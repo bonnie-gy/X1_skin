@@ -19,6 +19,8 @@ const sceneVideoStatus = document.querySelector('#sceneVideoStatus');
 const sceneVideoStatusText = sceneVideoStatus.querySelector('[data-status-text]');
 let activeSceneIndex = 0;
 let sceneLoadId = 0;
+const sceneVideoUrls = new Map();
+const sceneVideoDownloads = new Map();
 
 function renderProduct(index) {
   const item = products[index];
@@ -55,18 +57,59 @@ function setSceneVideoStatus(state, message) {
   sceneVideoStatusText.textContent = message;
 }
 
-function loadSceneVideo(item, loadId, retry = false) {
+function downloadSceneVideo(item, retry) {
+  if (retry) {
+    sceneVideoDownloads.delete(item.video);
+    const previousUrl = sceneVideoUrls.get(item.video);
+    if (previousUrl) URL.revokeObjectURL(previousUrl);
+    sceneVideoUrls.delete(item.video);
+  }
+
+  if (!sceneVideoDownloads.has(item.video)) {
+    const download = fetch(item.video, { cache: retry ? 'reload' : 'force-cache' })
+      .then(response => {
+        if (!response.ok) throw new Error(`Video returned ${response.status}`);
+        return response.blob();
+      })
+      .then(blob => {
+        if (!blob.type.startsWith('video/')) throw new Error('Invalid video response');
+        const objectUrl = URL.createObjectURL(blob);
+        sceneVideoUrls.set(item.video, objectUrl);
+        return objectUrl;
+      })
+      .catch(error => {
+        sceneVideoDownloads.delete(item.video);
+        throw error;
+      });
+    sceneVideoDownloads.set(item.video, download);
+  }
+
+  return sceneVideoDownloads.get(item.video);
+}
+
+async function loadSceneVideo(item, loadId, retry = false) {
   setSceneVideoStatus('loading', retry ? '正在重新加载视频...' : '视频加载中...');
   sceneVideo.pause();
   sceneVideo.removeAttribute('src');
-  sceneVideo.load();
-  sceneVideo.src = item.video;
   sceneVideo.load();
   const loadTimeout = window.setTimeout(() => {
     if (loadId === sceneLoadId && sceneVideo.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) {
       setSceneVideoStatus('error', '视频加载超时，点击重试');
     }
-  }, 12000);
+  }, 20000);
+
+  let videoUrl;
+  try {
+    videoUrl = await downloadSceneVideo(item, retry);
+  } catch (error) {
+    window.clearTimeout(loadTimeout);
+    if (loadId === sceneLoadId) setSceneVideoStatus('error', '视频下载失败，点击重试');
+    return;
+  }
+  if (loadId !== sceneLoadId) return;
+
+  sceneVideo.src = videoUrl;
+  sceneVideo.load();
 
   const handleReady = async () => {
     if (loadId !== sceneLoadId) return;
@@ -155,6 +198,10 @@ sceneVideoStatus.addEventListener('click', () => {
   }
   sceneLoadId += 1;
   loadSceneVideo(item, sceneLoadId, true);
+});
+
+window.addEventListener('beforeunload', () => {
+  sceneVideoUrls.forEach(url => URL.revokeObjectURL(url));
 });
 
 const root = document.documentElement;
