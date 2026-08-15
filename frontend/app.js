@@ -216,18 +216,86 @@ document.querySelector('#themeToggle').addEventListener('click', () => {
 
 const header = document.querySelector('#siteHeader');
 const backToTop = document.querySelector('#backToTop');
-const heroVideo = document.querySelector('#heroVideo');
+const hero = document.querySelector('#home');
+const heroStoryVideo = document.querySelector('#heroStoryVideo');
+const heroStoryCurrent = document.querySelector('#heroStoryCurrent');
+const heroStoryScenes = [...document.querySelectorAll('[data-story-scene]')];
+
+function clamp(value, min = 0, max = 1) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function smoothstep(start, end, value) {
+  const amount = clamp((value - start) / (end - start));
+  return amount * amount * (3 - 2 * amount);
+}
+
+function updateHeroStory() {
+  if (!hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const rect = hero.getBoundingClientRect();
+  const scrollableHeight = Math.max(1, hero.offsetHeight - window.innerHeight);
+  const progress = clamp(-rect.top / scrollableHeight);
+  const introExit = smoothstep(.08, .3, progress);
+  const materialEnter = smoothstep(.2, .38, progress);
+  const materialExit = smoothstep(.56, .72, progress);
+  const signalEnter = smoothstep(.62, .82, progress);
+  const materialOpacity = materialEnter * (1 - materialExit);
+  const introOpacity = 1 - introExit;
+  const signalOpacity = signalEnter;
+  const materialFocus = materialOpacity;
+  const mobile = window.innerWidth < 768;
+  const storyScale = 1 + materialFocus * (mobile ? .13 : .24) + signalEnter * (mobile ? .2 : .36);
+  const storyShiftX = materialFocus * (mobile ? -20 : -145) + signalEnter * (mobile ? 34 : 150);
+  const storyShiftY = materialFocus * (mobile ? 18 : 24) - signalEnter * (mobile ? 20 : 34);
+  const productOpacity = 1 - signalEnter * .5;
+  const videoOpacity = materialFocus * .34 + signalEnter * .64;
+  const phase = progress < .31 ? 0 : progress < .7 ? 1 : 2;
+
+  hero.dataset.storyPhase = String(phase);
+  hero.style.setProperty('--scene-intro-opacity', introOpacity.toFixed(3));
+  hero.style.setProperty('--scene-material-opacity', materialOpacity.toFixed(3));
+  hero.style.setProperty('--scene-signal-opacity', signalOpacity.toFixed(3));
+  hero.style.setProperty('--scene-intro-shift', `${introExit * -48}px`);
+  hero.style.setProperty('--scene-material-shift', `${(1 - materialEnter) * 36 - materialExit * 34}px`);
+  hero.style.setProperty('--scene-signal-shift', `${(1 - signalEnter) * 38}px`);
+  hero.style.setProperty('--story-scale', storyScale.toFixed(3));
+  hero.style.setProperty('--story-shift-x', `${storyShiftX.toFixed(1)}px`);
+  hero.style.setProperty('--story-shift-y', `${storyShiftY.toFixed(1)}px`);
+  hero.style.setProperty('--product-opacity', productOpacity.toFixed(3));
+  hero.style.setProperty('--story-video-opacity', videoOpacity.toFixed(3));
+  hero.style.setProperty('--story-progress', `${(progress * 100).toFixed(1)}%`);
+  heroStoryCurrent.textContent = `0${phase + 1}`;
+
+  heroStoryScenes.forEach((scene, index) => {
+    scene.setAttribute('aria-hidden', String(index !== phase));
+  });
+
+  if (heroStoryVideo?.duration && Number.isFinite(heroStoryVideo.duration)) {
+    const targetTime = progress * Math.max(0, heroStoryVideo.duration - .04);
+    if (Math.abs(heroStoryVideo.currentTime - targetTime) > .035) heroStoryVideo.currentTime = targetTime;
+  }
+}
+
+function initHeroScrollStory() {
+  if (!heroStoryVideo) return;
+  heroStoryVideo.pause();
+  heroStoryVideo.addEventListener('loadedmetadata', updateHeroStory);
+  heroStoryVideo.addEventListener('canplay', updateHeroStory);
+  window.addEventListener('resize', updateHeroStory, { passive: true });
+  updateHeroStory();
+}
 
 function handleScroll() {
   const y = window.scrollY;
+  const onHero = y < hero.offsetTop + hero.offsetHeight - 1;
+  const showBackToTop = y >= hero.offsetTop + hero.offsetHeight;
   header.classList.toggle('nav-scrolled', y > 24);
-  header.classList.toggle('on-hero', y <= 24);
-  backToTop.classList.toggle('opacity-0', y < 700);
-  backToTop.classList.toggle('translate-y-3', y < 700);
-  backToTop.classList.toggle('pointer-events-none', y < 700);
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && y < window.innerHeight) {
-    heroVideo.style.transform = `translate3d(0, ${y * 0.12}px, 0)`;
-  }
+  header.classList.toggle('on-hero', onHero);
+  backToTop.classList.toggle('opacity-0', !showBackToTop);
+  backToTop.classList.toggle('translate-y-3', !showBackToTop);
+  backToTop.classList.toggle('pointer-events-none', !showBackToTop);
+  updateHeroStory();
 }
 
 window.addEventListener('scroll', handleScroll, { passive: true });
@@ -265,6 +333,154 @@ document.querySelectorAll('[data-contact-topic]').forEach(link => {
   });
 });
 
+function initHeroExperience() {
+  const canvas = document.querySelector('#heroFlowCanvas');
+  if (!hero || !canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const heroStage = hero.querySelector('.hero-sticky');
+
+  const context = canvas.getContext('2d', { alpha: true });
+  if (!context) return;
+
+  const pointer = { x: 0, y: 0, active: false };
+  const particles = [];
+  const colors = [178, 195, 211, 14, 88];
+  let width = 0;
+  let height = 0;
+  let frameId = 0;
+  let running = true;
+  let lastTime = performance.now();
+
+  function resetParticle(particle, randomX = true) {
+    particle.x = randomX ? Math.random() * width : -20;
+    particle.y = Math.random() * height;
+    particle.px = particle.x;
+    particle.py = particle.y;
+    particle.speed = .35 + Math.random() * .75;
+    particle.life = 180 + Math.random() * 320;
+    particle.hue = colors[Math.floor(Math.random() * colors.length)];
+    particle.alpha = .16 + Math.random() * .32;
+    particle.width = .45 + Math.random() * 1.25;
+  }
+
+  function resizeCanvas() {
+    const rect = heroStage.getBoundingClientRect();
+    width = Math.max(1, rect.width);
+    height = Math.max(1, rect.height);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    particles.length = 0;
+    const particleCount = width < 768 ? 38 : 76;
+    for (let index = 0; index < particleCount; index += 1) {
+      const particle = {};
+      resetParticle(particle);
+      particles.push(particle);
+    }
+    context.clearRect(0, 0, width, height);
+  }
+
+  function setPointer(clientX, clientY) {
+    const rect = heroStage.getBoundingClientRect();
+    const localX = Math.max(0, Math.min(rect.width, clientX - rect.left));
+    const localY = Math.max(0, Math.min(rect.height, clientY - rect.top));
+    pointer.x = localX;
+    pointer.y = localY;
+    pointer.active = true;
+
+    const normalizedX = localX / rect.width - .5;
+    const normalizedY = localY / rect.height - .5;
+    hero.style.setProperty('--flow-x', `${(localX / rect.width) * 100}%`);
+    hero.style.setProperty('--flow-y', `${(localY / rect.height) * 100}%`);
+    hero.style.setProperty('--pointer-x', `${normalizedX * 28}px`);
+    hero.style.setProperty('--pointer-y', `${normalizedY * 18}px`);
+    hero.style.setProperty('--grid-x', `${normalizedX * -12}px`);
+    hero.style.setProperty('--grid-y', `${normalizedY * -10}px`);
+    hero.style.setProperty('--sensor-x', `${normalizedX * -16}px`);
+    hero.style.setProperty('--sensor-y', `${normalizedY * -11}px`);
+  }
+
+  function relaxPointer() {
+    pointer.active = false;
+    hero.style.setProperty('--flow-x', '68%');
+    hero.style.setProperty('--flow-y', '34%');
+    hero.style.setProperty('--pointer-x', '0px');
+    hero.style.setProperty('--pointer-y', '0px');
+    hero.style.setProperty('--grid-x', '0px');
+    hero.style.setProperty('--grid-y', '0px');
+    hero.style.setProperty('--sensor-x', '0px');
+    hero.style.setProperty('--sensor-y', '0px');
+  }
+
+  function draw(time) {
+    if (!running) return;
+    const delta = Math.min(2, (time - lastTime) / 16.67);
+    lastTime = time;
+    context.fillStyle = 'rgba(7, 23, 30, .075)';
+    context.fillRect(0, 0, width, height);
+
+    particles.forEach(particle => {
+      particle.px = particle.x;
+      particle.py = particle.y;
+      const fieldX = Math.sin(particle.y * .007 + time * .00034) + Math.cos(particle.x * .003 - time * .00022);
+      const fieldY = Math.cos(particle.x * .005 + time * .00028) * .72 + Math.sin(particle.y * .004) * .35;
+      const storyEnergy = 1 + Number(hero.dataset.storyPhase || 0) * .22;
+      let velocityX = (1.05 + fieldX * .44) * particle.speed * storyEnergy;
+      let velocityY = fieldY * particle.speed * storyEnergy;
+
+      if (pointer.active) {
+        const dx = particle.x - pointer.x;
+        const dy = particle.y - pointer.y;
+        const distance = Math.hypot(dx, dy);
+        if (distance < 240 && distance > 1) {
+          const force = (1 - distance / 240) * 2.1;
+          velocityX += (-dy / distance) * force;
+          velocityY += (dx / distance) * force;
+        }
+      }
+
+      particle.x += velocityX * delta;
+      particle.y += velocityY * delta;
+      particle.life -= delta;
+
+      context.beginPath();
+      context.moveTo(particle.px, particle.py);
+      context.lineTo(particle.x, particle.y);
+      context.strokeStyle = `hsla(${particle.hue}, 84%, 67%, ${particle.alpha})`;
+      context.lineWidth = particle.width;
+      context.stroke();
+
+      if (particle.x > width + 30 || particle.y < -40 || particle.y > height + 40 || particle.life <= 0) {
+        resetParticle(particle, false);
+      }
+    });
+
+    frameId = requestAnimationFrame(draw);
+  }
+
+  heroStage.addEventListener('pointermove', event => setPointer(event.clientX, event.clientY), { passive: true });
+  heroStage.addEventListener('pointerleave', relaxPointer);
+  window.addEventListener('resize', resizeCanvas, { passive: true });
+
+  const visibilityObserver = new IntersectionObserver(entries => {
+    const visible = entries[0]?.isIntersecting;
+    if (visible && !running) {
+      running = true;
+      lastTime = performance.now();
+      frameId = requestAnimationFrame(draw);
+    } else if (!visible && running) {
+      running = false;
+      cancelAnimationFrame(frameId);
+    }
+  }, { threshold: 0.02 });
+  visibilityObserver.observe(hero);
+
+  resizeCanvas();
+  frameId = requestAnimationFrame(draw);
+}
+
 document.querySelector('#contactForm').addEventListener('submit', async event => {
   event.preventDefault();
   const form = event.currentTarget;
@@ -298,3 +514,5 @@ document.querySelector('#contactForm').addEventListener('submit', async event =>
 
 lucide.createIcons();
 loadContent();
+initHeroScrollStory();
+initHeroExperience();

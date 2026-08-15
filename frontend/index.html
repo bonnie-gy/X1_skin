@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="链感：智能触觉穿戴系统，以柔性电子皮肤、模块化触觉硬件与开放 SDK 连接现实动作与数字反馈。" />
-  <meta name="theme-color" content="#f4f7f8" />
+  <meta name="theme-color" content="#eef4f7" />
   <link rel="icon" href="assets/media/x1-skin.png" />
   <title>X1 | 智能触觉穿戴系统</title>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -14,12 +14,12 @@
       theme: {
         extend: {
           colors: {
-            ink: '#111719',
-            mist: '#f4f7f8',
-            line: '#dce3e5',
-            tech: '#1376c5',
-            cyan: '#53c5d9',
-            signal: '#b8e560'
+            ink: '#10222b',
+            mist: '#eef4f7',
+            line: '#cad9df',
+            tech: '#176fdf',
+            cyan: '#20c7c2',
+            signal: '#ff775c'
           },
           fontFamily: {
             sans: ['Inter', 'PingFang SC', 'Microsoft YaHei', 'system-ui', 'sans-serif']
@@ -29,9 +29,9 @@
     };
   </script>
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <link rel="stylesheet" href="styles.css?v=20260815-2" />
+  <link rel="stylesheet" href="styles.css?v=20260815-5" />
 </head>
-<body class="bg-mist text-ink antialiased transition-colors duration-300 dark:bg-[#0b1012] dark:text-[#edf3f4] [--nav-bg:#f4f7f8] [--nav-border:#dce3e5] [--timeline-ring:#f4f7f8] dark:[--nav-bg:#0b1012] dark:[--nav-border:#263034] dark:[--timeline-ring:#0b1012]">
+<body class="bg-mist text-ink antialiased transition-colors duration-300 dark:bg-[#071116] dark:text-[#edf7f6] [--nav-bg:#eef4f7] [--nav-border:#cad9df] [--timeline-ring:#eef4f7] dark:[--nav-bg:#071116] dark:[--nav-border:#26383d] dark:[--timeline-ring:#071116]">
   <header id="siteHeader" class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-all duration-300">
     <div class="section-shell flex h-16 items-center justify-between lg:h-[4.5rem]">
       <a href="#home" class="flex items-center gap-3" aria-label="X1 首页">
@@ -77,33 +77,84 @@
   </header>
 
   <main>
-    <section id="home" class="relative flex min-h-[88svh] items-end overflow-hidden bg-[#071014] text-white">
-      <video id="heroVideo" class="absolute inset-0 h-[112%] w-full object-cover opacity-80" autoplay muted loop playsinline poster="assets/media/x1-skin.png">
-        <source src="assets/media/hero-material.mp4" type="video/mp4" />
-      </video>
-      <div class="media-wash absolute inset-0"></div>
-      <div class="media-bottom absolute inset-x-0 bottom-0 h-2/3"></div>
-      <div class="absolute left-0 top-0 h-full w-px bg-white/20"></div>
+    <section id="home" class="hero-experience relative text-white" data-story-phase="0">
+      <div class="hero-sticky flex min-h-[100svh] overflow-hidden">
+        <video id="heroStoryVideo" class="hero-story-video" muted playsinline preload="auto" poster="assets/media/x1-skin.png" aria-hidden="true">
+          <source src="assets/media/hero-material.mp4" type="video/mp4" />
+        </video>
+        <canvas id="heroFlowCanvas" class="hero-flow-canvas" aria-hidden="true"></canvas>
+        <div class="hero-spectrum" aria-hidden="true"></div>
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-cursor-glow" aria-hidden="true"></div>
 
-      <div class="section-shell relative z-10 pb-14 pt-28 md:pb-16 lg:pb-20">
-        <div class="mb-8 flex items-center gap-3 text-xs font-medium uppercase text-white/70">
-          <span class="h-px w-10 bg-cyan"></span>
-          Intelligent Haptic Wearable Platform
+        <div class="hero-product" aria-hidden="true">
+          <img id="heroGlove" src="assets/media/x1-skin.png" alt="" />
+          <div class="hero-product-sheen"></div>
         </div>
-        <h1 class="display-title max-w-5xl font-semibold text-balance">让身体，成为下一代<br class="hidden sm:block" />人机交互界面</h1>
-        <div class="mt-8 flex max-w-4xl flex-col gap-7 border-t border-white/25 pt-6 md:flex-row md:items-end md:justify-between">
-          <p class="max-w-2xl text-base leading-7 text-white/74 md:text-lg md:leading-8">
-            X1 将柔性传感、空间触觉反馈与开放 SDK 组合成可编程穿戴系统，面向 XR 内容、沉浸体验、职业训练与科研验证。
-          </p>
-          <div class="flex shrink-0 flex-wrap gap-3">
-            <a href="#products" class="inline-flex h-12 items-center gap-2 bg-white px-5 text-sm font-semibold text-ink transition-colors hover:bg-cyan">
-              探索 X1 <i data-lucide="arrow-down" class="size-4"></i>
-            </a>
-            <a href="#contact" class="inline-flex h-12 items-center gap-2 border border-white/35 px-5 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white/10">
-              获取合作资料 <i data-lucide="arrow-up-right" class="size-4"></i>
-            </a>
+
+        <div class="hero-sensor hero-sensor-a" aria-hidden="true"><span></span><b>01</b><small>压力感知</small></div>
+        <div class="hero-sensor hero-sensor-b" aria-hidden="true"><span></span><b>02</b><small>柔性电路</small></div>
+        <div class="hero-sensor hero-sensor-c" aria-hidden="true"><span></span><b>03</b><small>实时映射</small></div>
+
+        <div class="section-shell hero-content hero-scene hero-scene-intro relative z-10 flex flex-col justify-end pb-12 pt-28 md:pb-16 lg:pb-20" data-story-scene="0">
+          <div class="hero-kicker mb-7 flex items-center gap-3 text-xs font-medium uppercase text-white/75">
+            <span class="hero-live-dot"></span>
+            Intelligent Haptic Wearable Platform
+          </div>
+          <h1 class="display-title max-w-4xl font-semibold text-balance">X1 纳米透明<br />电子皮肤</h1>
+          <div class="mt-7 grid max-w-5xl gap-7 border-t border-white/25 pt-6 md:grid-cols-[1fr_auto] md:items-end">
+            <div>
+              <p class="max-w-2xl text-base leading-7 text-white/78 md:text-lg md:leading-8">
+                X1 纳米透明电子皮肤，将柔性传感、空间触觉反馈与开放 SDK 织入身体，让每一次触碰都有方向、温度与回应。
+              </p>
+              <div class="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-xs text-white/55">
+                <span>柔性贴肤</span><span>低延迟反馈</span><span>多点感知</span><span>开放 SDK</span>
+              </div>
+            </div>
+            <div class="flex shrink-0 flex-wrap gap-3">
+              <a href="#products" class="hero-primary-action inline-flex h-12 items-center gap-2 bg-white px-5 text-sm font-semibold text-ink transition-colors">
+                探索 X1 <i data-lucide="arrow-down" class="size-4"></i>
+              </a>
+              <a href="#contact" class="hero-secondary-action inline-flex h-12 items-center gap-2 border border-white/35 px-5 text-sm font-semibold text-white transition-colors">
+                获取合作资料 <i data-lucide="arrow-up-right" class="size-4"></i>
+              </a>
+            </div>
           </div>
         </div>
+
+        <div class="section-shell hero-scene hero-story-panel hero-story-material" data-story-scene="1" aria-hidden="true">
+          <div class="hero-story-copy">
+            <p class="hero-story-eyebrow">02 / NANOFIBER MATERIAL</p>
+            <h2>透明，<br />不等于脆弱</h2>
+            <p class="hero-story-lead">柔性材料沿手部曲面贴合，让拉伸、压力与姿态变化成为连续可读取的身体信号。</p>
+          </div>
+          <div class="hero-story-measure">
+            <strong>535<sup>%*</sup></strong>
+            <span>最高应变研究参考</span>
+            <small>* 来自当前材料路线研究数据，量产规格以工程验证结果为准。</small>
+          </div>
+        </div>
+
+        <div class="section-shell hero-scene hero-story-panel hero-story-signal" data-story-scene="2" aria-hidden="true">
+          <div class="hero-story-copy">
+            <p class="hero-story-eyebrow">03 / REAL-TIME HAPTIC SIGNAL</p>
+            <h2>触觉，<br />在身体上流动</h2>
+            <p class="hero-story-lead">从感知输入到多点反馈，X1 将空间事件转译为有方向、可编排、可记录的触觉语言。</p>
+          </div>
+          <div class="hero-signal-metrics">
+            <div><strong>&lt; 30</strong><span>ms / P1 延迟目标</span></div>
+            <div><strong>16-24</strong><span>可更换反馈点</span></div>
+            <div><strong>≥ 6</strong><span>h / 连续使用目标</span></div>
+          </div>
+          <a href="#products" class="hero-story-link">进入产品系统 <i data-lucide="arrow-down" class="size-4"></i></a>
+        </div>
+
+        <div class="hero-story-progress" aria-hidden="true">
+          <span id="heroStoryCurrent">01</span>
+          <div><i></i></div>
+          <span>03</span>
+        </div>
+        <div class="hero-scroll-cue" aria-hidden="true"><span></span><small>SCROLL TO EXPLORE</small></div>
       </div>
     </section>
 
@@ -444,6 +495,6 @@
     <i data-lucide="arrow-up" class="size-4"></i>
   </button>
 
-  <script src="app.js?v=20260815-3" defer></script>
+  <script src="app.js?v=20260815-5" defer></script>
 </body>
 </html>

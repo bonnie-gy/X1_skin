@@ -101,10 +101,41 @@ async function serveStatic(request, response, pathname) {
     if (!stat.isFile()) throw new Error('NOT_FILE');
     const extension = path.extname(filePath).toLowerCase();
     const noCacheExtensions = new Set(['.html', '.css', '.js', '.json']);
+    const cacheControl = noCacheExtensions.has(extension) ? 'no-cache' : 'public, max-age=86400';
+    const range = request.headers.range;
+
+    if (extension === '.mp4' && range) {
+      const match = /^bytes=(\d*)-(\d*)$/.exec(range);
+      if (!match) {
+        response.writeHead(416, { 'Content-Range': `bytes */${stat.size}` });
+        response.end();
+        return;
+      }
+
+      const start = match[1] ? Number(match[1]) : 0;
+      const end = match[2] ? Math.min(Number(match[2]), stat.size - 1) : stat.size - 1;
+      if (!Number.isInteger(start) || !Number.isInteger(end) || start < 0 || start > end || start >= stat.size) {
+        response.writeHead(416, { 'Content-Range': `bytes */${stat.size}` });
+        response.end();
+        return;
+      }
+
+      response.writeHead(206, {
+        'Content-Type': mimeTypes[extension],
+        'Content-Length': end - start + 1,
+        'Content-Range': `bytes ${start}-${end}/${stat.size}`,
+        'Accept-Ranges': 'bytes',
+        'Cache-Control': cacheControl
+      });
+      fs.createReadStream(filePath, { start, end }).pipe(response);
+      return;
+    }
+
     response.writeHead(200, {
       'Content-Type': mimeTypes[extension] || 'application/octet-stream',
       'Content-Length': stat.size,
-      'Cache-Control': noCacheExtensions.has(extension) ? 'no-cache' : 'public, max-age=86400'
+      'Accept-Ranges': extension === '.mp4' ? 'bytes' : 'none',
+      'Cache-Control': cacheControl
     });
     fs.createReadStream(filePath).pipe(response);
   } catch {
