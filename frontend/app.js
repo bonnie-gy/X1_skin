@@ -152,6 +152,12 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
 
+document.querySelectorAll('[data-contact-topic]').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelector('#contactForm [name="topic"]').value = link.dataset.contactTopic;
+  });
+});
+
 document.querySelector('#contactForm').addEventListener('submit', async event => {
   event.preventDefault();
   const form = event.currentTarget;

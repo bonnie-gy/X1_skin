@@ -40,12 +40,13 @@
         <span class="hidden border-l border-line pl-3 text-xs text-slate-500 dark:border-[#344044] dark:text-slate-400 sm:inline">HAPTIC SYSTEMS</span>
       </a>
 
-      <nav class="hidden items-center gap-7 text-sm text-slate-600 dark:text-slate-300 lg:flex" aria-label="主导航">
+      <nav class="hidden items-center gap-6 text-sm text-slate-600 dark:text-slate-300 xl:flex" aria-label="主导航">
         <a class="transition-colors hover:text-tech" href="#products">产品</a>
         <a class="transition-colors hover:text-tech" href="#applications">行业应用</a>
         <a class="transition-colors hover:text-tech" href="#funding">融资发展</a>
-        <a class="transition-colors hover:text-tech" href="#news">新闻动态</a>
         <a class="transition-colors hover:text-tech" href="#about">关于我们</a>
+        <a class="transition-colors hover:text-tech" href="#resources">材料与合作</a>
+        <a class="transition-colors hover:text-tech" href="#news">新闻动态</a>
         <a class="transition-colors hover:text-tech" href="#contact">联系我们</a>
       </nav>
 
@@ -57,18 +58,19 @@
         <a href="#contact" class="hidden h-10 items-center gap-2 bg-ink px-4 text-sm font-medium text-white transition-colors hover:bg-tech dark:bg-white dark:text-ink dark:hover:bg-cyan sm:flex">
           商务合作 <i data-lucide="arrow-up-right" class="size-4"></i>
         </a>
-        <button id="menuToggle" class="grid size-10 place-items-center border border-line bg-white/60 dark:border-[#313c40] dark:bg-white/5 lg:hidden" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="打开导航菜单">
+        <button id="menuToggle" class="grid size-10 place-items-center border border-line bg-white/60 dark:border-[#313c40] dark:bg-white/5 xl:hidden" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="打开导航菜单">
           <i data-lucide="menu" class="size-5"></i>
         </button>
       </div>
     </div>
-    <div id="mobileMenu" class="hidden border-t border-line bg-mist px-4 py-4 dark:border-[#263034] dark:bg-[#0b1012] lg:hidden">
+    <div id="mobileMenu" class="hidden border-t border-line bg-mist px-4 py-4 dark:border-[#263034] dark:bg-[#0b1012] xl:hidden">
       <nav class="mx-auto grid max-w-xl gap-1 text-base" aria-label="移动端导航">
         <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#products">产品</a>
         <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#applications">行业应用</a>
         <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#funding">融资发展</a>
-        <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#news">新闻动态</a>
         <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#about">关于我们</a>
+        <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#resources">材料与合作</a>
+        <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#news">新闻动态</a>
         <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#contact">联系我们</a>
       </nav>
     </div>
@@ -313,10 +315,63 @@
       </div>
     </section>
 
+    <section id="resources" class="section-pad border-b border-line bg-mist dark:border-[#253034] dark:bg-[#0b1012]">
+      <div class="section-shell">
+        <div class="reveal grid gap-6 lg:grid-cols-[.75fr_1.25fr] lg:items-end">
+          <div>
+            <p class="mb-4 text-sm font-semibold text-tech">05 / 材料与院企合作</p>
+            <h2 class="section-title max-w-3xl font-semibold text-balance">从材料选型到联合验证，集中在同一入口</h2>
+          </div>
+          <p class="max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-400 lg:justify-self-end">统一管理首代物料、新材料验证和高校科研合作，避免技术路线、样机需求与对接信息分散。</p>
+        </div>
+
+        <div class="mt-12 border-y border-line dark:border-[#2d383c]">
+          <article class="reveal grid gap-8 py-8 md:grid-cols-[.32fr_1fr] md:py-10">
+            <div>
+              <p class="text-xs font-semibold text-tech">01 / 物料与材料清单</p>
+              <h3 class="mt-3 text-2xl font-semibold">工程物料与新材料路线</h3>
+              <p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">先用成熟器件完成系统验证，再按可靠性证据逐步导入先进柔性材料。</p>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[620px] border-collapse text-left text-sm">
+                <thead class="border-b border-line text-xs text-slate-500 dark:border-[#344044]">
+                  <tr><th class="pb-4 pr-5 font-medium">阶段</th><th class="pb-4 pr-5 font-medium">材料与器件</th><th class="pb-4 font-medium">项目结论</th></tr>
+                </thead>
+                <tbody class="divide-y divide-line dark:divide-[#2d383c]">
+                  <tr><td class="py-5 pr-5 font-semibold">首代样机</td><td class="py-5 pr-5 text-slate-600 dark:text-slate-400">TPU 联锁骨架、织物基底、铜 FPC、ERM / LRA</td><td class="py-5 text-[#138c83]">立即采用</td></tr>
+                  <tr><td class="py-5 pr-5 font-semibold">局部升级</td><td class="py-5 pr-5 text-slate-600 dark:text-slate-400">PDMS、AgNW、LIG 传感片、音圈模块</td><td class="py-5 text-tech">模块验证后采用</td></tr>
+                  <tr><td class="py-5 pr-5 font-semibold">联合研发</td><td class="py-5 pr-5 text-slate-600 dark:text-slate-400">MXene / CNT / TPU、AgNW / 壳聚糖 / ZnO</td><td class="py-5 text-[#7b61a8] dark:text-[#b89cdd]">先替换局部节点</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="reveal grid gap-8 border-t border-line py-8 dark:border-[#2d383c] md:grid-cols-[.32fr_1fr] md:py-10">
+            <div>
+              <p class="text-xs font-semibold text-tech">02 / 院企合作联系</p>
+              <h3 class="mt-3 text-2xl font-semibold">按课题对接联合验证团队</h3>
+              <p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">以下均为建议接洽方向，不代表合作已经达成。</p>
+            </div>
+            <div>
+              <div class="grid gap-px bg-line dark:bg-[#2d383c] md:grid-cols-3">
+                <div class="bg-mist p-5 dark:bg-[#0b1012]"><p class="text-xs text-slate-500">柔性电子</p><p class="mt-3 font-semibold">清华大学相关团队</p><p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">阵列布局、曲面贴合与信号解耦</p></div>
+                <div class="bg-mist p-5 dark:bg-[#0b1012]"><p class="text-xs text-slate-500">智能感知</p><p class="mt-3 font-semibold">东南大学相关团队</p><p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">可拉伸传感、动作识别与联合样机</p></div>
+                <div class="bg-mist p-5 dark:bg-[#0b1012]"><p class="text-xs text-slate-500">纳米能源</p><p class="mt-3 font-semibold">中科院相关团队</p><p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">压电感知、低功耗传感与可靠性</p></div>
+              </div>
+              <div class="mt-6 flex flex-col gap-4 border-l-2 border-tech pl-5 sm:flex-row sm:items-center sm:justify-between">
+                <p class="max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-400">首次对接建议以 6-9 个月、指标清晰的联合课题为单位，并提前约定知识产权、保密、样品归属和成果许可范围。</p>
+                <a href="#contact" data-contact-topic="材料与院企合作" class="inline-flex h-11 shrink-0 items-center gap-2 bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-tech dark:bg-white dark:text-ink dark:hover:bg-cyan">发起合作联系 <i data-lucide="arrow-up-right" class="size-4"></i></a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="news" class="section-pad bg-white dark:bg-[#101719]">
       <div class="section-shell">
         <div class="reveal flex items-end justify-between gap-6">
-          <div><p class="mb-4 text-sm font-semibold text-tech">05 / 新闻动态</p><h2 class="section-title font-semibold">持续进展</h2></div>
+          <div><p class="mb-4 text-sm font-semibold text-tech">06 / 新闻动态</p><h2 class="section-title font-semibold">持续进展</h2></div>
           <a href="#contact" class="hidden items-center gap-2 text-sm font-semibold text-tech sm:flex">媒体与合作咨询 <i data-lucide="arrow-right" class="size-4"></i></a>
         </div>
         <div class="mt-10 grid gap-4 lg:grid-cols-3">
@@ -345,9 +400,9 @@
     <section id="contact" class="section-pad border-t border-line bg-mist dark:border-[#253034] dark:bg-[#0b1012]">
       <div class="section-shell grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
         <div class="reveal">
-          <p class="mb-4 text-sm font-semibold text-tech">06 / 联系我们</p>
+          <p class="mb-4 text-sm font-semibold text-tech">07 / 联系我们</p>
           <h2 class="section-title font-semibold text-balance">共同定义下一代身体交互</h2>
-          <p class="mt-6 max-w-md text-sm leading-7 text-slate-600 dark:text-slate-400">欢迎 XR 内容团队、行业集成商、科研院校、供应链伙伴与投资机构交流合作。</p>
+          <p class="mt-6 max-w-md text-sm leading-7 text-slate-600 dark:text-slate-400">欢迎 XR 内容团队、行业集成商、材料与院企合作伙伴及投资机构交流合作。</p>
           <div class="mt-10 grid gap-5 text-sm">
             <div class="flex items-center gap-4"><span class="grid size-10 place-items-center border border-line dark:border-[#344044]"><i data-lucide="messages-square" class="size-4"></i></span><span>商务联系方式待主体确认后公开</span></div>
             <div class="flex items-center gap-4"><span class="grid size-10 place-items-center border border-line dark:border-[#344044]"><i data-lucide="map-pin" class="size-4"></i></span><span>中国 · 商务地址待补充</span></div>
@@ -358,7 +413,7 @@
           <label class="grid gap-2 text-sm"><span>姓名 / 称呼</span><input name="name" required class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请输入" /></label>
           <label class="grid gap-2 text-sm"><span>公司 / 机构</span><input name="company" class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请输入" /></label>
           <label class="grid gap-2 text-sm"><span>联系邮箱</span><input name="email" type="email" required class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="name@company.com" /></label>
-          <label class="grid gap-2 text-sm"><span>合作方向</span><select name="topic" class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044] dark:bg-[#101719]"><option>产品与 SDK</option><option>场景试点</option><option>科研合作</option><option>供应链合作</option><option>融资沟通</option><option>媒体咨询</option></select></label>
+          <label class="grid gap-2 text-sm"><span>合作方向</span><select name="topic" class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044] dark:bg-[#101719]"><option>产品与 SDK</option><option>场景试点</option><option>材料与院企合作</option><option>融资沟通</option><option>媒体咨询</option></select></label>
           <label class="grid gap-2 text-sm md:col-span-2"><span>需求说明</span><textarea name="message" required rows="5" class="resize-none border border-line bg-transparent p-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请简要说明合作需求"></textarea></label>
           <div class="flex flex-col gap-3 md:col-span-2 sm:flex-row sm:items-center sm:justify-between">
             <p id="formStatus" class="text-xs text-slate-500">信息将提交至项目联系渠道，仅用于本次合作沟通。</p>
@@ -373,7 +428,7 @@
     <div class="section-shell flex flex-col gap-7">
       <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <a href="#home" class="flex items-center gap-3"><span class="grid size-9 place-items-center bg-ink text-xs font-bold text-white dark:bg-white dark:text-ink">X1</span><span class="text-lg font-semibold">链感：智能触觉</span></a>
-        <nav class="flex flex-wrap gap-x-6 gap-y-3 text-xs text-slate-500"><a href="#products">产品</a><a href="#applications">行业应用</a><a href="#funding">融资发展</a><a href="#about">关于我们</a><a href="#contact">联系我们</a></nav>
+        <nav class="flex flex-wrap gap-x-6 gap-y-3 text-xs text-slate-500"><a href="#products">产品</a><a href="#applications">行业应用</a><a href="#funding">融资发展</a><a href="#about">关于我们</a><a href="#resources">材料与院企合作</a><a href="#contact">联系我们</a></nav>
       </div>
       <div class="flex flex-col gap-3 border-t border-line pt-6 text-xs text-slate-500 dark:border-[#2d383c] md:flex-row md:items-center md:justify-between">
         <p>© 2026 链感：智能触觉穿戴项目。版权所有。</p>
