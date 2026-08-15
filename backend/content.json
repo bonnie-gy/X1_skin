@@ -32,7 +32,7 @@
     {
       "name": "XR 内容与沉浸体验",
       "short": "XR 沉浸",
-      "video": "/assets/media/scene-xr.mp4",
+      "video": "/assets/media/scene-xr.mp4?v=20260815-2",
       "description": "将碰撞方向、爆炸冲击和空间事件转化为身体反馈，帮助内容团队在不自研硬件的情况下增强沉浸感。",
       "values": ["缩短 SDK 接入与内容适配周期", "预置空间触觉模板与音频转触觉能力", "支持开发套件、批量硬件和软件授权"],
       "delivery": "触觉背心 + SDK + 游戏事件接口 + 触觉模板"
@@ -40,7 +40,7 @@
     {
       "name": "运动与动作训练",
       "short": "运动训练",
-      "video": "/assets/media/scene-sport.mp4",
+      "video": "/assets/media/scene-sport.mp4?v=20260815-2",
       "description": "通过身体动作采集与定向触觉提示，辅助教练和研究人员分析动作偏差，构建可重复的训练反馈。",
       "values": ["动作提示与训练过程记录", "面向体育院校、俱乐部与训练机构", "以动作纠错效果和穿戴舒适性验收"],
       "delivery": "传感模块 + 动作提示 + 训练分析工具"
@@ -48,7 +48,7 @@
     {
       "name": "康复科研",
       "short": "健康医疗",
-      "video": "/assets/media/scene-health.mp4",
+      "video": "/assets/media/scene-health.mp4?v=20260815-2",
       "description": "现阶段定位为科研工具和伦理研究平台，用于探索触觉提示对动作训练的价值，不对外宣称诊断或治疗效果。",
       "values": ["开放原始数据与同步时间戳", "支持小规模科研与人体工学验证", "医疗用途需独立完成分类、临床与注册路径"],
       "delivery": "科研套件 + 数据接口 + 联合研究支持"
@@ -56,7 +56,7 @@
     {
       "name": "工业与安全训练",
       "short": "工业安全",
-      "video": "/assets/media/scene-industry.mp4",
+      "video": "/assets/media/scene-industry.mp4?v=20260815-2",
       "description": "在低风险仿真环境中提供危险方向、碰撞位置和动作偏差提示，并记录训练过程用于复盘。",
       "values": ["离线运行与私有化部署", "适配消防、工业安全和职业训练", "以系统稳定性、训练效果和数据安全验收"],
       "delivery": "行业硬件 + 私有化平台 + 定制接口 + 维保"
@@ -64,7 +64,7 @@
     {
       "name": "科研教学与人机交互",
       "short": "科研教育",
-      "video": "/assets/media/scene-research.mp4",
+      "video": "/assets/media/scene-research.mp4?v=20260815-2",
       "description": "为高校实验室和交互研究团队提供开放 API、可替换模块和可观测数据，降低二次开发门槛。",
       "values": ["开放 API 与原始数据导出", "支持 10-50 人触觉盲测和教学演示", "可围绕材料、感知和算法开展联合课题"],
       "delivery": "开发者套件 + API 文档 + 示例工程 + 技术支持"

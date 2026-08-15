@@ -197,7 +197,10 @@
 
         <div class="mt-5 grid overflow-hidden border border-line bg-[#071014] text-white dark:border-[#283337] lg:grid-cols-[1.35fr_.65fr]">
           <div class="media-zoom relative min-h-[360px] overflow-hidden lg:min-h-[560px]">
-            <video id="sceneVideo" class="absolute inset-0 h-full w-full object-cover" autoplay muted loop playsinline></video>
+            <video id="sceneVideo" class="absolute inset-0 h-full w-full object-cover" autoplay muted loop playsinline preload="metadata"></video>
+            <button id="sceneVideoStatus" class="absolute inset-0 z-[3] hidden cursor-pointer place-items-center bg-[#071014]/70 px-6 text-center text-sm text-white backdrop-blur-sm" type="button">
+              <span class="inline-flex items-center gap-3"><i data-status-icon data-lucide="rotate-cw" class="size-5 animate-spin"></i><span data-status-text>视频加载中...</span></span>
+            </button>
             <div class="media-wash absolute inset-0"></div>
             <div class="fine-grid absolute inset-0 opacity-30"></div>
             <div class="absolute bottom-0 left-0 p-6 md:p-9">

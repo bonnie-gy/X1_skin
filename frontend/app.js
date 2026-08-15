@@ -15,6 +15,10 @@ const sceneIndex = document.querySelector('#sceneIndex');
 const sceneDescription = document.querySelector('#sceneDescription');
 const sceneValues = document.querySelector('#sceneValues');
 const sceneDelivery = document.querySelector('#sceneDelivery');
+const sceneVideoStatus = document.querySelector('#sceneVideoStatus');
+const sceneVideoStatusText = sceneVideoStatus.querySelector('[data-status-text]');
+let activeSceneIndex = 0;
+let sceneLoadId = 0;
 
 function renderProduct(index) {
   const item = products[index];
@@ -43,10 +47,54 @@ function renderProductTabs() {
   renderProduct(0);
 }
 
+function setSceneVideoStatus(state, message) {
+  const icon = sceneVideoStatus.querySelector('[data-status-icon]');
+  sceneVideoStatus.classList.toggle('hidden', state === 'ready');
+  sceneVideoStatus.classList.toggle('grid', state !== 'ready');
+  icon.classList.toggle('animate-spin', state === 'loading');
+  sceneVideoStatusText.textContent = message;
+}
+
+function loadSceneVideo(item, loadId, retry = false) {
+  setSceneVideoStatus('loading', retry ? '正在重新加载视频...' : '视频加载中...');
+  sceneVideo.pause();
+  sceneVideo.removeAttribute('src');
+  sceneVideo.load();
+  sceneVideo.src = item.video;
+  sceneVideo.load();
+  const loadTimeout = window.setTimeout(() => {
+    if (loadId === sceneLoadId && sceneVideo.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) {
+      setSceneVideoStatus('error', '视频加载超时，点击重试');
+    }
+  }, 12000);
+
+  const handleReady = async () => {
+    if (loadId !== sceneLoadId) return;
+    window.clearTimeout(loadTimeout);
+    setSceneVideoStatus('ready', '');
+    try {
+      await sceneVideo.play();
+    } catch (error) {
+      if (error.name !== 'AbortError' && loadId === sceneLoadId) {
+        setSceneVideoStatus('error', '点击播放视频');
+      }
+    }
+  };
+
+  const handleError = () => {
+    window.clearTimeout(loadTimeout);
+    if (loadId === sceneLoadId) setSceneVideoStatus('error', '视频加载失败，点击重试');
+  };
+
+  sceneVideo.addEventListener('canplay', handleReady, { once: true });
+  sceneVideo.addEventListener('error', handleError, { once: true });
+}
+
 function renderScene(index) {
   const item = scenes[index];
   if (!item) return;
 
+  activeSceneIndex = index;
   sceneName.textContent = item.name;
   sceneIndex.textContent = `SCENE 0${index + 1}`;
   sceneDescription.textContent = item.description;
@@ -54,9 +102,8 @@ function renderScene(index) {
     .map(value => `<li class="flex gap-3"><i data-lucide="check" class="mt-0.5 size-4 shrink-0 text-cyan"></i><span>${value}</span></li>`)
     .join('');
   sceneDelivery.textContent = item.delivery;
-  sceneVideo.src = item.video;
-  sceneVideo.load();
-  sceneVideo.play().catch(() => {});
+  sceneLoadId += 1;
+  loadSceneVideo(item, sceneLoadId);
   sceneTabs.querySelectorAll('button').forEach((button, itemIndex) => {
     button.setAttribute('aria-selected', String(itemIndex === index));
   });
@@ -95,6 +142,19 @@ productTabs.addEventListener('click', event => {
 sceneTabs.addEventListener('click', event => {
   const button = event.target.closest('[data-scene]');
   if (button) renderScene(Number(button.dataset.scene));
+});
+
+sceneVideoStatus.addEventListener('click', () => {
+  const item = scenes[activeSceneIndex];
+  if (!item) return;
+  if (sceneVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+    sceneVideo.play()
+      .then(() => setSceneVideoStatus('ready', ''))
+      .catch(() => setSceneVideoStatus('error', '视频无法播放，点击重试'));
+    return;
+  }
+  sceneLoadId += 1;
+  loadSceneVideo(item, sceneLoadId, true);
 });
 
 const root = document.documentElement;
