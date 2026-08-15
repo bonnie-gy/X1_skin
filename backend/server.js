@@ -2,12 +2,16 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
+const {
+  createInquiryRecord,
+  saveInquiryLocally,
+  validateInquiry
+} = require('./inquiries');
 
 const PORT = Number(process.env.PORT || 4173);
 const HOST = process.env.HOST || '127.0.0.1';
 const FRONTEND_DIR = path.resolve(__dirname, '..', 'frontend');
 const CONTENT_FILE = path.join(__dirname, 'content.json');
-const INQUIRY_FILE = path.join(__dirname, 'data', 'inquiries.ndjson');
 const MAX_BODY_SIZE = 64 * 1024;
 
 const mimeTypes = {
@@ -47,24 +51,6 @@ function readRequestBody(request) {
   });
 }
 
-function validateInquiry(input) {
-  const inquiry = {
-    name: String(input.name || '').trim(),
-    company: String(input.company || '').trim(),
-    email: String(input.email || '').trim(),
-    topic: String(input.topic || '').trim(),
-    message: String(input.message || '').trim()
-  };
-
-  if (!inquiry.name || !inquiry.email || !inquiry.message) return { error: '请完整填写姓名、邮箱和需求说明。' };
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inquiry.email)) return { error: '请输入有效的联系邮箱。' };
-  if ([inquiry.name, inquiry.company, inquiry.email, inquiry.topic].some(value => value.length > 120) || inquiry.message.length > 4000) {
-    return { error: '提交内容过长，请精简后重试。' };
-  }
-
-  return { inquiry };
-}
-
 async function handleApi(request, response, pathname) {
   if (request.method === 'GET' && pathname === '/api/health') {
     sendJson(response, 200, { status: 'ok', service: 'x1-website' });
@@ -87,13 +73,8 @@ async function handleApi(request, response, pathname) {
         return true;
       }
 
-      const record = {
-        id: `X1-${Date.now()}`,
-        createdAt: new Date().toISOString(),
-        ...validation.inquiry
-      };
-      await fs.promises.mkdir(path.dirname(INQUIRY_FILE), { recursive: true });
-      await fs.promises.appendFile(INQUIRY_FILE, `${JSON.stringify(record)}\n`, 'utf8');
+      const record = createInquiryRecord(validation.inquiry);
+      await saveInquiryLocally(record);
       sendJson(response, 201, { ok: true, id: record.id, message: '合作需求已提交，我们会尽快与您联系。' });
     } catch (error) {
       const status = error.message === 'REQUEST_TOO_LARGE' ? 413 : 400;
