@@ -1,0 +1,8 @@
+{
+  "name": "com.x1.haptics",
+  "version": "0.1.0",
+  "displayName": "X1 Haptics SDK",
+  "description": "X1 device gateway client for Unity.",
+  "unity": "2021.3",
+  "author": { "name": "X1" }
+}

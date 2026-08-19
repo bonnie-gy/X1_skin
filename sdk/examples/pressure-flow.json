@@ -1,0 +1,20 @@
+{
+  "id": "pressure-to-chest-pulse",
+  "name": "Pressure feedback demo",
+  "enabled": true,
+  "deviceId": "x1-skin-sim-02",
+  "trigger": {
+    "channel": "pressure",
+    "operator": ">=",
+    "value": 0.68
+  },
+  "action": {
+    "deviceId": "x1-vest-sim-01",
+    "zones": ["chest"],
+    "waveform": "pulse",
+    "intensity": 0.82,
+    "durationMs": 180,
+    "frequencyHz": 120
+  },
+  "cooldownMs": 650
+}

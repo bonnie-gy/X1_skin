@@ -7,12 +7,15 @@ const {
   saveInquiryLocally,
   validateInquiry
 } = require('./inquiries');
+const { DeviceGateway } = require('./sdk/gateway');
+const { handleSdkApi } = require('./sdk/api');
 
 const PORT = Number(process.env.PORT || 4173);
 const HOST = process.env.HOST || '127.0.0.1';
 const FRONTEND_DIR = path.resolve(__dirname, '..', 'frontend');
 const CONTENT_FILE = path.join(__dirname, 'content.json');
 const MAX_BODY_SIZE = 64 * 1024;
+const deviceGateway = new DeviceGateway();
 
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
@@ -52,6 +55,8 @@ function readRequestBody(request) {
 }
 
 async function handleApi(request, response, pathname) {
+  if (await handleSdkApi(request, response, pathname, deviceGateway, readRequestBody)) return true;
+
   if (request.method === 'GET' && pathname === '/api/health') {
     sendJson(response, 200, { status: 'ok', service: 'x1-website' });
     return true;

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1012" />
+  <title>X1 SDK 交互实验台</title>
+  <link rel="icon" type="image/svg+xml" href="assets/brand/x1-nano-layer-logo.svg" />
+  <link rel="stylesheet" href="sdk-demo.css?v=20260819-1" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/"><img src="assets/brand/x1-nano-layer-logo.svg" alt="" /><span>X1 SDK LAB</span></a>
+    <div class="gateway-state"><span id="gatewayDot" class="state-dot"></span><span id="gatewayText">正在连接网关</span></div>
+    <a class="icon-link" href="/" title="返回官网" aria-label="返回官网">&#8592;</a>
+  </header>
+
+  <main class="workspace">
+    <aside class="device-pane">
+      <div class="pane-title"><p>DEVICES</p><span id="deviceCount">0</span></div>
+      <div id="deviceList" class="device-list"></div>
+      <div class="transport-note">
+        <span>TRANSPORT</span>
+        <strong id="transportName">simulator</strong>
+        <p>当前使用模拟器。串口、BLE 或 UDP 适配器接入后，上层 API 无需修改。</p>
+      </div>
+    </aside>
+
+    <section class="stage-pane">
+      <div class="stage-head">
+        <div><p>LIVE INTERACTION</p><h1>压力触发触觉反馈</h1></div>
+        <label class="stream-toggle"><input id="streamToggle" type="checkbox" checked /><span></span>模拟数据流</label>
+      </div>
+
+      <div class="stage-grid">
+        <div class="body-stage">
+          <img src="assets/media/x1-cabin.png" alt="X1 触觉穿戴设备" />
+          <button class="zone zone-chest" data-zone="chest" type="button"><span></span>胸部</button>
+          <button class="zone zone-back" data-zone="back" type="button"><span></span>背部</button>
+          <button class="zone zone-left" data-zone="left-arm" type="button"><span></span>左臂</button>
+          <button class="zone zone-right" data-zone="right-arm" type="button"><span></span>右臂</button>
+          <div class="latency"><span>LOOP LATENCY</span><strong id="latencyValue">-- ms</strong></div>
+        </div>
+
+        <div class="signal-pane">
+          <div class="metric-row"><span>PRESSURE</span><strong><span id="pressureValue">0.00</span> <small>N</small></strong></div>
+          <canvas id="signalChart" width="720" height="220" aria-label="实时压力曲线"></canvas>
+          <label class="range-field"><span>手动压力输入</span><output id="pressureOutput">0.40</output><input id="pressureInput" type="range" min="0" max="1" value="0.4" step="0.01" /></label>
+          <button id="sendFrameButton" class="secondary-button" type="button">上传单帧数据</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="flow-pane">
+      <div class="pane-title"><p>ORCHESTRATION</p><span>FLOW 01</span></div>
+      <div class="flow-chain">
+        <div class="flow-node"><span>INPUT</span><strong>pressure</strong><small>遥测通道</small></div>
+        <div class="flow-arrow">&#8595;</div>
+        <div class="flow-node active"><span>CONDITION</span><strong>&gt;= <output id="thresholdOutput">0.68</output></strong><input id="thresholdInput" type="range" min="0.1" max="1" value="0.68" step="0.01" /></div>
+        <div class="flow-arrow">&#8595;</div>
+        <div class="flow-node"><span>ACTION</span><strong id="actionSummary">chest / pulse</strong><small>触觉指令</small></div>
+      </div>
+
+      <div class="control-group">
+        <label><span>输出设备</span><select id="targetDeviceSelect"></select></label>
+        <label><span>反馈区域</span><select id="zoneSelect"><option value="chest">胸部</option><option value="back">背部</option><option value="left-arm">左臂</option><option value="right-arm">右臂</option></select></label>
+        <label><span>波形</span><select id="waveformSelect"><option value="pulse">Pulse</option><option value="click">Click</option><option value="heartbeat">Heartbeat</option><option value="constant">Constant</option></select></label>
+        <label class="range-field"><span>强度</span><output id="intensityOutput">0.82</output><input id="intensityInput" type="range" min="0" max="1" value="0.82" step="0.01" /></label>
+      </div>
+      <button id="saveFlowButton" class="primary-button" type="button">保存并启用编排</button>
+      <button id="playButton" class="secondary-button" type="button">手动发送触觉指令</button>
+
+      <div class="event-console">
+        <div><span>EVENT STREAM</span><button id="clearLogButton" type="button">清空</button></div>
+        <ol id="eventLog"></ol>
+      </div>
+    </aside>
+  </main>
+
+  <script src="sdk/x1-sdk.js?v=20260819-1"></script>
+  <script src="sdk-demo.js?v=20260819-1"></script>
+</body>
+</html>

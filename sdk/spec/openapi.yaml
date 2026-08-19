@@ -1,0 +1,162 @@
+openapi: 3.1.0
+info:
+  title: X1 Device Gateway API
+  version: 0.1.0
+servers:
+  - url: http://127.0.0.1:4173/api/sdk/v1
+paths:
+  /devices:
+    get:
+      operationId: listDevices
+      responses:
+        '200':
+          description: Connected and known devices
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Device' }
+  /devices/{deviceId}/telemetry:
+    get:
+      operationId: getLatestTelemetry
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+      responses:
+        '200':
+          description: Latest device frame, or null before the first frame
+  /telemetry:
+    post:
+      operationId: uploadTelemetry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/TelemetryInput' }
+      responses:
+        '202': { description: Frame accepted and flows evaluated }
+  /devices/{deviceId}/haptics:
+    post:
+      operationId: playHaptics
+      parameters:
+        - $ref: '#/components/parameters/DeviceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/HapticInput' }
+      responses:
+        '202': { description: Command accepted by the gateway }
+  /flows:
+    get:
+      operationId: listFlows
+      responses:
+        '200': { description: Saved flows }
+  /flows/{flowId}:
+    put:
+      operationId: saveFlow
+      parameters:
+        - name: flowId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Flow' }
+      responses:
+        '200': { description: Flow saved }
+  /flows/{flowId}/run:
+    post:
+      operationId: runFlow
+      parameters:
+        - name: flowId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Flow action accepted }
+  /events:
+    get:
+      operationId: listEvents
+      parameters:
+        - name: after
+          in: query
+          schema: { type: integer, minimum: 0 }
+      responses:
+        '200': { description: Ordered gateway events after a cursor }
+components:
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer }
+  parameters:
+    DeviceId:
+      name: deviceId
+      in: path
+      required: true
+      schema: { type: string }
+  schemas:
+    Device:
+      type: object
+      required: [id, name, model, transport, status, capabilities]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        model: { type: string }
+        transport: { type: string, examples: [simulator, serial, ble, udp] }
+        status: { type: string, enum: [connected, disconnected, error] }
+        firmwareVersion: { type: string }
+        capabilities:
+          type: object
+          properties:
+            telemetryChannels: { type: array, items: { type: string } }
+            hapticZones: { type: array, items: { type: string } }
+            waveforms: { type: array, items: { type: string } }
+    TelemetryInput:
+      type: object
+      required: [deviceId, channels]
+      properties:
+        deviceId: { type: string }
+        sequence: { type: integer }
+        timestamp: { type: string, format: date-time }
+        channels:
+          type: object
+          additionalProperties: { type: number }
+        metadata: { type: object, additionalProperties: true }
+    HapticInput:
+      type: object
+      required: [zones]
+      properties:
+        requestId: { type: string }
+        zones: { type: array, minItems: 1, items: { type: string } }
+        waveform: { type: string, enum: [constant, pulse, click, heartbeat] }
+        intensity: { type: number, minimum: 0, maximum: 1 }
+        durationMs: { type: integer, minimum: 10, maximum: 10000 }
+        frequencyHz: { type: integer, minimum: 1, maximum: 1000 }
+        source: { type: string }
+    Flow:
+      type: object
+      required: [trigger, action]
+      properties:
+        name: { type: string }
+        enabled: { type: boolean }
+        deviceId: { type: string, description: Source device ID or wildcard }
+        trigger:
+          type: object
+          required: [channel, operator, value]
+          properties:
+            channel: { type: string }
+            operator: { type: string, enum: ['>', '>=', '<', '<=', '=='] }
+            value: { type: number }
+        action:
+          allOf:
+            - $ref: '#/components/schemas/HapticInput'
+            - type: object
+              properties:
+                deviceId: { type: string, description: Target device ID or $source }
+        cooldownMs: { type: integer, minimum: 0, maximum: 60000 }
+security:
+  - bearerAuth: []
+  - {}

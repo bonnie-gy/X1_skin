@@ -36,6 +36,18 @@ main section[id] { scroll-margin-top: 5rem; }
 .display-title { font-size: 2.85rem; line-height: .94; letter-spacing: 0; }
 .section-title { font-size: 2.1rem; line-height: 1.06; letter-spacing: 0; }
 .text-balance { text-wrap: balance; }
+.brand-mark-shell {
+  display: grid;
+  width: 2.65rem;
+  height: 2.65rem;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: .32rem;
+  border: 1px solid rgba(21,61,111,.16);
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 8px 24px rgba(4,22,31,.12);
+}
+.brand-mark-shell img { width: 100%; height: 100%; object-fit: contain; }
 
 .reveal {
   opacity: 0;

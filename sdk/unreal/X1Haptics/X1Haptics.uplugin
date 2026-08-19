@@ -1,0 +1,11 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.1.0",
+  "FriendlyName": "X1 Haptics",
+  "Description": "X1 device gateway client for Unreal Engine.",
+  "Category": "Input Devices",
+  "Modules": [
+    { "Name": "X1Haptics", "Type": "Runtime", "LoadingPhase": "Default" }
+  ]
+}
