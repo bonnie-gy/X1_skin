@@ -5,7 +5,8 @@ const { URL } = require('url');
 const {
   createInquiryRecord,
   saveInquiryLocally,
-  validateInquiry
+  validateInquiry,
+  deliverInquiryByEmail
 } = require('./inquiries');
 const { DeviceGateway } = require('./sdk/gateway');
 const { handleSdkApi } = require('./sdk/api');
@@ -80,6 +81,13 @@ async function handleApi(request, response, pathname) {
 
       const record = createInquiryRecord(validation.inquiry);
       await saveInquiryLocally(record);
+
+      // 异步发送邮件通知（不阻塞响应）
+      deliverInquiryByEmail(record).catch(error => {
+        console.error('[Email] Failed to send notification:', error.message);
+        // 不影响主流程，仅记录错误
+      });
+
       sendJson(response, 201, { ok: true, id: record.id, message: '合作需求已提交，我们会尽快与您联系。' });
     } catch (error) {
       const status = error.message === 'REQUEST_TOO_LARGE' ? 413 : 400;

@@ -6,9 +6,14 @@
   "scripts": {
     "start": "node backend/server.js",
     "dev": "node --watch backend/server.js",
-    "test": "node --test"
+    "test": "node --test",
+    "test:email": "node backend/test-email.js"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "nodemailer": "^9.0.5"
   }
 }

@@ -26,35 +26,95 @@ function renderProduct(index) {
   const item = products[index];
   if (!item) return;
 
-  productImage.src = item.image;
-  productImage.alt = item.alt;
-  productName.textContent = item.name;
-  productEyebrow.textContent = item.eyebrow;
-  productDescription.textContent = item.description;
-  productStage.textContent = item.stage;
-  productSpecs.innerHTML = item.specs
-    .map(([label, value]) => `<div><dt class="text-xs text-slate-500">${label}</dt><dd class="mt-1 font-semibold">${value}</dd></div>`)
-    .join('');
-  productTabs.querySelectorAll('button').forEach((button, itemIndex) => {
-    button.setAttribute('aria-selected', String(itemIndex === index));
-  });
+  // 添加淡出效果
+  const productContent = document.querySelector('#productName').parentElement.parentElement.parentElement;
+  productContent.style.opacity = '0';
+  productContent.style.transform = 'translateY(10px)';
+  productContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+
+  setTimeout(() => {
+    productImage.src = item.image;
+    productImage.alt = item.alt;
+    productName.textContent = item.name;
+    productEyebrow.textContent = item.eyebrow;
+    productDescription.textContent = item.description;
+    productStage.textContent = item.stage;
+    productSpecs.innerHTML = item.specs
+      .map(([label, value]) => `<div><dt class="text-xs text-slate-500">${label}</dt><dd class="mt-1 font-semibold">${value}</dd></div>`)
+      .join('');
+
+    // 更新产品图片区域
+    const productMain = document.querySelector('#productImage').parentElement;
+    productMain.querySelector('.media-bottom')?.remove();
+    const bottomOverlay = document.createElement('div');
+    bottomOverlay.className = 'media-bottom pointer-events-none absolute inset-x-0 bottom-0 h-1/2';
+    productMain.appendChild(bottomOverlay);
+
+    // 淡入效果
+    productContent.style.opacity = '1';
+    productContent.style.transform = 'translateY(0)';
+
+    productTabs.querySelectorAll('button').forEach((button, itemIndex) => {
+      button.setAttribute('aria-selected', String(itemIndex === index));
+      // 更新选中状态样式
+      if (itemIndex === index) {
+        button.classList.add('border-tech', 'bg-tech/5');
+        button.classList.remove('border-line');
+      } else {
+        button.classList.remove('border-tech', 'bg-tech/5');
+        button.classList.add('border-line');
+      }
+    });
+  }, 150);
 }
 
 function renderProductTabs() {
   productTabs.innerHTML = products.map((item, index) => `
-    <button class="product-thumb lift flex min-h-28 items-center justify-between border border-line bg-white p-5 text-left dark:border-[#283337] dark:bg-[#101719]" type="button" role="tab" aria-selected="${index === 0}" data-product="${index}">
+    <button class="product-thumb lift flex min-h-28 items-center justify-between border border-line bg-white p-5 text-left transition-all duration-200 dark:border-[#283337] dark:bg-[#101719]" type="button" role="tab" aria-selected="${index === 0}" data-product="${index}">
       <span><span class="text-xs text-slate-500">0${index + 1} / ${item.stage}</span><strong class="mt-2 block text-lg">${item.name}</strong></span>
       <i data-lucide="arrow-right" class="size-4 text-slate-400"></i>
     </button>`).join('');
   renderProduct(0);
+
+  // 设置第一个标签的选中状态
+  const firstTab = productTabs.querySelector('button[data-product="0"]');
+  if (firstTab) {
+    firstTab.classList.add('border-tech', 'bg-tech/5');
+  }
 }
 
 function setSceneVideoStatus(state, message) {
   const icon = sceneVideoStatus.querySelector('[data-status-icon]');
-  sceneVideoStatus.classList.toggle('hidden', state === 'ready');
-  sceneVideoStatus.classList.toggle('grid', state !== 'ready');
-  icon.classList.toggle('animate-spin', state === 'loading');
-  sceneVideoStatusText.textContent = message;
+  const text = sceneVideoStatus.querySelector('[data-status-text]');
+
+  // 重置所有状态
+  sceneVideoStatus.classList.remove('hidden', 'grid');
+  icon.classList.remove('animate-spin');
+
+  switch (state) {
+    case 'ready':
+      sceneVideoStatus.classList.add('hidden');
+      break;
+    case 'loading':
+      sceneVideoStatus.classList.add('grid');
+      icon.classList.add('animate-spin');
+      icon.setAttribute('data-lucide', 'loader-2');
+      text.textContent = message || '视频加载中...';
+      break;
+    case 'error':
+      sceneVideoStatus.classList.add('grid');
+      icon.setAttribute('data-lucide', 'refresh-cw');
+      text.textContent = message || '视频加载失败';
+      break;
+    case 'paused':
+      sceneVideoStatus.classList.add('grid');
+      icon.setAttribute('data-lucide', 'play');
+      text.textContent = '点击播放视频';
+      break;
+  }
+
+  // 重新渲染图标
+  lucide.createIcons();
 }
 
 function downloadSceneVideo(item, retry) {
@@ -137,6 +197,11 @@ function renderScene(index) {
   const item = scenes[index];
   if (!item) return;
 
+  // 添加过渡效果
+  const sceneContent = document.querySelector('#sceneName').parentElement.parentElement;
+  sceneContent.style.opacity = '0.7';
+  sceneContent.style.transition = 'opacity 0.2s ease';
+
   activeSceneIndex = index;
   sceneName.textContent = item.name;
   sceneIndex.textContent = `SCENE 0${index + 1}`;
@@ -147,17 +212,36 @@ function renderScene(index) {
   sceneDelivery.textContent = item.delivery;
   sceneLoadId += 1;
   loadSceneVideo(item, sceneLoadId);
+
   sceneTabs.querySelectorAll('button').forEach((button, itemIndex) => {
     button.setAttribute('aria-selected', String(itemIndex === index));
+    // 更新选中状态样式
+    if (itemIndex === index) {
+      button.classList.add('border-tech', 'text-tech', 'bg-tech/5');
+    } else {
+      button.classList.remove('border-tech', 'text-tech', 'bg-tech/5');
+    }
   });
+
+  // 淡入效果
+  setTimeout(() => {
+    sceneContent.style.opacity = '1';
+  }, 200);
+
   lucide.createIcons();
 }
 
 function renderSceneTabs() {
   sceneTabs.innerHTML = scenes.map((item, index) => `
-    <button class="scene-tab shrink-0 border border-line px-4 py-2.5 text-sm text-slate-600 transition-colors hover:border-tech hover:text-tech dark:border-[#344044] dark:text-slate-300" type="button" role="tab" aria-selected="${index === 0}" data-scene="${index}">${item.short}</button>`)
+    <button class="scene-tab shrink-0 border border-line px-4 py-2.5 text-sm text-slate-600 transition-all duration-200 hover:border-tech hover:text-tech dark:border-[#344044] dark:text-slate-300" type="button" role="tab" aria-selected="${index === 0}" data-scene="${index}">${item.short}</button>`)
     .join('');
   renderScene(0);
+
+  // 设置第一个标签的选中状态
+  const firstTab = sceneTabs.querySelector('button[data-scene="0"]');
+  if (firstTab) {
+    firstTab.classList.add('border-tech', 'text-tech', 'bg-tech/5');
+  }
 }
 
 async function loadContent() {
@@ -289,33 +373,110 @@ function initHeroScrollStory() {
 function handleScroll() {
   const y = window.scrollY;
   const onHero = y < hero.offsetTop + hero.offsetHeight - 1;
-  const showBackToTop = y >= hero.offsetTop + hero.offsetHeight;
+  const showBackToTop = y >= hero.offsetTop + hero.offsetHeight + 200; // 增加200px的延迟显示
+
   header.classList.toggle('nav-scrolled', y > 24);
   header.classList.toggle('on-hero', onHero);
-  backToTop.classList.toggle('opacity-0', !showBackToTop);
-  backToTop.classList.toggle('translate-y-3', !showBackToTop);
-  backToTop.classList.toggle('pointer-events-none', !showBackToTop);
+
+  // 返回顶部按钮优化
+  if (showBackToTop) {
+    backToTop.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
+    backToTop.classList.add('opacity-100', 'translate-y-0');
+  } else {
+    backToTop.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
+    backToTop.classList.remove('opacity-100', 'translate-y-0');
+  }
+
+  backToTop.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+
   updateHeroStory();
 }
 
 window.addEventListener('scroll', handleScroll, { passive: true });
 handleScroll();
-backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// 优化返回顶部按钮
+backToTop.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+// 导航链接平滑滚动优化
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      e.preventDefault();
+
+      // 关闭移动端菜单
+      if (window.innerWidth < 1280) {
+        closeMenu();
+      }
+
+      // 计算滚动位置，考虑固定头部高度
+      const headerHeight = document.querySelector('#siteHeader').offsetHeight;
+      const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+
+      // 平滑滚动
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+
+      // 更新 URL hash
+      history.pushState(null, null, targetId);
+    }
+  });
+});
 
 const menuToggle = document.querySelector('#menuToggle');
 const mobileMenu = document.querySelector('#mobileMenu');
 
 function closeMenu() {
-  mobileMenu.classList.add('hidden');
+  mobileMenu.style.maxHeight = '0';
+  mobileMenu.style.opacity = '0';
+  mobileMenu.style.overflow = 'hidden';
+  mobileMenu.style.transition = 'max-height 0.3s ease, opacity 0.3s ease';
+  setTimeout(() => {
+    mobileMenu.classList.add('hidden');
+    mobileMenu.style.maxHeight = '';
+    mobileMenu.style.opacity = '';
+    mobileMenu.style.overflow = '';
+  }, 300);
   menuToggle.setAttribute('aria-expanded', 'false');
 }
 
 menuToggle.addEventListener('click', () => {
   const open = menuToggle.getAttribute('aria-expanded') === 'true';
-  mobileMenu.classList.toggle('hidden', open);
-  menuToggle.setAttribute('aria-expanded', String(!open));
+
+  if (open) {
+    closeMenu();
+  } else {
+    mobileMenu.classList.remove('hidden');
+    // 强制重绘以触发动画
+    mobileMenu.offsetHeight;
+    mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+    mobileMenu.style.opacity = '1';
+    mobileMenu.style.transition = 'max-height 0.3s ease, opacity 0.3s ease';
+    menuToggle.setAttribute('aria-expanded', 'true');
+  }
 });
+
 document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeMenu));
+
+// 点击菜单外部关闭菜单
+document.addEventListener('click', (e) => {
+  if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+    if (menuToggle.getAttribute('aria-expanded') === 'true') {
+      closeMenu();
+    }
+  }
+});
 
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -327,11 +488,279 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
 
-document.querySelectorAll('[data-contact-topic]').forEach(link => {
-  link.addEventListener('click', () => {
-    document.querySelector('#contactForm [name="topic"]').value = link.dataset.contactTopic;
+// 跳过导航链接的键盘导航
+document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+  link.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      link.click();
+    }
   });
 });
+
+// 联系合作按钮点击跳转优化
+document.querySelectorAll('[data-contact-topic]').forEach(link => {
+  link.addEventListener('click', () => {
+    const topic = link.dataset.contactTopic;
+    document.querySelector('#contactForm [name="topic"]').value = topic;
+
+    // 关闭移动端菜单（如果打开）
+    if (window.innerWidth < 1280) {
+      closeMenu();
+    }
+
+    // 平滑滚动到联系表单
+    setTimeout(() => {
+      const contactSection = document.querySelector('#contact');
+      const headerHeight = document.querySelector('#siteHeader').offsetHeight;
+      const targetPosition = contactSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+
+      // 聚焦到姓名字段
+      setTimeout(() => {
+        document.querySelector('#contactForm [name="name"]').focus();
+      }, 500);
+    }, 100);
+  });
+});
+
+// 视频播放控制增强
+sceneVideo.addEventListener('loadeddata', () => {
+  setSceneVideoStatus('ready', '');
+});
+
+sceneVideo.addEventListener('pause', () => {
+  if (sceneVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+    setSceneVideoStatus('paused', '点击播放视频');
+  }
+});
+
+sceneVideo.addEventListener('play', () => {
+  setSceneVideoStatus('ready', '');
+});
+
+// ESC 键关闭移动端菜单
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (!mobileMenu.classList.contains('hidden')) {
+      closeMenu();
+      menuToggle.focus();
+    }
+  }
+});
+
+// 产品图片点击放大功能
+const productImageWrapper = document.querySelector('#productImage').parentElement;
+productImageWrapper.style.cursor = 'pointer';
+productImageWrapper.addEventListener('click', function() {
+  const imgSrc = document.querySelector('#productImage').src;
+  // 创建全屏图片查看器
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  `;
+
+  const img = document.createElement('img');
+  img.src = imgSrc;
+  img.style.cssText = `
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+  `;
+
+  modal.appendChild(img);
+  document.body.appendChild(modal);
+
+  // 触发动画
+  requestAnimationFrame(() => {
+    modal.style.opacity = '1';
+    img.style.transform = 'scale(1)';
+  });
+
+  // 点击关闭
+  modal.addEventListener('click', () => {
+    modal.style.opacity = '0';
+    img.style.transform = 'scale(0.9)';
+    setTimeout(() => modal.remove(), 300);
+  });
+
+  // ESC 关闭
+  const handleEscape = (e) => {
+    if (e.key === 'Escape') {
+      modal.style.opacity = '0';
+      img.style.transform = 'scale(0.9)';
+      setTimeout(() => modal.remove(), 300);
+      document.removeEventListener('keydown', handleEscape);
+    }
+  };
+  document.addEventListener('keydown', handleEscape);
+});
+
+// 添加加载指示器
+window.addEventListener('load', () => {
+  document.body.classList.add('loaded');
+});
+
+// 页面可见性变化时的优化
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    // 页面隐藏时暂停视频和动画
+    sceneVideo?.pause();
+  } else {
+    // 页面可见时恢复
+    if (sceneVideo?.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      sceneVideo.play().catch(() => {});
+    }
+  }
+});
+
+// 性能优化：防抖函数
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// 滚动事件性能优化
+const optimizedHandleScroll = debounce(handleScroll, 10);
+window.removeEventListener('scroll', handleScroll);
+window.addEventListener('scroll', optimizedHandleScroll, { passive: true });
+
+// 新闻卡片交互优化
+document.querySelectorAll('#news article.lift').forEach(card => {
+  // 鼠标悬浮效果
+  card.addEventListener('mouseenter', function() {
+    this.style.transform = 'translateY(-4px)';
+    this.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.08)';
+    this.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+  });
+
+  card.addEventListener('mouseleave', function() {
+    this.style.transform = 'translateY(0)';
+    this.style.boxShadow = 'none';
+  });
+
+  // 点击效果（目前是示例，可添加跳转或展开详情）
+  card.addEventListener('click', function(e) {
+    // 添加点击涟漪效果
+    const ripple = document.createElement('div');
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top - size / 2;
+
+    ripple.style.cssText = `
+      position: absolute;
+      width: ${size}px;
+      height: ${size}px;
+      left: ${x}px;
+      top: ${y}px;
+      background: rgba(23, 111, 223, 0.1);
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 0.6s ease-out;
+      pointer-events: none;
+    `;
+
+    this.style.position = 'relative';
+    this.style.overflow = 'hidden';
+    this.appendChild(ripple);
+
+    setTimeout(() => ripple.remove(), 600);
+  });
+});
+
+// 产品卡片键盘导航支持
+document.querySelectorAll('#productTabs button').forEach((button, index) => {
+  button.addEventListener('keydown', (e) => {
+    const buttons = Array.from(document.querySelectorAll('#productTabs button'));
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIndex = (index + 1) % buttons.length;
+      buttons[nextIndex].focus();
+      renderProduct(nextIndex);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIndex = (index - 1 + buttons.length) % buttons.length;
+      buttons[prevIndex].focus();
+      renderProduct(prevIndex);
+    }
+  });
+});
+
+// 场景标签键盘导航
+document.querySelectorAll('#sceneTabs button').forEach((button, index) => {
+  button.addEventListener('keydown', (e) => {
+    const buttons = Array.from(document.querySelectorAll('#sceneTabs button'));
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIndex = (index + 1) % buttons.length;
+      buttons[nextIndex].focus();
+      renderScene(nextIndex);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIndex = (index - 1 + buttons.length) % buttons.length;
+      buttons[prevIndex].focus();
+      renderScene(prevIndex);
+    }
+  });
+});
+
+// 添加涟漪动画样式
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  #productTabs button[aria-selected="true"] {
+    border-color: #176fdf;
+    background: rgba(23, 111, 223, 0.05);
+  }
+
+  .product-thumb:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  .scene-tab[aria-selected="true"] {
+    border-color: #176fdf;
+    color: #176fdf;
+    background: rgba(23, 111, 223, 0.05);
+  }
+
+  .scene-tab:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+`;
+document.head.appendChild(style);
 
 function initHeroExperience() {
   const canvas = document.querySelector('#heroFlowCanvas');
@@ -481,6 +910,7 @@ function initHeroExperience() {
   frameId = requestAnimationFrame(draw);
 }
 
+// 表单验证和提交优化
 document.querySelector('#contactForm').addEventListener('submit', async event => {
   event.preventDefault();
   const form = event.currentTarget;
@@ -488,9 +918,33 @@ document.querySelector('#contactForm').addEventListener('submit', async event =>
   const status = document.querySelector('#formStatus');
   const payload = Object.fromEntries(new FormData(form).entries());
 
+  // 基本验证
+  if (!payload.name || payload.name.trim().length < 2) {
+    status.textContent = '请输入有效的姓名（至少2个字符）';
+    status.className = 'text-xs text-red-600 dark:text-red-400';
+    form.querySelector('[name="name"]').focus();
+    return;
+  }
+
+  if (!payload.email || !isValidEmail(payload.email)) {
+    status.textContent = '请输入有效的邮箱地址';
+    status.className = 'text-xs text-red-600 dark:text-red-400';
+    form.querySelector('[name="email"]').focus();
+    return;
+  }
+
+  if (!payload.message || payload.message.trim().length < 10) {
+    status.textContent = '需求说明至少需要10个字符';
+    status.className = 'text-xs text-red-600 dark:text-red-400';
+    form.querySelector('[name="message"]').focus();
+    return;
+  }
+
+  // 提交表单
   submitButton.disabled = true;
   submitButton.classList.add('opacity-60', 'cursor-not-allowed');
   status.textContent = '正在提交合作需求...';
+  status.className = 'text-xs text-slate-500';
 
   try {
     const response = await fetch('/api/contact', {
@@ -500,9 +954,16 @@ document.querySelector('#contactForm').addEventListener('submit', async event =>
     });
     const result = await response.json();
     if (!response.ok) throw new Error(result.message || '提交失败');
-    status.textContent = result.message;
-    status.className = 'text-xs text-[#138c83]';
+
+    status.textContent = '✓ ' + result.message;
+    status.className = 'text-xs text-[#138c83] font-semibold';
     form.reset();
+
+    // 3秒后恢复默认状态
+    setTimeout(() => {
+      status.textContent = '信息将提交至项目联系渠道，仅用于本次合作沟通。';
+      status.className = 'text-xs text-slate-500';
+    }, 3000);
   } catch (error) {
     status.textContent = error.message || '提交失败，请稍后重试。';
     status.className = 'text-xs text-red-600 dark:text-red-400';
@@ -510,6 +971,36 @@ document.querySelector('#contactForm').addEventListener('submit', async event =>
     submitButton.disabled = false;
     submitButton.classList.remove('opacity-60', 'cursor-not-allowed');
   }
+});
+
+// 邮箱验证函数
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// 实时表单验证
+document.querySelectorAll('#contactForm input, #contactForm textarea, #contactForm select').forEach(field => {
+  field.addEventListener('blur', () => {
+    const name = field.name;
+    const value = field.value.trim();
+
+    if (field.hasAttribute('required') && !value) {
+      field.classList.add('border-red-500');
+      field.classList.remove('border-line');
+    } else if (name === 'email' && value && !isValidEmail(value)) {
+      field.classList.add('border-red-500');
+      field.classList.remove('border-line');
+    } else {
+      field.classList.remove('border-red-500');
+      field.classList.add('border-line');
+    }
+  });
+
+  // 输入时移除错误状态
+  field.addEventListener('input', () => {
+    field.classList.remove('border-red-500');
+    field.classList.add('border-line');
+  });
 });
 
 lucide.createIcons();
