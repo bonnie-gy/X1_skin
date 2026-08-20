@@ -1003,6 +1003,48 @@ document.querySelectorAll('#contactForm input, #contactForm textarea, #contactFo
   });
 });
 
+// 移动端场景滑动切换
+let touchStartX = 0;
+let touchEndX = 0;
+const sceneContainer = document.querySelector('#sceneTabs')?.closest('section');
+
+if (sceneContainer) {
+  sceneContainer.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  sceneContainer.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+}
+
+function handleSwipe() {
+  const swipeThreshold = 50;
+  const diff = touchStartX - touchEndX;
+
+  if (Math.abs(diff) > swipeThreshold && scenes.length > 1) {
+    if (diff > 0 && activeSceneIndex < scenes.length - 1) {
+      renderScene(activeSceneIndex + 1);
+    } else if (diff < 0 && activeSceneIndex > 0) {
+      renderScene(activeSceneIndex - 1);
+    }
+  }
+}
+
+// 复制邮箱功能
+document.getElementById('copyEmailBtn')?.addEventListener('click', async () => {
+  const email = 'hatchyoung@outlook.com';
+  try {
+    await navigator.clipboard.writeText(email);
+    const status = document.getElementById('copyEmailStatus');
+    status.style.opacity = '1';
+    setTimeout(() => { status.style.opacity = '0'; }, 2000);
+  } catch (err) {
+    console.error('Failed to copy email:', err);
+  }
+});
+
 lucide.createIcons();
 loadContent();
 initHeroScrollStory();

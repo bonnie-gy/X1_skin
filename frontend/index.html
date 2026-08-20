@@ -4,8 +4,56 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="链感：智能触觉穿戴系统，以柔性电子皮肤、模块化触觉硬件与开放 SDK 连接现实动作与数字反馈。" />
-  <meta name="theme-color" content="#eef4f7" />
+  <meta name="keywords" content="触觉穿戴,电子皮肤,柔性传感器,触觉反馈,XR,SDK,智能穿戴,触觉背心" />
+  <meta name="author" content="链感：智能触觉" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://x1-skin.com/" />
+
+  <!-- Open Graph / 社交媒体分享 -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://x1-skin.com/" />
+  <meta property="og:title" content="X1 | 智能触觉穿戴系统" />
+  <meta property="og:description" content="链感：智能触觉穿戴系统，以柔性电子皮肤、模块化触觉硬件与开放 SDK 连接现实动作与数字反馈。" />
+  <meta property="og:image" content="https://x1-skin.com/assets/media/x1-skin.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="zh_CN" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://x1-skin.com/" />
+  <meta name="twitter:title" content="X1 | 智能触觉穿戴系统" />
+  <meta name="twitter:description" content="链感：智能触觉穿戴系统，以柔性电子皮肤、模块化触觉硬件与开放 SDK 连接现实动作与数字反馈。" />
+  <meta name="twitter:image" content="https://x1-skin.com/assets/media/x1-skin.png" />
+
+  <!-- Favicon -->
   <link rel="icon" href="assets/brand/x1-nano-layer-logo.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/brand/x1-nano-layer-logo.svg" />
+
+  <!-- 结构化数据 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "链感：智能触觉",
+    "description": "智能触觉穿戴系统，以柔性电子皮肤、模块化触觉硬件与开放 SDK 连接现实动作与数字反馈。",
+    "url": "https://x1-skin.com",
+    "email": "hatchyoung@outlook.com",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "hatchyoung@outlook.com",
+      "contactType": "business",
+      "availableLanguage": ["Chinese", "English"]
+    }
+  }
+  </script>
+
+  <!-- 性能优化：预连接外部资源 -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com" />
+  <link rel="dns-prefetch" href="https://unpkg.com" />
+
   <title>X1 | 智能触觉穿戴系统</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -32,6 +80,11 @@
   <link rel="stylesheet" href="styles.css?v=20260815-6" />
 </head>
 <body class="bg-mist text-ink antialiased transition-colors duration-300 dark:bg-[#071116] dark:text-[#edf7f6] [--nav-bg:#eef4f7] [--nav-border:#cad9df] [--timeline-ring:#eef4f7] dark:[--nav-bg:#071116] dark:[--nav-border:#26383d] dark:[--timeline-ring:#071116]">
+  <!-- 跳过导航链接（无障碍访问） -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded focus:bg-tech focus:px-4 focus:py-2 focus:text-white focus:shadow-lg">
+    跳到主要内容
+  </a>
+
   <header id="siteHeader" class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-all duration-300">
     <div class="section-shell flex h-16 items-center justify-between lg:h-[4.5rem]">
       <a href="#home" class="flex items-center gap-3" aria-label="X1 首页">
@@ -78,7 +131,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <section id="home" class="hero-experience relative text-white" data-story-phase="0">
       <div class="hero-sticky flex min-h-[100svh] overflow-hidden">
         <video id="heroStoryVideo" class="hero-story-video" muted playsinline preload="auto" poster="assets/media/x1-skin.png" aria-hidden="true">
@@ -196,7 +249,7 @@
         <div class="mt-12 grid gap-4 lg:grid-cols-[1.55fr_.7fr]">
           <article class="reveal overflow-hidden border border-line bg-white dark:border-[#283337] dark:bg-[#101719]">
             <div class="media-zoom relative aspect-[16/10] overflow-hidden bg-[#071014]">
-              <img id="productImage" src="assets/media/x1-skin.png" alt="X1 柔性电子皮肤产品概念图" class="h-full w-full object-cover" />
+              <img id="productImage" src="assets/media/x1-skin.png" alt="X1 柔性电子皮肤产品概念图" class="h-full w-full object-cover" loading="lazy" />
               <div class="media-bottom pointer-events-none absolute inset-x-0 bottom-0 h-1/2"></div>
               <div class="absolute bottom-5 left-5 flex items-center gap-2 text-xs text-white/80">
                 <span id="productStage" class="bg-white/15 px-2.5 py-1 backdrop-blur">概念验证</span>
@@ -464,7 +517,13 @@
               <span class="grid size-10 place-items-center border border-line dark:border-[#344044]">
                 <i data-lucide="mail" class="size-4"></i>
               </span>
-              <a href="mailto:hatchyoung@outlook.com" class="transition-colors hover:text-tech">hatchyoung@outlook.com</a>
+              <div class="flex flex-1 items-center gap-2">
+                <a href="mailto:hatchyoung@outlook.com" class="flex-1 transition-colors hover:text-tech">hatchyoung@outlook.com</a>
+                <button id="copyEmailBtn" class="grid size-8 place-items-center rounded border border-line transition-colors hover:border-tech hover:text-tech" type="button" aria-label="复制邮箱地址" title="复制邮箱地址">
+                  <i data-lucide="copy" class="size-3.5"></i>
+                </button>
+                <span id="copyEmailStatus" class="text-xs text-cyan opacity-0 transition-opacity" aria-live="polite">已复制</span>
+              </div>
             </div>
             <div class="flex items-center gap-4">
               <span class="grid size-10 place-items-center border border-line dark:border-[#344044]">
@@ -475,16 +534,47 @@
           </div>
         </div>
 
-        <form id="contactForm" class="reveal grid gap-5 border-t-2 border-ink bg-white p-6 dark:border-white dark:bg-[#101719] md:grid-cols-2 md:p-8">
+        <form id="contactForm" class="reveal grid gap-5 border-t-2 border-ink bg-white p-6 dark:border-white dark:bg-[#101719] md:grid-cols-2 md:p-8" novalidate>
           <label class="hidden" aria-hidden="true"><span>网站</span><input name="website" tabindex="-1" autocomplete="off" /></label>
-          <label class="grid gap-2 text-sm"><span>姓名 / 称呼</span><input name="name" required class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请输入" /></label>
-          <label class="grid gap-2 text-sm"><span>公司 / 机构</span><input name="company" class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请输入" /></label>
-          <label class="grid gap-2 text-sm"><span>联系邮箱</span><input name="email" type="email" required class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="name@company.com" /></label>
-          <label class="grid gap-2 text-sm"><span>合作方向</span><select name="topic" class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044] dark:bg-[#101719]"><option>产品与 SDK</option><option>场景试点</option><option>材料与院企合作</option><option>融资沟通</option><option>媒体咨询</option></select></label>
-          <label class="grid gap-2 text-sm md:col-span-2"><span>需求说明</span><textarea name="message" required rows="5" class="resize-none border border-line bg-transparent p-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请简要说明合作需求"></textarea></label>
+          <label class="grid gap-2 text-sm" for="contactName">
+            <span>姓名 / 称呼 <span class="text-red-500" aria-hidden="true">*</span></span>
+            <input id="contactName" name="name" required class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请输入" aria-describedby="nameHint" />
+            <small id="nameHint" class="text-xs text-slate-400">至少 2 个字符</small>
+          </label>
+          <label class="grid gap-2 text-sm" for="contactCompany">
+            <span>公司 / 机构</span>
+            <input id="contactCompany" name="company" class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请输入" />
+          </label>
+          <label class="grid gap-2 text-sm" for="contactEmail">
+            <span>联系邮箱 <span class="text-red-500" aria-hidden="true">*</span></span>
+            <input id="contactEmail" name="email" type="email" required class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="name@company.com" aria-describedby="emailHint" />
+            <small id="emailHint" class="text-xs text-slate-400">用于接收回复</small>
+          </label>
+          <label class="grid gap-2 text-sm" for="contactTopic">
+            <span>合作方向</span>
+            <select id="contactTopic" name="topic" class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044] dark:bg-[#101719]">
+              <option>产品与 SDK</option>
+              <option>场景试点</option>
+              <option>材料与院企合作</option>
+              <option>融资沟通</option>
+              <option>媒体咨询</option>
+            </select>
+          </label>
+          <label class="grid gap-2 text-sm md:col-span-2" for="contactMessage">
+            <span>需求说明 <span class="text-red-500" aria-hidden="true">*</span></span>
+            <textarea id="contactMessage" name="message" required rows="5" class="resize-none border border-line bg-transparent p-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请简要说明合作需求" aria-describedby="messageHint"></textarea>
+            <small id="messageHint" class="text-xs text-slate-400">至少 10 个字符</small>
+          </label>
           <div class="flex flex-col gap-3 md:col-span-2 sm:flex-row sm:items-center sm:justify-between">
-            <p id="formStatus" class="text-xs text-slate-500">信息将提交至项目联系渠道，仅用于本次合作沟通。</p>
-            <button class="inline-flex h-12 items-center justify-center gap-2 bg-ink px-6 text-sm font-semibold text-white transition-colors hover:bg-tech dark:bg-white dark:text-ink dark:hover:bg-cyan" type="submit">发送合作需求 <i data-lucide="send" class="size-4"></i></button>
+            <p id="formStatus" class="text-xs text-slate-500" aria-live="polite" aria-atomic="true">信息将提交至项目联系渠道，仅用于本次合作沟通。</p>
+            <button class="inline-flex h-12 items-center justify-center gap-2 bg-ink px-6 text-sm font-semibold text-white transition-all hover:bg-tech active:scale-95 dark:bg-white dark:text-ink dark:hover:bg-cyan" type="submit">
+              <span id="submitText">发送合作需求</span>
+              <i data-lucide="send" class="size-4" id="submitIcon"></i>
+              <svg id="submitSpinner" class="hidden size-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke-opacity="1"></path>
+              </svg>
+            </button>
           </div>
         </form>
       </div>

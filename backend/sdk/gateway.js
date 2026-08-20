@@ -39,7 +39,10 @@ const DEFAULT_DEVICES = [
 
 class DeviceGateway {
   constructor() {
-    const simulator = new SimulatorTransport(DEFAULT_DEVICES);
+    const simulator = new SimulatorTransport(DEFAULT_DEVICES, {
+      latencyMs: 35,
+      jitterMs: 15
+    });
     this.transports = new Map([[simulator.name, simulator]]);
     this.devices = new Map(simulator.listDevices().map(device => [device.id, device]));
     this.telemetry = new Map();

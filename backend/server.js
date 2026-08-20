@@ -18,6 +18,33 @@ const CONTENT_FILE = path.join(__dirname, 'content.json');
 const MAX_BODY_SIZE = 64 * 1024;
 const deviceGateway = new DeviceGateway();
 
+// 限流配置
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW = 60000; // 1分钟
+const RATE_LIMIT_MAX = 5; // 最多5次请求
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip) || { count: 0, resetTime: now + RATE_LIMIT_WINDOW };
+
+  if (now > record.resetTime) {
+    record.count = 0;
+    record.resetTime = now + RATE_LIMIT_WINDOW;
+  }
+
+  record.count += 1;
+  rateLimitMap.set(ip, record);
+
+  return record.count <= RATE_LIMIT_MAX;
+}
+
+function getClientIp(request) {
+  return request.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
+         request.headers['x-real-ip'] ||
+         request.connection.remoteAddress ||
+         'unknown';
+}
+
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -34,7 +61,11 @@ const mimeTypes = {
 function sendJson(response, statusCode, payload) {
   response.writeHead(statusCode, {
     'Content-Type': 'application/json; charset=utf-8',
-    'Cache-Control': 'no-store'
+    'Cache-Control': 'no-store',
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'X-XSS-Protection': '1; mode=block',
+    'Referrer-Policy': 'strict-origin-when-cross-origin'
   });
   response.end(JSON.stringify(payload));
 }
@@ -71,6 +102,13 @@ async function handleApi(request, response, pathname) {
 
   if (request.method === 'POST' && pathname === '/api/contact') {
     try {
+      const clientIp = getClientIp(request);
+
+      if (!checkRateLimit(clientIp)) {
+        sendJson(response, 429, { ok: false, message: '请求过于频繁，请稍后再试。' });
+        return true;
+      }
+
       const rawBody = await readRequestBody(request);
       const parsed = JSON.parse(rawBody || '{}');
       const validation = validateInquiry(parsed);
@@ -138,7 +176,9 @@ async function serveStatic(request, response, pathname) {
         'Content-Length': end - start + 1,
         'Content-Range': `bytes ${start}-${end}/${stat.size}`,
         'Accept-Ranges': 'bytes',
-        'Cache-Control': cacheControl
+        'Cache-Control': cacheControl,
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY'
       });
       fs.createReadStream(filePath, { start, end }).pipe(response);
       return;
@@ -148,7 +188,9 @@ async function serveStatic(request, response, pathname) {
       'Content-Type': mimeTypes[extension] || 'application/octet-stream',
       'Content-Length': stat.size,
       'Accept-Ranges': extension === '.mp4' ? 'bytes' : 'none',
-      'Cache-Control': cacheControl
+      'Cache-Control': cacheControl,
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY'
     });
     fs.createReadStream(filePath).pipe(response);
   } catch {

@@ -1,6 +1,6 @@
 'use strict';
 
-const sdk = new X1.Client({ timeoutMs: 4000 });
+const sdk = new X1.Client({ timeoutMs: 800 });
 const elements = {
   gatewayDot: document.querySelector('#gatewayDot'),
   gatewayText: document.querySelector('#gatewayText'),
@@ -36,7 +36,22 @@ let eventCursor = 0;
 let uploadPending = false;
 let samples = Array(90).fill(0);
 
+let chartDirty = false;
+let lastUploadTime = 0;
+const lastLogTime = new Map();
+const LOG_THROTTLE = 250;
+
 function log(message, type) {
+  const key = `${type || 'info'}:${message}`;
+  const now = Date.now();
+  if (lastLogTime.get(key) && now - lastLogTime.get(key) < LOG_THROTTLE) return;
+  lastLogTime.set(key, now);
+  // Evict stale throttle entries
+  if (lastLogTime.size > 200) {
+    for (const [k, t] of lastLogTime) {
+      if (now - t > 5000) lastLogTime.delete(k);
+    }
+  }
   const item = document.createElement('li');
   item.className = type || '';
   item.textContent = `${new Date().toLocaleTimeString('zh-CN', { hour12: false })}  ${message}`;
@@ -67,6 +82,13 @@ function renderTargetDevices() {
   ).join('');
   elements.targetDeviceSelect.value = targetDeviceId;
   renderZones();
+}
+
+function updateFlowTitle(flow) {
+  const flowTitle = document.querySelector('#flowName');
+  if (flowTitle && flow) {
+    flowTitle.textContent = flow.name || flow.id;
+  }
 }
 
 function renderZones() {
@@ -125,6 +147,16 @@ function drawChart() {
   context.stroke();
 }
 
+function scheduleChartRedraw() {
+  if (!chartDirty) {
+    chartDirty = true;
+    requestAnimationFrame(() => {
+      chartDirty = false;
+      drawChart();
+    });
+  }
+}
+
 function flashZones(zones) {
   zones.forEach(zone => {
     const button = document.querySelector(`[data-zone="${zone}"]`);
@@ -136,6 +168,9 @@ function flashZones(zones) {
 
 async function uploadFrame(pressure) {
   if (!selectedDeviceId || uploadPending) return;
+  const now = performance.now();
+  if (now - lastUploadTime < 140) return;
+  lastUploadTime = now;
   uploadPending = true;
   const startedAt = performance.now();
   try {
@@ -152,6 +187,7 @@ async function uploadFrame(pressure) {
     });
     elements.latencyValue.textContent = `${Math.round(performance.now() - startedAt)} ms`;
     setGatewayOnline(true, '本地设备网关在线');
+    pollEvents();
     return frame;
   } catch (error) {
     setGatewayOnline(false, '设备网关离线');
@@ -198,7 +234,9 @@ async function saveFlow() {
       },
       cooldownMs: 650
     });
+    updateFlowTitle({ id: 'pressure-to-chest-pulse', name: 'Pressure feedback demo' });
     log('编排已保存并启用', 'command');
+    pollEvents();
   } catch (error) {
     log(`${error.code || 'ERROR'} ${error.message}`, 'error');
   } finally {
@@ -217,6 +255,7 @@ async function playHaptics(zone) {
       frequencyHz: 120,
       source: 'sdk-browser-demo'
     });
+    pollEvents();
   } catch (error) {
     log(`${error.code || 'ERROR'} ${error.message}`, 'error');
   } finally {
@@ -233,6 +272,7 @@ async function initialize() {
     renderTargetDevices();
     const flows = await sdk.flows.list();
     const flow = flows.find(item => item.id === 'pressure-to-chest-pulse');
+    updateFlowTitle(flow);
     if (flow) {
       if (flow.deviceId !== '*' && devices.some(device => device.id === flow.deviceId)) {
         selectedDeviceId = flow.deviceId;
@@ -261,7 +301,7 @@ elements.deviceList.addEventListener('click', event => {
   renderDevices();
 });
 elements.pressureInput.addEventListener('input', updateControlLabels);
-elements.thresholdInput.addEventListener('input', () => { updateControlLabels(); drawChart(); });
+elements.thresholdInput.addEventListener('input', () => { updateControlLabels(); scheduleChartRedraw(); });
 elements.intensityInput.addEventListener('input', updateControlLabels);
 elements.targetDeviceSelect.addEventListener('change', () => {
   targetDeviceId = elements.targetDeviceSelect.value;
@@ -292,12 +332,11 @@ setInterval(() => {
   elements.pressureValue.textContent = pressure.toFixed(2);
   samples.push(pressure);
   samples = samples.slice(-90);
-  drawChart();
+  scheduleChartRedraw();
   if (elements.streamToggle.checked) uploadFrame(pressure);
 }, 180);
-setInterval(pollEvents, 360);
 window.addEventListener('resize', drawChart);
 
 updateControlLabels();
-drawChart();
+scheduleChartRedraw();
 initialize();
