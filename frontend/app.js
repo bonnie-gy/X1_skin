@@ -1033,16 +1033,20 @@ function handleSwipe() {
 }
 
 // 复制邮箱功能
-document.getElementById('copyEmailBtn')?.addEventListener('click', async () => {
-  const email = 'hatchyoung@outlook.com';
-  try {
-    await navigator.clipboard.writeText(email);
-    const status = document.getElementById('copyEmailStatus');
-    status.style.opacity = '1';
-    setTimeout(() => { status.style.opacity = '0'; }, 2000);
-  } catch (err) {
-    console.error('Failed to copy email:', err);
-  }
+document.querySelectorAll('.copy-email-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const email = btn.dataset.email;
+    if (!email) return;
+    try {
+      await navigator.clipboard.writeText(email);
+      const status = document.getElementById('copyEmailStatus');
+      status.textContent = '已复制';
+      status.style.opacity = '1';
+      setTimeout(() => { status.style.opacity = '0'; }, 2000);
+    } catch (err) {
+      console.error('Failed to copy email:', err);
+    }
+  });
 });
 
 lucide.createIcons();

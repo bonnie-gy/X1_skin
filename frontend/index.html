@@ -513,18 +513,31 @@
           <h2 class="section-title font-semibold text-balance">共同定义下一代身体交互</h2>
           <p class="mt-6 max-w-md text-sm leading-7 text-slate-600 dark:text-slate-400">欢迎 XR 内容团队、行业集成商、材料与院企合作伙伴及投资机构交流合作。</p>
           <div class="mt-10 grid gap-5 text-sm">
-            <div class="flex items-center gap-4">
-              <span class="grid size-10 place-items-center border border-line dark:border-[#344044]">
-                <i data-lucide="mail" class="size-4"></i>
-              </span>
-              <div class="flex flex-1 items-center gap-2">
-                <a href="mailto:hatchyoung@outlook.com" class="flex-1 transition-colors hover:text-tech">hatchyoung@outlook.com</a>
-                <button id="copyEmailBtn" class="grid size-8 place-items-center rounded border border-line transition-colors hover:border-tech hover:text-tech" type="button" aria-label="复制邮箱地址" title="复制邮箱地址">
-                  <i data-lucide="copy" class="size-3.5"></i>
-                </button>
-                <span id="copyEmailStatus" class="text-xs text-cyan opacity-0 transition-opacity" aria-live="polite">已复制</span>
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-4">
+                <span class="grid size-10 place-items-center border border-line dark:border-[#344044]">
+                  <i data-lucide="mail" class="size-4"></i>
+                </span>
+                <div class="flex flex-1 items-center gap-2">
+                  <a href="mailto:hatchyoung@outlook.com" class="flex-1 transition-colors hover:text-tech">hatchyoung@outlook.com</a>
+                  <button data-email="hatchyoung@outlook.com" class="copy-email-btn grid size-8 place-items-center rounded border border-line transition-colors hover:border-tech hover:text-tech" type="button" aria-label="复制邮箱地址" title="复制邮箱地址">
+                    <i data-lucide="copy" class="size-3.5"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="grid size-10 place-items-center border border-line dark:border-[#344044]">
+                  <i data-lucide="mail" class="size-4"></i>
+                </span>
+                <div class="flex flex-1 items-center gap-2">
+                  <a href="mailto:guoy38529@gmail.com" class="flex-1 transition-colors hover:text-tech">guoy38529@gmail.com</a>
+                  <button data-email="guoy38529@gmail.com" class="copy-email-btn grid size-8 place-items-center rounded border border-line transition-colors hover:border-tech hover:text-tech" type="button" aria-label="复制邮箱地址" title="复制邮箱地址">
+                    <i data-lucide="copy" class="size-3.5"></i>
+                  </button>
+                </div>
               </div>
             </div>
+            <span id="copyEmailStatus" class="text-xs text-cyan opacity-0 transition-opacity" aria-live="polite">已复制</span>
             <div class="flex items-center gap-4">
               <span class="grid size-10 place-items-center border border-line dark:border-[#344044]">
                 <i data-lucide="clock" class="size-4"></i>
