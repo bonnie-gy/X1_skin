@@ -460,12 +460,23 @@
           <h2 class="section-title font-semibold text-balance">共同定义下一代身体交互</h2>
           <p class="mt-6 max-w-md text-sm leading-7 text-slate-600 dark:text-slate-400">欢迎 XR 内容团队、行业集成商、材料与院企合作伙伴及投资机构交流合作。</p>
           <div class="mt-10 grid gap-5 text-sm">
-            <div class="flex items-center gap-4"><span class="grid size-10 place-items-center border border-line dark:border-[#344044]"><i data-lucide="messages-square" class="size-4"></i></span><span>商务联系方式待主体确认后公开</span></div>
-            <div class="flex items-center gap-4"><span class="grid size-10 place-items-center border border-line dark:border-[#344044]"><i data-lucide="map-pin" class="size-4"></i></span><span>中国 · 商务地址待补充</span></div>
+            <div class="flex items-center gap-4">
+              <span class="grid size-10 place-items-center border border-line dark:border-[#344044]">
+                <i data-lucide="mail" class="size-4"></i>
+              </span>
+              <a href="mailto:hatchyoung@outlook.com" class="transition-colors hover:text-tech">hatchyoung@outlook.com</a>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="grid size-10 place-items-center border border-line dark:border-[#344044]">
+                <i data-lucide="clock" class="size-4"></i>
+              </span>
+              <span>工作日 24 小时内回复</span>
+            </div>
           </div>
         </div>
 
         <form id="contactForm" class="reveal grid gap-5 border-t-2 border-ink bg-white p-6 dark:border-white dark:bg-[#101719] md:grid-cols-2 md:p-8">
+          <label class="hidden" aria-hidden="true"><span>网站</span><input name="website" tabindex="-1" autocomplete="off" /></label>
           <label class="grid gap-2 text-sm"><span>姓名 / 称呼</span><input name="name" required class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请输入" /></label>
           <label class="grid gap-2 text-sm"><span>公司 / 机构</span><input name="company" class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请输入" /></label>
           <label class="grid gap-2 text-sm"><span>联系邮箱</span><input name="email" type="email" required class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="name@company.com" /></label>

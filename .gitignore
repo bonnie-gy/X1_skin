@@ -16,6 +16,7 @@ backend/data/
 # 日志文件
 *.log
 .playwright-mcp/
+.wrangler/
 
 # 系统文件
 .DS_Store

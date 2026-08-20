@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npm install *)",
-      "Bash(node test-email.js)"
+      "Bash(node test-email.js)",
+      "Bash(Invoke-RestMethod -Uri \"http://127.0.0.1:4173/api/contact\" -Method POST -ContentType \"application/json\" -Body '{\"name\":\"测试用户\",\"company\":\"测试公司\",\"email\":\"test@example.com\",\"topic\":\"产品与SDK\",\"message\":\"测试表单提交功能\"}')"
     ]
   }
 }

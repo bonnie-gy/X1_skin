@@ -191,6 +191,30 @@ webhook 收到的数据格式为：
 }
 ```
 
+## Cloudflare Workers 部署
+
+生产站点通过 `wrangler.jsonc` 部署到 Cloudflare Worker `x1-skin`。Worker 同时提供 `frontend/` 静态资源、`/api/health`、`/api/content` 和 `/api/contact`。
+
+```powershell
+npm install
+npm test
+npm run cf:deploy
+```
+
+联系表单在 Workers 环境中使用 Resend HTTPS API，不使用 SMTP。发布前需要在 Resend 验证发件域名，并给 Worker 配置以下 Secret：
+
+```powershell
+npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put CONTACT_EMAIL
+npx wrangler secret put CONTACT_FROM_EMAIL
+```
+
+- `RESEND_API_KEY`：Resend API Key
+- `CONTACT_EMAIL`：接收询盘的邮箱，例如 `hatchyoung@outlook.com`
+- `CONTACT_FROM_EMAIL`：Resend 已验证的发件人，例如 `X1 Website <contact@example.com>`
+
+Secret 配置完成后再次运行 `npm run cf:deploy`。邮件服务未配置或发送失败时，接口会返回错误，不会向用户误报发送成功。
+
 本地通过 `npm start` 运行时，联系表单仍写入 `backend/data/inquiries.ndjson`。
 
 ## 正式发布前

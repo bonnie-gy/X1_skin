@@ -6,8 +6,10 @@
   "scripts": {
     "start": "node backend/server.js",
     "dev": "node --watch backend/server.js",
-    "test": "node --test",
-    "test:email": "node backend/test-email.js"
+    "test": "node --test \"test/*.test.js\" \"test/*.test.mjs\"",
+    "test:email": "node backend/test-email.js",
+    "cf:dev": "wrangler dev",
+    "cf:deploy": "wrangler deploy"
   },
   "engines": {
     "node": ">=18"
@@ -15,5 +17,8 @@
   "dependencies": {
     "dotenv": "^17.4.2",
     "nodemailer": "^9.0.5"
+  },
+  "devDependencies": {
+    "wrangler": "^4.124.0"
   }
 }
