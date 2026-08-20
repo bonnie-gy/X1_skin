@@ -152,48 +152,28 @@ SMTP_PASS=your-qq-smtp-code
 - `/api/health`：应返回 `{"status":"ok","service":"x1-website"}`
 - `/api/content`：应返回产品和行业场景数据
 
-### ⚠️ 重要说明：邮件功能
+### 邮件环境变量
 
-**Vercel Serverless 函数不支持 SMTP 连接**。如需在 Vercel 部署时使用邮件功能，请：
+Vercel Serverless 函数不使用 SMTP，而是通过 Resend HTTPS API 发送联系表单通知。在 Vercel 项目的 Production Environment Variables 中配置：
 
-1. **使用专业邮件 API 服务**（推荐）：
-   - SendGrid
-   - Mailgun
-   - AWS SES
+- `RESEND_API_KEY`：Resend Sending access API Key
+- `CONTACT_EMAIL`：接收询盘的邮箱
+- `CONTACT_FROM_EMAIL`：Resend 允许的发件人地址
 
-2. **或仅在本地服务器运行邮件功能**，Vercel 部署仅用于展示官网。
+可以通过 Vercel Dashboard 配置，也可以运行：
 
-配置邮件通知请参考本 README 的"邮件通知配置"部分。
-
-### 环境变量配置
-
-在 Vercel 项目的 Environment Variables 中配置：
-
-- `CONTACT_WEBHOOK_URL`：必填，接收询盘 JSON 的 HTTPS 地址（邮件功能暂不可用）
-- `CONTACT_WEBHOOK_TOKEN`：可选，配置后请求会携带 `Authorization: Bearer <token>`
-
-**注意：** Vercel 部署目前只支持 Webhook 通知，不支持 SMTP 邮件发送。
-
-webhook 收到的数据格式为：
-
-```json
-{
-  "event": "x1.contact.created",
-  "inquiry": {
-    "id": "X1-...",
-    "createdAt": "...",
-    "name": "...",
-    "company": "...",
-    "email": "...",
-    "topic": "...",
-    "message": "..."
-  }
-}
+```powershell
+npx vercel env add RESEND_API_KEY production --sensitive
+npx vercel env add CONTACT_EMAIL production --sensitive
+npx vercel env add CONTACT_FROM_EMAIL production --sensitive
+npx vercel --prod
 ```
 
-## Cloudflare Workers 部署
+只有 Resend 明确返回邮件 ID 后，`POST /api/contact` 才会返回成功。未配置或投递请求失败时，接口返回错误，前端保留用户填写的内容。
 
-生产站点通过 `wrangler.jsonc` 部署到 Cloudflare Worker `x1-skin`。Worker 同时提供 `frontend/` 静态资源、`/api/health`、`/api/content` 和 `/api/contact`。
+## Cloudflare Workers 备用部署
+
+项目也可以通过 `wrangler.jsonc` 部署到 Cloudflare Worker `x1-skin`。Worker 同时提供 `frontend/` 静态资源、`/api/health`、`/api/content` 和 `/api/contact`。
 
 ```powershell
 npm install
@@ -214,6 +194,8 @@ npx wrangler secret put CONTACT_FROM_EMAIL
 - `CONTACT_FROM_EMAIL`：Resend 已验证的发件人，例如 `X1 Website <contact@example.com>`
 
 Secret 配置完成后再次运行 `npm run cf:deploy`。邮件服务未配置或发送失败时，接口会返回错误，不会向用户误报发送成功。
+
+未验证自有域名时，Resend 的测试发件人 `onboarding@resend.dev` 只能向 Resend 账号邮箱发送。当前部署暂时发送到 `guoy38529@gmail.com`；验证自有域名后才能稳定切换到其他收件地址。
 
 本地通过 `npm start` 运行时，联系表单仍写入 `backend/data/inquiries.ndjson`。
 
