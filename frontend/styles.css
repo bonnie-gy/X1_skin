@@ -640,36 +640,3 @@ html.dark .product-thumb[aria-selected="true"] { background: rgba(22,42,50,.94) 
   .hero-content { opacity: 1 !important; transform: none !important; }
   .hero-product { opacity: 1 !important; transform: none !important; }
 }
-
-/* 预售弹窗 */
-.presale-modal {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-.presale-modal.flex {
-  opacity: 1;
-  visibility: visible;
-}
-.presale-modal-overlay {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.presale-modal.flex .presale-modal-overlay {
-  opacity: 1;
-}
-.presale-modal-content {
-  transform: translateY(20px) scale(0.97);
-  opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-.presale-modal.flex .presale-modal-content {
-  transform: translateY(0) scale(1);
-  opacity: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .presale-modal { transition: none; }
-  .presale-modal-content { transition: none; }
-  .presale-modal-overlay { transition: none; }
-}

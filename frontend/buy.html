@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="X1 智能触觉产品预订、企业采购与试用申请。" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://x1-skin.com/buy.html" />
+  <link rel="icon" href="assets/brand/x1-nano-layer-logo.svg" type="image/svg+xml" />
+  <title>X1 产品预订与采购</title>
+  <script>
+    (() => {
+      const stored = localStorage.getItem('x1-theme');
+      if (stored === 'dark' || (!stored && matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <link rel="stylesheet" href="buy.css?v=20260821-1" />
+  <script src="buy.js?v=20260821-1" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+  <header class="sales-header">
+    <div class="sales-shell header-inner">
+      <a class="brand" href="/" aria-label="返回 X1 首页">
+        <span class="brand-mark"><img src="assets/brand/x1-nano-layer-logo.svg" alt="" /></span>
+        <span><strong>链感：智能触觉</strong><small>HAPTIC SYSTEMS</small></span>
+      </a>
+      <div class="header-actions">
+        <a class="back-link" href="/#products"><i data-lucide="arrow-left"></i><span>返回产品页</span></a>
+        <button id="themeToggle" class="icon-button" type="button" aria-label="切换深浅色模式" title="切换深浅色模式">
+          <i class="theme-sun" data-lucide="sun"></i>
+          <i class="theme-moon" data-lucide="moon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="sales-intro">
+      <div class="sales-shell intro-inner">
+        <div>
+          <p class="eyebrow">X1 OFFICIAL SALES</p>
+          <h1>产品预订与采购</h1>
+        </div>
+        <p>个人预订、企业采购和开发者试用采用不同流程。选择产品后，页面会显示对应的价格、交付阶段与下一步。</p>
+      </div>
+    </section>
+
+    <section class="sales-shell selector-section" aria-labelledby="productSelectorTitle">
+      <div class="selector-heading">
+        <p id="productSelectorTitle">选择产品</p>
+        <span id="contentStatus" role="status">正在加载产品信息</span>
+      </div>
+      <div id="productSelector" class="product-selector" role="tablist" aria-label="可选产品"></div>
+    </section>
+
+    <section class="sales-shell sales-layout" aria-live="polite">
+      <article class="product-detail" aria-labelledby="productName">
+        <figure class="product-media">
+          <img id="productImage" src="assets/media/x1-skin.png" alt="" />
+          <figcaption>
+            <span id="productStage">概念验证</span>
+            <span id="productIndex">PRODUCT 01</span>
+          </figcaption>
+        </figure>
+
+        <div class="product-copy">
+          <p id="productEyebrow" class="eyebrow"></p>
+          <h2 id="productName">X1 Skin</h2>
+          <p id="productDescription" class="product-description"></p>
+          <dl id="productSpecs" class="spec-grid"></dl>
+        </div>
+
+        <div class="delivery-strip">
+          <div><i data-lucide="package-check"></i><span><strong>提交可追踪</strong><small>提交后生成订单或咨询编号</small></span></div>
+          <div><i data-lucide="calendar-clock"></i><span><strong id="deliveryTitle">预计 2026 年 Q4</strong><small>交付时间以最终确认信息为准</small></span></div>
+          <div><i data-lucide="messages-square"></i><span><strong>团队跟进</strong><small>确认付款、演示或试用安排</small></span></div>
+        </div>
+      </article>
+
+      <aside class="action-panel" aria-label="产品销售操作">
+        <div id="panelLoading" class="panel-state">
+          <span class="loader" aria-hidden="true"></span>
+          <p>正在准备产品信息</p>
+        </div>
+
+        <div id="preorderPanel" class="hidden">
+          <div id="preorderFormView">
+            <p class="panel-kicker">限量预订</p>
+            <div class="price-heading">
+              <div><h2 id="actionTitle">支付预订金</h2><p id="panelProductName"></p></div>
+              <div class="price"><strong id="panelPrice"></strong><small>产品参考价</small></div>
+            </div>
+
+            <div class="deposit-line">
+              <span>本次应付预订金</span>
+              <strong id="depositAmount"></strong>
+            </div>
+
+            <form id="preorderForm" class="sales-form" novalidate>
+              <div class="field-row">
+                <label><span>姓名 *</span><input name="name" autocomplete="name" required maxlength="120" placeholder="请输入姓名" /></label>
+                <label><span>手机号 *</span><input name="phone" type="tel" autocomplete="tel" required inputmode="numeric" pattern="1[3-9][0-9]{9}" maxlength="11" placeholder="用于订单核对" /></label>
+              </div>
+              <label><span>邮箱 *</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder="name@company.com" /></label>
+              <label><span>收货地址 *</span><textarea name="address" autocomplete="street-address" required maxlength="120" rows="3" placeholder="省 / 市 / 区及详细地址"></textarea></label>
+              <input class="honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+              <div class="quantity-row">
+                <span>预订数量</span>
+                <div class="stepper" aria-label="预订数量">
+                  <button id="quantityMinus" type="button" aria-label="减少数量"><i data-lucide="minus"></i></button>
+                  <input id="preorderQuantity" name="quantity" type="number" min="1" max="99" value="1" aria-label="预订数量" />
+                  <button id="quantityPlus" type="button" aria-label="增加数量"><i data-lucide="plus"></i></button>
+                </div>
+              </div>
+
+              <div class="order-summary">
+                <div><span>产品总价</span><strong id="orderTotal"></strong></div>
+                <div class="payable"><span>本次支付</span><strong id="payableTotal"></strong></div>
+              </div>
+
+              <label class="confirm-row">
+                <input name="confirmed" type="checkbox" required />
+                <span>我已确认当前为产品验证期预订，最终配置与交付日期由团队进一步确认。</span>
+              </label>
+              <p id="preorderError" class="form-message error" role="alert"></p>
+              <button class="primary-action" type="submit">
+                <i data-lucide="lock-keyhole"></i>
+                <span data-submit-text>提交订单并获取付款码</span>
+                <span class="button-loader hidden" aria-hidden="true"></span>
+              </button>
+              <p class="security-note"><i data-lucide="shield-check"></i>页面不会保存银行卡或支付账户信息</p>
+            </form>
+          </div>
+
+          <div id="paymentView" class="hidden payment-view">
+            <div class="success-mark"><i data-lucide="check"></i></div>
+            <p class="panel-kicker">订单已创建</p>
+            <h2>扫码支付预订金</h2>
+            <p>付款时请在备注中填写订单编号，以便团队人工核对。</p>
+            <img class="payment-qr" src="assets/media/wechat-pay-qr.jpg" alt="微信收款码" />
+            <div class="payment-amount"><span>应付金额</span><strong id="paymentAmount"></strong></div>
+            <div class="order-id-row">
+              <span>订单编号</span>
+              <strong id="paymentOrderId"></strong>
+              <button id="copyOrderId" class="icon-button" type="button" aria-label="复制订单编号" title="复制订单编号"><i data-lucide="copy"></i></button>
+            </div>
+            <p id="copyStatus" class="form-message" role="status"></p>
+            <button id="newOrderButton" class="secondary-action" type="button"><i data-lucide="rotate-ccw"></i>重新填写</button>
+          </div>
+        </div>
+
+        <div id="inquiryPanel" class="hidden">
+          <p id="inquiryKicker" class="panel-kicker">企业采购</p>
+          <div class="price-heading">
+            <div><h2 id="inquiryTitle">申请演示与报价</h2><p id="inquiryProductName"></p></div>
+            <div class="price"><strong id="inquiryPrice"></strong><small id="inquiryPriceLabel">参考价</small></div>
+          </div>
+          <p id="inquiryLead" class="panel-lead"></p>
+
+          <form id="inquiryForm" class="sales-form" novalidate>
+            <div class="field-row">
+              <label><span>姓名 *</span><input name="name" autocomplete="name" required maxlength="120" placeholder="联系人姓名" /></label>
+              <label><span>公司 / 机构</span><input name="company" autocomplete="organization" maxlength="120" placeholder="单位名称" /></label>
+            </div>
+            <div class="field-row">
+              <label><span>邮箱 *</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder="工作邮箱" /></label>
+              <label><span>联系电话</span><input name="phone" type="tel" autocomplete="tel" maxlength="30" placeholder="电话或微信" /></label>
+            </div>
+            <label><span id="quantityLabel">预计采购数量</span><input name="quantity" type="number" min="1" max="999" value="1" /></label>
+            <label><span>应用需求 *</span><textarea name="message" required maxlength="3000" rows="5" placeholder="请描述使用场景、项目阶段和预计时间"></textarea></label>
+            <input class="honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <p id="inquiryError" class="form-message error" role="alert"></p>
+            <button class="primary-action" type="submit">
+              <i data-lucide="send"></i>
+              <span data-submit-text>提交采购需求</span>
+              <span class="button-loader hidden" aria-hidden="true"></span>
+            </button>
+          </form>
+
+          <div id="inquirySuccess" class="hidden inquiry-success">
+            <div class="success-mark"><i data-lucide="check"></i></div>
+            <h2>需求已提交</h2>
+            <p>团队会通过你填写的邮箱联系，进一步确认演示、报价或试用安排。</p>
+            <div><span>咨询编号</span><strong id="inquiryId"></strong></div>
+            <button id="newInquiryButton" class="secondary-action" type="button"><i data-lucide="rotate-ccw"></i>提交另一项需求</button>
+          </div>
+        </div>
+
+        <div id="panelError" class="panel-state hidden">
+          <i data-lucide="cloud-off"></i>
+          <h2>产品信息暂时无法加载</h2>
+          <p>请稍后刷新，或发送邮件至 hatchyoung@outlook.com。</p>
+          <button id="retryButton" class="secondary-action" type="button"><i data-lucide="refresh-cw"></i>重新加载</button>
+        </div>
+      </aside>
+    </section>
+
+    <section class="policy-band">
+      <div class="sales-shell policy-grid">
+        <div><p class="eyebrow">ORDER NOTES</p><h2>预订与采购说明</h2></div>
+        <div><strong>预订阶段</strong><p>X1 Skin 当前处于概念验证阶段，预订金用于锁定首批沟通与交付顺序。</p></div>
+        <div><strong>付款确认</strong><p>扫码付款后由团队根据订单编号人工核对，付款状态不会即时自动更新。</p></div>
+        <div><strong>配置与交付</strong><p>产品规格、最终配置和交付日期将在发货前与你确认。</p></div>
+        <div><strong>订单变更</strong><p>退款、数量或地址变更请联系 hatchyoung@outlook.com，并提供订单编号。</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="sales-footer">
+    <div class="sales-shell">
+      <span>© 2026 链感：智能触觉</span>
+      <a href="mailto:hatchyoung@outlook.com">订单与采购支持</a>
+    </div>
+  </footer>
+</body>
+</html>
