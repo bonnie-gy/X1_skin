@@ -14,7 +14,8 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" -X POST http://127.0.0.1:4173/api/orders -H \"Content-Type: application/json\" -d \"{\\\\\"name\\\\\":\\\\\"Test\\\\\",\\\\\"phone\\\\\":\\\\\"13800138000\\\\\",\\\\\"email\\\\\":\\\\\"test@test.com\\\\\",\\\\\"address\\\\\":\\\\\"addr\\\\\",\\\\\"quantity\\\\\":1,\\\\\"productName\\\\\":\\\\\"X1 Skin\\\\\",\\\\\"productPrice\\\\\":\\\\\"¥2999\\\\\",\\\\\"paymentUrl\\\\\":\\\\\"https://pay.xxx.com/test\\\\\"}\")",
       "Bash(powershell -c \"\\(Get-Content 'c:\\\\Users\\\\GuoYi\\\\Desktop\\\\yingjian\\\\X1_skin\\\\backend\\\\data\\\\orders.ndjson' | Measure-Object -Line\\).Lines\")",
       "Bash(powershell -c \"Set-Content 'c:\\\\Users\\\\GuoYi\\\\Desktop\\\\yingjian\\\\X1_skin\\\\backend\\\\data\\\\orders.ndjson' -Value '' -NoNewline\")",
-      "Bash(powershell -c \"Test-Path 'c:\\\\Users\\\\GuoYi\\\\Desktop\\\\yingjian\\\\X1_skin\\\\frontend\\\\assets\\\\media'\")"
+      "Bash(powershell -c \"Test-Path 'c:\\\\Users\\\\GuoYi\\\\Desktop\\\\yingjian\\\\X1_skin\\\\frontend\\\\assets\\\\media'\")",
+      "Bash(curl -s --max-time 15 https://x1-skin.vercel.app/)"
     ]
   }
 }
