@@ -8,6 +8,7 @@ const {
   validateInquiry,
   deliverInquiryByEmail
 } = require('./inquiries');
+const { createOrderRecord, saveOrderLocally, validateOrder, deliverOrderByEmail } = require('./orders');
 const { DeviceGateway } = require('./sdk/gateway');
 const { handleSdkApi } = require('./sdk/api');
 
@@ -120,13 +121,48 @@ async function handleApi(request, response, pathname) {
       const record = createInquiryRecord(validation.inquiry);
       await saveInquiryLocally(record);
 
-      // 异步发送邮件通知（不阻塞响应）
       deliverInquiryByEmail(record).catch(error => {
         console.error('[Email] Failed to send notification:', error.message);
-        // 不影响主流程，仅记录错误
       });
 
       sendJson(response, 201, { ok: true, id: record.id, message: '合作需求已提交，我们会尽快与您联系。' });
+    } catch (error) {
+      const status = error.message === 'REQUEST_TOO_LARGE' ? 413 : 400;
+      sendJson(response, status, { ok: false, message: status === 413 ? '提交内容过大。' : '提交数据格式不正确。' });
+    }
+    return true;
+  }
+
+  if (request.method === 'POST' && pathname === '/api/orders') {
+    try {
+      const clientIp = getClientIp(request);
+
+      if (!checkRateLimit(clientIp)) {
+        sendJson(response, 429, { ok: false, message: '请求过于频繁，请稍后再试。' });
+        return true;
+      }
+
+      const rawBody = await readRequestBody(request);
+      const parsed = JSON.parse(rawBody || '{}');
+      const validation = validateOrder(parsed);
+      if (validation.error) {
+        sendJson(response, 400, { ok: false, message: validation.error });
+        return true;
+      }
+
+      const record = createOrderRecord(validation);
+      await saveOrderLocally(record);
+
+      deliverOrderByEmail(record).catch(error => {
+        console.error('[Email] Failed to send order notification:', error.message);
+      });
+
+      sendJson(response, 201, {
+        ok: true,
+        id: record.id,
+        paymentUrl: record.product.paymentUrl,
+        message: '订单已提交，即将跳转到支付页面。'
+      });
     } catch (error) {
       const status = error.message === 'REQUEST_TOO_LARGE' ? 413 : 400;
       sendJson(response, status, { ok: false, message: status === 413 ? '提交内容过大。' : '提交数据格式不正确。' });

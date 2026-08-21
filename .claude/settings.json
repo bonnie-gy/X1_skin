@@ -1,7 +1,20 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm test *)"
+      "Bash(npm test *)",
+      "Bash(powershell -c \"\\(Get-Content 'c:\\\\Users\\\\GuoYi\\\\Desktop\\\\yingjian\\\\X1_skin\\\\frontend\\\\app.js'\\).Count\")",
+      "Bash(powershell -c \"Test-Path 'c:\\\\Users\\\\GuoYi\\\\Desktop\\\\yingjian\\\\X1_skin\\\\backend\\\\data'\")",
+      "Bash(powershell -c \"cd 'c:\\\\Users\\\\GuoYi\\\\Desktop\\\\yingjian\\\\X1_skin'; node backend/server.js\")",
+      "Bash(curl -s http://127.0.0.1:4173/api/content)",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\(0,'utf8'\\); const j=JSON.parse\\(d\\); j.products.forEach\\(p => console.log\\(p.name, p.presale.enabled, p.presale.price\\)\\)\")",
+      "Bash(curl -s -X POST http://127.0.0.1:4173/api/orders -H \"Content-Type: application/json\" -d \"{\\\\\"name\\\\\":\\\\\"张三\\\\\",\\\\\"phone\\\\\":\\\\\"13800138000\\\\\",\\\\\"email\\\\\":\\\\\"test@test.com\\\\\",\\\\\"address\\\\\":\\\\\"北京市朝阳区xxx\\\\\",\\\\\"quantity\\\\\":1,\\\\\"productName\\\\\":\\\\\"X1 Skin\\\\\",\\\\\"productPrice\\\\\":\\\\\"¥2999\\\\\",\\\\\"paymentUrl\\\\\":\\\\\"https://pay.xxx.com/test\\\\\"}\")",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\(0,'utf8'\\); console.log\\(d\\)\")",
+      "Bash(powershell -c \"Get-Content 'c:\\\\Users\\\\GuoYi\\\\Desktop\\\\yingjian\\\\X1_skin\\\\backend\\\\data\\\\orders.ndjson' -Tail 1\")",
+      "Bash(curl -s -X POST http://127.0.0.1:4173/api/orders -H \"Content-Type: application/json\" -d \"{\\\\\"name\\\\\":\\\\\"\\\\\",\\\\\"phone\\\\\":\\\\\"123\\\\\",\\\\\"email\\\\\":\\\\\"bad\\\\\",\\\\\"address\\\\\":\\\\\"addr\\\\\",\\\\\"quantity\\\\\":0}\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -X POST http://127.0.0.1:4173/api/orders -H \"Content-Type: application/json\" -d \"{\\\\\"name\\\\\":\\\\\"Test\\\\\",\\\\\"phone\\\\\":\\\\\"13800138000\\\\\",\\\\\"email\\\\\":\\\\\"test@test.com\\\\\",\\\\\"address\\\\\":\\\\\"addr\\\\\",\\\\\"quantity\\\\\":1,\\\\\"productName\\\\\":\\\\\"X1 Skin\\\\\",\\\\\"productPrice\\\\\":\\\\\"¥2999\\\\\",\\\\\"paymentUrl\\\\\":\\\\\"https://pay.xxx.com/test\\\\\"}\")",
+      "Bash(powershell -c \"\\(Get-Content 'c:\\\\Users\\\\GuoYi\\\\Desktop\\\\yingjian\\\\X1_skin\\\\backend\\\\data\\\\orders.ndjson' | Measure-Object -Line\\).Lines\")",
+      "Bash(powershell -c \"Set-Content 'c:\\\\Users\\\\GuoYi\\\\Desktop\\\\yingjian\\\\X1_skin\\\\backend\\\\data\\\\orders.ndjson' -Value '' -NoNewline\")",
+      "Bash(powershell -c \"Test-Path 'c:\\\\Users\\\\GuoYi\\\\Desktop\\\\yingjian\\\\X1_skin\\\\frontend\\\\assets\\\\media'\")"
     ]
   }
 }

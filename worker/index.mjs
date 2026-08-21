@@ -160,6 +160,213 @@ async function deliverInquiry(record, env) {
   return result.id;
 }
 
+function validateOrder(input) {
+  const customer = {
+    name: String(input.name || '').trim(),
+    phone: String(input.phone || '').trim(),
+    email: String(input.email || '').trim(),
+    address: String(input.address || '').trim()
+  };
+  const quantity = parseInt(input.quantity, 10);
+
+  if (!customer.name || !customer.phone || !customer.email || !customer.address) {
+    return { error: '请完整填写姓名、电话、邮箱和收货地址。' };
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) {
+    return { error: '请输入有效的联系邮箱。' };
+  }
+  if (!/^1[3-9]\d{9}$/.test(customer.phone)) {
+    return { error: '请输入有效的手机号码。' };
+  }
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99) {
+    return { error: '购买数量必须在 1 到 99 之间。' };
+  }
+  if (
+    [customer.name, customer.phone, customer.email, customer.address].some(value => value.length > 120)
+  ) {
+    return { error: '填写内容过长，请精简后重试。' };
+  }
+
+  return {
+    customer,
+    quantity,
+    product: {
+      name: String(input.productName || '').trim(),
+      price: String(input.productPrice || '').trim(),
+      paymentUrl: String(input.paymentUrl || '').trim()
+    }
+  };
+}
+
+function createOrderRecord(validated) {
+  const numericMatch = validated.product.price.match(/[\d.]+/);
+  const unitPrice = numericMatch ? parseFloat(numericMatch[0]) : 0;
+  const total = Number.isNaN(unitPrice) ? validated.product.price : unitPrice * validated.quantity;
+  return {
+    id: `X1-ORDER-${crypto.randomUUID()}`,
+    createdAt: new Date().toISOString(),
+    product: validated.product,
+    quantity: validated.quantity,
+    customer: validated.customer,
+    totalAmount: total,
+    status: 'pending_payment'
+  };
+}
+
+function buildOrderEmail(record) {
+  const safe = {
+    id: escapeHtml(record.id),
+    productName: escapeHtml(record.product.name),
+    price: escapeHtml(record.product.price),
+    quantity: record.quantity,
+    totalAmount: escapeHtml(typeof record.totalAmount === 'number' ? `¥${record.totalAmount.toLocaleString()}` : record.totalAmount),
+    customerName: escapeHtml(record.customer.name),
+    customerPhone: escapeHtml(record.customer.phone),
+    customerEmail: escapeHtml(record.customer.email),
+    customerAddress: escapeHtml(record.customer.address),
+    createdAt: escapeHtml(formatDate(record.createdAt))
+  };
+
+  return {
+    subject: `[X1官网] 新预售订单 - ${safe.productName} - ${safe.customerName}`,
+    html: `<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>新预售订单</title></head>
+<body style="margin:0;background:#f4f6f7;color:#172126;font-family:Arial,'Microsoft YaHei',sans-serif">
+  <div style="max-width:680px;margin:0 auto;padding:32px 20px">
+    <div style="background:#101719;color:#fff;padding:24px 28px">
+      <h1 style="margin:0;font-size:22px">新预售订单</h1>
+      <p style="margin:8px 0 0;color:#b8c5ca;font-size:13px">来自 X1 智能触觉穿戴官网</p>
+    </div>
+    <div style="background:#fff;padding:28px">
+      <table style="width:100%;border-collapse:collapse;font-size:14px">
+        <tr><td style="padding:9px 0;color:#66757c;width:110px">订单编号</td><td style="padding:9px 0">${safe.id}</td></tr>
+        <tr><td style="padding:9px 0;color:#66757c">提交时间</td><td style="padding:9px 0">${safe.createdAt}</td></tr>
+        <tr><td style="padding:9px 0;color:#66757c">订单状态</td><td style="padding:9px 0"><span style="background:#ff775c;color:#fff;padding:3px 12px;border-radius:12px;font-size:12px">待付款</span></td></tr>
+        <tr><td style="padding:9px 0;color:#66757c">购买数量</td><td style="padding:9px 0">${safe.quantity} 件</td></tr>
+        <tr><td style="padding:9px 0;color:#66757c">订单总额</td><td style="padding:9px 0;color:#ff775c;font-weight:600;font-size:16px">${safe.totalAmount}</td></tr>
+      </table>
+      <div style="margin-top:22px;border-left:3px solid #176fdf;background:#f6f9f9;padding:18px">
+        <strong style="color:#176fdf">产品信息</strong>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px">
+          <tr><td style="padding:6px 0;color:#66757c;width:110px">产品名称</td><td style="padding:6px 0"><strong>${safe.productName}</strong></td></tr>
+          <tr><td style="padding:6px 0;color:#66757c">单价</td><td style="padding:6px 0">${safe.price}</td></tr>
+        </table>
+      </div>
+      <div style="margin-top:22px;border-left:3px solid #20c7c2;background:#f6f9f9;padding:18px">
+        <strong style="color:#20c7c2">客户信息</strong>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px">
+          <tr><td style="padding:6px 0;color:#66757c;width:110px">姓名</td><td style="padding:6px 0"><strong>${safe.customerName}</strong></td></tr>
+          <tr><td style="padding:6px 0;color:#66757c">电话</td><td style="padding:6px 0">${safe.customerPhone}</td></tr>
+          <tr><td style="padding:6px 0;color:#66757c">邮箱</td><td style="padding:6px 0"><a href="mailto:${safe.customerEmail}">${safe.customerEmail}</a></td></tr>
+          <tr><td style="padding:6px 0;color:#66757c">地址</td><td style="padding:6px 0">${safe.customerAddress}</td></tr>
+        </table>
+      </div>
+    </div>
+    <div style="text-align:center;color:#66757c;font-size:12px;margin-top:22px">
+      <p>此邮件由 X1 官网自动发送，请勿直接回复此邮件。</p>
+    </div>
+  </div>
+</body>
+</html>`,
+    text: [
+      '新预售订单 - X1官网',
+      '',
+      `订单编号：${record.id}`,
+      `提交时间：${formatDate(record.createdAt)}`,
+      '订单状态：待付款',
+      `购买数量：${record.quantity} 件`,
+      `订单总额：${typeof record.totalAmount === 'number' ? '¥' + record.totalAmount.toLocaleString() : record.totalAmount}`,
+      '',
+      '--- 产品信息 ---',
+      `产品名称：${record.product.name}`,
+      `单价：${record.product.price}`,
+      '',
+      '--- 客户信息 ---',
+      `姓名：${record.customer.name}`,
+      `电话：${record.customer.phone}`,
+      `邮箱：${record.customer.email}`,
+      `地址：${record.customer.address}`,
+      '',
+      '此邮件由 X1 官网自动发送，请勿直接回复此邮件。'
+    ].join('\n')
+  };
+}
+
+async function handleOrders(request, env) {
+  if (request.method !== 'POST') {
+    return new Response(JSON.stringify({ ok: false, message: 'Method not allowed' }), {
+      status: 405,
+      headers: { ...jsonHeaders, Allow: 'POST' }
+    });
+  }
+
+  const contentLength = Number(request.headers.get('content-length') || 0);
+  if (contentLength > MAX_BODY_SIZE) {
+    return jsonResponse({ ok: false, message: '提交内容过大。' }, 413);
+  }
+
+  let body;
+  try {
+    const bodyText = await request.text();
+    if (new TextEncoder().encode(bodyText).byteLength > MAX_BODY_SIZE) {
+      return jsonResponse({ ok: false, message: '提交内容过大。' }, 413);
+    }
+    body = JSON.parse(bodyText || '{}');
+  } catch {
+    return jsonResponse({ ok: false, message: '提交数据格式不正确。' }, 400);
+  }
+
+  // Bot honeypot
+  if (String(body.website || '').trim()) {
+    return jsonResponse({ ok: true, paymentUrl: body.paymentUrl || '#', message: '订单已提交，即将跳转到支付页面。' }, 201);
+  }
+
+  const validation = validateOrder(body);
+  if (validation.error) {
+    return jsonResponse({ ok: false, message: validation.error }, 400);
+  }
+
+  const record = createOrderRecord(validation);
+
+  // Save order to KV if available, otherwise just log
+  if (env.ORDERS_STORE) {
+    try {
+      await env.ORDERS_STORE.put(record.id, JSON.stringify(record));
+    } catch (e) {
+      console.error('Failed to save order to KV:', e.message);
+    }
+  }
+
+  try {
+    const email = buildOrderEmail(record);
+    await fetch(EMAIL_API_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: env.CONTACT_FROM_EMAIL,
+        to: [env.CONTACT_EMAIL],
+        reply_to: record.customer.email,
+        subject: email.subject,
+        html: email.html,
+        text: email.text
+      })
+    });
+  } catch (error) {
+    console.error('Failed to deliver order notification:', error.message);
+  }
+
+  return jsonResponse({
+    ok: true,
+    id: record.id,
+    paymentUrl: record.product.paymentUrl,
+    message: '订单已提交，即将跳转到支付页面。'
+  }, 201);
+}
+
 async function handleContact(request, env) {
   const contentLength = Number(request.headers.get('content-length') || 0);
   if (contentLength > MAX_BODY_SIZE) {
@@ -229,6 +436,10 @@ async function handleRequest(request, env) {
       });
     }
     return handleContact(request, env);
+  }
+
+  if (url.pathname === '/api/orders') {
+    return handleOrders(request, env);
   }
 
   if (url.pathname.startsWith('/api/')) {
