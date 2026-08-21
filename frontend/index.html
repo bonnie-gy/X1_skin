@@ -250,6 +250,16 @@
 
         <div class="mt-12 grid gap-4 lg:grid-cols-[1.55fr_.7fr]">
           <article class="reveal overflow-hidden border border-line bg-white dark:border-[#283337] dark:bg-[#101719]">
+            <div id="presaleBar" class="hidden min-h-16 items-center justify-between gap-4 border-b border-line bg-white px-5 py-3 dark:border-[#283337] dark:bg-[#101719] md:px-6">
+              <div class="min-w-0">
+                <p class="text-[11px] font-semibold text-slate-500">当前预售产品</p>
+                <strong id="presaleProductName" class="mt-1 block truncate text-sm">X1 Skin</strong>
+              </div>
+              <button id="presaleBtn" type="button" class="inline-flex h-10 shrink-0 items-center gap-2 bg-signal px-4 text-xs font-semibold text-white transition-colors hover:bg-[#e5684e]">
+                <i data-lucide="shopping-cart" class="size-3.5"></i>
+                <span>立即预售</span>
+              </button>
+            </div>
             <div class="media-zoom relative aspect-[16/10] overflow-hidden bg-[#071014]">
               <img id="productImage" src="assets/media/x1-skin.png" alt="X1 柔性电子皮肤产品概念图" class="h-full w-full object-cover" loading="lazy" />
               <div class="media-bottom pointer-events-none absolute inset-x-0 bottom-0 h-1/2"></div>
@@ -257,10 +267,6 @@
                 <span id="productStage" class="bg-white/15 px-2.5 py-1 backdrop-blur">概念验证</span>
                 <span>PRODUCT 01</span>
               </div>
-              <button id="presaleBtn" type="button" class="hidden absolute bottom-5 right-5 inline-flex items-center gap-2 bg-signal px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#e5684e]">
-                <i data-lucide="shopping-cart" class="size-3.5"></i>
-                <span>立即预售</span>
-              </button>
             </div>
             <div class="grid gap-8 p-6 md:grid-cols-[1fr_.9fr] md:p-8">
               <div>

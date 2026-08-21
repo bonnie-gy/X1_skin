@@ -50,14 +50,19 @@ function renderProduct(index) {
     bottomOverlay.className = 'media-bottom pointer-events-none absolute inset-x-0 bottom-0 h-1/2';
     productMain.appendChild(bottomOverlay);
 
-    // 预售按钮
+    // 选择产品后，在图片上方显示独立预售入口。
+    const presaleBar = document.querySelector('#presaleBar');
     const presaleBtn = document.querySelector('#presaleBtn');
+    const presaleProductName = document.querySelector('#presaleProductName');
     const hasPresale = item.presale?.enabled;
     if (hasPresale) {
-      presaleBtn.classList.remove('hidden');
+      presaleProductName.textContent = item.name;
+      presaleBar.classList.remove('hidden');
+      presaleBar.classList.add('flex');
       presaleBtn.onclick = () => openPresaleModal(index);
     } else {
-      presaleBtn.classList.add('hidden');
+      presaleBar.classList.add('hidden');
+      presaleBar.classList.remove('flex');
     }
 
     // 淡入效果
