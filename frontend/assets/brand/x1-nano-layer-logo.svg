@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 96" role="img" aria-labelledby="title desc">
-  <title id="title">X1 三层纳米衣物标志</title>
-  <desc id="desc">深蓝色上层波浪、黄色波点感知层与土黄色下层波浪组成的三层结构。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 96" role="img" aria-labelledby="x1-logo-title x1-logo-desc">
+  <title id="x1-logo-title">X1 three-layer nano textile logo</title>
+  <desc id="x1-logo-desc">A navy upper wave, yellow sensing dots, and an ochre lower wave form a three-layer structure.</desc>
   <path d="M12 24 C23 14 35 14 46 24 S69 34 80 24 S101 14 108 21" fill="none" stroke="#153D6F" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
   <g fill="#F2C94C">
     <circle cx="12" cy="50" r="4.2"/>

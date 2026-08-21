@@ -1,10 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="x1-logo-title x1-logo-desc">
-  <title id="x1-logo-title">X1 haptic systems</title>
-  <desc id="x1-logo-desc">A flexible X-shaped sensor layer paired with a signal-shaped numeral one.</desc>
-  <path d="M14 18c10 0 15 8 21 18l17 26c6 10 11 16 20 16" fill="none" stroke="#176FDF" stroke-width="11" stroke-linecap="round"/>
-  <path d="M62 18c-10 0-15 8-21 18L24 62c-6 10-11 16-20 16" fill="none" stroke="#20C7C2" stroke-width="11" stroke-linecap="round"/>
-  <circle cx="38" cy="48" r="7" fill="#FFFFFF"/>
-  <circle cx="38" cy="48" r="4.25" fill="#FF775C"/>
-  <path d="M69 29l9-9v56M68 76h20" fill="none" stroke="#10222B" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="78" cy="49" r="3.25" fill="#FF775C"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 96" role="img" aria-labelledby="x1-logo-title x1-logo-desc">
+  <title id="x1-logo-title">X1 three-layer nano textile logo</title>
+  <desc id="x1-logo-desc">A navy upper wave, yellow sensing dots, and an ochre lower wave form a three-layer structure.</desc>
+  <path d="M12 24 C23 14 35 14 46 24 S69 34 80 24 S101 14 108 21" fill="none" stroke="#153D6F" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#F2C94C">
+    <circle cx="12" cy="50" r="4.2"/>
+    <circle cx="24" cy="43.5" r="4.2"/>
+    <circle cx="36" cy="43.5" r="4.2"/>
+    <circle cx="48" cy="50" r="4.2"/>
+    <circle cx="60" cy="56.5" r="4.2"/>
+    <circle cx="72" cy="56.5" r="4.2"/>
+    <circle cx="84" cy="50" r="4.2"/>
+    <circle cx="96" cy="43.5" r="4.2"/>
+    <circle cx="108" cy="43.5" r="4.2"/>
+  </g>
+  <path d="M12 72 C23 62 35 62 46 72 S69 82 80 72 S101 62 108 69" fill="none" stroke="#B58A43" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
