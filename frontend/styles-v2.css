@@ -37,8 +37,8 @@ main section[id] { scroll-margin-top: 5rem; }
 .text-balance { text-wrap: balance; }
 .brand-mark-shell {
   display: grid;
-  width: 2.65rem;
-  height: 2.65rem;
+  width: 3.5rem;
+  height: 3.5rem;
   flex: 0 0 auto;
   place-items: center;
   padding: .32rem;
