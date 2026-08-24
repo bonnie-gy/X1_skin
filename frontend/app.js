@@ -16,7 +16,9 @@ const productVideos = [
 ];
 
 productVideo?.addEventListener('error', () => productVideo.classList.add('is-unavailable'));
-productVideo?.addEventListener('canplay', () => productVideo.classList.remove('is-unavailable'));
+productVideo?.addEventListener('canplay', () => {
+  if (!productVideo.dataset.staticImage) productVideo.classList.remove('is-unavailable');
+});
 const sceneTabs = document.querySelector('#sceneTabs');
 const sceneVideo = document.querySelector('#sceneVideo');
 const sceneName = document.querySelector('#sceneName');
@@ -50,10 +52,12 @@ function renderProduct(index) {
       // The engineering-development card uses the supplied lab image as its
       // hero artwork; don't let the legacy vest video cover it.
       if (index === 1) {
+        productVideo.dataset.staticImage = 'true';
         productVideo.classList.add('is-unavailable');
         productVideo.removeAttribute('src');
         productVideo.load();
       } else {
+        delete productVideo.dataset.staticImage;
         productVideo.classList.remove('is-unavailable');
         productVideo.src = nextVideo || '';
         productVideo.poster = item.image;

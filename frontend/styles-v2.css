@@ -558,7 +558,7 @@ main section[id] { scroll-margin-top: 5rem; }
   filter: brightness(.88);
   transition: opacity .25s ease;
 }
-.product-media-video:not(.is-unavailable) + #productImage { opacity: 0; }
+.product-media-video:not(.is-unavailable):not([data-static-image="true"]) + #productImage { opacity: 0; }
 .scene-tab { border-radius: 4px; }
 .scene-tab[aria-selected="true"] {
   color: #fff;
