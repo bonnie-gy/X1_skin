@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light;
+  color-scheme: dark;
   --flow-x: 68%;
   --flow-y: 34%;
   --pointer-x: 0px;
@@ -27,7 +27,6 @@
   --spectrum-lime: #b8e560;
 }
 
-html.dark { color-scheme: dark; }
 body { letter-spacing: 0; overflow-x: hidden; }
 main section[id] { scroll-margin-top: 5rem; }
 ::selection { background: #176fdf; color: #fff; }
@@ -70,7 +69,6 @@ main section[id] { scroll-margin-top: 5rem; }
 }
 .on-hero nav a { color: rgba(255,255,255,.72); }
 .on-hero nav a:hover { color: #fff; }
-.on-hero #themeToggle,
 .on-hero #menuToggle { color: #fff; border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.08); }
 .on-hero a[aria-label="X1 首页"] > span:last-child { color: rgba(255,255,255,.55); border-color: rgba(255,255,255,.25); }
 
@@ -435,16 +433,6 @@ main section[id] { scroll-margin-top: 5rem; }
 #applications > *,
 #news > * { position: relative; z-index: 1; }
 
-#products .bg-white,
-#funding .bg-white,
-#resources .bg-white,
-#contact .bg-white,
-#applications .bg-white,
-#news .bg-white,
-#news .bg-mist {
-  background-color: rgba(255,255,255,.76) !important;
-  backdrop-filter: blur(14px);
-}
 #products article,
 #funding article,
 #resources article,
@@ -512,22 +500,6 @@ main section[id] { scroll-margin-top: 5rem; }
   background: linear-gradient(135deg, var(--spectrum-cyan), var(--spectrum-blue));
   box-shadow: 0 0 0 6px var(--timeline-ring), 0 0 20px rgba(32,199,194,.35);
 }
-
-html.dark #home + section { background: #0c1a20; }
-html.dark #products,
-html.dark #funding,
-html.dark #resources,
-html.dark #contact { background-color: #071116 !important; }
-html.dark #applications,
-html.dark #news { background-color: #0c181d !important; }
-html.dark #products .bg-white,
-html.dark #funding .bg-white,
-html.dark #resources .bg-white,
-html.dark #contact .bg-white,
-html.dark #applications .bg-white,
-html.dark #news .bg-white,
-html.dark #news .bg-mist { background-color: rgba(16,31,38,.78) !important; }
-html.dark .product-thumb[aria-selected="true"] { background: rgba(22,42,50,.94) !important; }
 
 @keyframes spectrumDrift {
   from { transform: translate3d(-1.5%, -1%, 0) scale(1); filter: saturate(1); }
@@ -735,30 +707,6 @@ html.dark .product-thumb[aria-selected="true"] { background: rgba(22,42,50,.94) 
     radial-gradient(ellipse at 50% 50%, rgba(32,199,194,.07) 0%, transparent 50%),
     linear-gradient(155deg, #060a0e 0%, #0a1018 30%, #080e14 60%, #05080c 100%) !important;
   background-color: #070c10 !important;
-}
-
-#resources .bg-white,
-#resources .bg-mist {
-  background-color: rgba(8,14,20,.78) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-color: rgba(255,255,255,.06) !important;
-}
-
-html.dark #resources {
-  background:
-    radial-gradient(ellipse at 15% 20%, rgba(255,119,92,.15) 0%, transparent 48%),
-    radial-gradient(ellipse at 80% 70%, rgba(184,229,96,.11) 0%, transparent 45%),
-    radial-gradient(ellipse at 50% 50%, rgba(32,199,194,.09) 0%, transparent 50%),
-    #060a0e !important;
-  background-color: #060a0e !important;
-}
-
-html.dark #resources .bg-white,
-html.dark #resources .bg-mist {
-  background-color: rgba(6,10,14,.82) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
 }
 
 #resources::before { display: none; }

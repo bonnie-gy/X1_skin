@@ -58,7 +58,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -79,7 +78,7 @@
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <link rel="stylesheet" href="styles.css?v=20260821-1" />
 </head>
-<body class="bg-mist text-ink antialiased transition-colors duration-300 dark:bg-[#071116] dark:text-[#edf7f6] [--nav-bg:#eef4f7] [--nav-border:#cad9df] [--timeline-ring:#eef4f7] dark:[--nav-bg:#071116] dark:[--nav-border:#26383d] dark:[--timeline-ring:#071116]">
+<body class="bg-[#071116] text-[#edf7f6] antialiased [--nav-bg:#071116] [--nav-border:#26383d] [--timeline-ring:#071116]">
   <!-- 跳过导航链接（无障碍访问） -->
   <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded focus:bg-tech focus:px-4 focus:py-2 focus:text-white focus:shadow-lg">
     跳到主要内容
@@ -90,10 +89,10 @@
       <a href="#home" class="flex items-center gap-3" aria-label="X1 首页">
         <span class="brand-mark-shell"><img src="assets/brand/x1-nano-layer-logo.svg" alt="" /></span>
         <span class="text-lg font-semibold tracking-normal">链感：智能触觉</span>
-        <span class="hidden border-l border-line pl-3 text-xs text-slate-500 dark:border-[#344044] dark:text-slate-400 sm:inline">HAPTIC SYSTEMS</span>
+        <span class="hidden border-l border-line pl-3 text-xs text-white/40 sm:inline">HAPTIC SYSTEMS</span>
       </a>
 
-      <nav class="hidden items-center gap-6 text-sm text-slate-600 dark:text-slate-300 xl:flex" aria-label="主导航">
+      <nav class="hidden items-center gap-6 text-sm text-white/70 xl:flex" aria-label="主导航">
         <a class="transition-colors hover:text-tech" href="#products">产品</a>
         <a class="transition-colors hover:text-tech" href="#applications">行业应用</a>
         <a class="transition-colors hover:text-tech" href="#funding">融资发展</a>
@@ -106,29 +105,25 @@
       </nav>
 
       <div class="flex items-center gap-2">
-        <button id="themeToggle" class="grid size-10 place-items-center border border-line bg-white/60 text-slate-700 transition-colors hover:border-tech hover:text-tech dark:border-[#313c40] dark:bg-white/5 dark:text-slate-200" type="button" aria-label="切换深浅色模式" title="切换深浅色模式">
-          <i data-lucide="sun" class="size-4 dark:hidden"></i>
-          <i data-lucide="moon" class="hidden size-4 dark:block"></i>
-        </button>
-        <a href="#contact" class="hidden h-10 items-center gap-2 bg-ink px-4 text-sm font-medium text-white transition-colors hover:bg-tech dark:bg-white dark:text-ink dark:hover:bg-cyan sm:flex">
+        <a href="#contact" class="hidden h-10 items-center gap-2 bg-white px-4 text-sm font-medium text-ink transition-colors hover:bg-white/80 sm:flex">
           商务合作 <i data-lucide="arrow-up-right" class="size-4"></i>
         </a>
-        <button id="menuToggle" class="grid size-10 place-items-center border border-line bg-white/60 dark:border-[#313c40] dark:bg-white/5 xl:hidden" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="打开导航菜单">
+        <button id="menuToggle" class="grid size-10 place-items-center border border-white/20 bg-white/5 xl:hidden" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="打开导航菜单">
           <i data-lucide="menu" class="size-5"></i>
         </button>
       </div>
     </div>
-    <div id="mobileMenu" class="hidden border-t border-line bg-mist px-4 py-4 dark:border-[#263034] dark:bg-[#0b1012] xl:hidden">
+    <div id="mobileMenu" class="hidden border-t border-white/10 bg-[#0b1012] px-4 py-4 xl:hidden">
       <nav class="mx-auto grid max-w-xl gap-1 text-base" aria-label="移动端导航">
-        <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#products">产品</a>
-        <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#applications">行业应用</a>
-        <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#funding">融资发展</a>
-        <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#about">关于我们</a>
-        <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#resources">材料与合作</a>
-        <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#news">新闻动态</a>
-        <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="/sdk-demo.html">SDK 演示</a>
-        <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="/buy.html">购买 / 预订</a>
-        <a class="mobile-link px-3 py-3 hover:bg-black/5 dark:hover:bg-white/5" href="#contact">联系我们</a>
+        <a class="mobile-link px-3 py-3 hover:bg-white/5" href="#products">产品</a>
+        <a class="mobile-link px-3 py-3 hover:bg-white/5" href="#applications">行业应用</a>
+        <a class="mobile-link px-3 py-3 hover:bg-white/5" href="#funding">融资发展</a>
+        <a class="mobile-link px-3 py-3 hover:bg-white/5" href="#about">关于我们</a>
+        <a class="mobile-link px-3 py-3 hover:bg-white/5" href="#resources">材料与合作</a>
+        <a class="mobile-link px-3 py-3 hover:bg-white/5" href="#news">新闻动态</a>
+        <a class="mobile-link px-3 py-3 hover:bg-white/5" href="/sdk-demo.html">SDK 演示</a>
+        <a class="mobile-link px-3 py-3 hover:bg-white/5" href="/buy.html">购买 / 预订</a>
+        <a class="mobile-link px-3 py-3 hover:bg-white/5" href="#contact">联系我们</a>
       </nav>
     </div>
   </header>
@@ -215,42 +210,42 @@
       </div>
     </section>
 
-    <section class="border-b border-line bg-white py-7 dark:border-[#253034] dark:bg-[#101719]">
+    <section class="border-b border-line py-7 border-[#253034] bg-[#101719]">
       <div class="section-shell grid grid-cols-2 gap-y-6 md:grid-cols-4">
-        <div class="border-r border-line pr-4 dark:border-[#2d383c]">
+        <div class="border-r border-line pr-4 border-[#2d383c]">
           <div class="text-2xl font-semibold md:text-3xl">&lt; 30 ms</div>
-          <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">P1 端到端延迟目标</p>
+          <p class="mt-1 text-xs text-slate-400">P1 端到端延迟目标</p>
         </div>
-        <div class="md:border-r md:border-line md:px-6 md:dark:border-[#2d383c]">
+        <div class="md:border-r md:border-line md:px-6 md:border-[#2d383c]">
           <div class="text-2xl font-semibold md:text-3xl">16-24</div>
-          <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">可更换触觉反馈模块</p>
+          <p class="mt-1 text-xs text-slate-400">可更换触觉反馈模块</p>
         </div>
-        <div class="border-r border-line pr-4 dark:border-[#2d383c] md:px-6">
+        <div class="border-r border-line pr-4 border-[#2d383c] md:px-6">
           <div class="text-2xl font-semibold md:text-3xl">≥ 6 h</div>
-          <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">典型连续使用目标</p>
+          <p class="mt-1 text-xs text-slate-400">典型连续使用目标</p>
         </div>
         <div class="md:pl-6">
           <div class="text-2xl font-semibold md:text-3xl">3 min</div>
-          <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">电子层拆卸目标</p>
+          <p class="mt-1 text-xs text-slate-400">电子层拆卸目标</p>
         </div>
       </div>
     </section>
 
-    <section id="products" class="section-pad bg-mist dark:bg-[#0b1012]">
+    <section id="products" class="section-pad bg-[#0b1012]">
       <div class="section-shell">
         <div class="reveal grid gap-6 lg:grid-cols-[1fr_.75fr] lg:items-end">
           <div>
             <p class="mb-4 text-sm font-semibold text-tech">01 / 产品系统</p>
             <h2 class="section-title max-w-3xl font-semibold text-balance">从柔性传感到空间触觉，构成完整交互闭环</h2>
           </div>
-          <p class="max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-400 lg:justify-self-end">
+          <p class="max-w-xl text-sm leading-7 text-slate-400 lg:justify-self-end">
             产品路线遵循工程可行性优先：先以成熟器件完成系统与商业验证，再逐步引入 MXene/CNT、LIG 与 ZnO 等先进柔性传感材料。
           </p>
         </div>
 
         <div class="mt-12 grid gap-4 lg:grid-cols-[1.55fr_.7fr]">
-          <article class="reveal overflow-hidden border border-line bg-white dark:border-[#283337] dark:bg-[#101719]">
-            <div id="presaleBar" class="hidden min-h-16 items-center justify-between gap-4 border-b border-line bg-white px-5 py-3 dark:border-[#283337] dark:bg-[#101719] md:px-6">
+          <article class="reveal overflow-hidden border border-line border-[#283337] bg-[#101719]">
+            <div id="presaleBar" class="hidden min-h-16 items-center justify-between gap-4 border-b border-line px-5 py-3 border-[#283337] bg-[#101719] md:px-6">
               <div class="min-w-0">
                 <p class="text-[11px] font-semibold text-slate-500">当前预售产品</p>
                 <strong id="presaleProductName" class="mt-1 block truncate text-sm">X1 Skin</strong>
@@ -272,7 +267,7 @@
               <div>
                 <p id="productEyebrow" class="text-sm font-semibold text-tech">FLEXIBLE SENSOR LAYER</p>
                 <h3 id="productName" class="mt-3 text-3xl font-semibold">X1 Skin</h3>
-                <p id="productDescription" class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">贴合身体曲面的柔性电子皮肤，用于采集压力、拉伸与姿态变化，为触觉反馈提供实时输入。</p>
+                <p id="productDescription" class="mt-4 text-sm leading-7 text-slate-400">贴合身体曲面的柔性电子皮肤，用于采集压力、拉伸与姿态变化，为触觉反馈提供实时输入。</p>
               </div>
               <dl id="productSpecs" class="grid grid-cols-2 gap-x-6 gap-y-5 self-start"></dl>
             </div>
@@ -282,38 +277,38 @@
         </div>
 
         <div class="mt-4 grid gap-4 md:grid-cols-3">
-          <article class="lift reveal border border-line bg-white p-6 dark:border-[#283337] dark:bg-[#101719]">
+          <article class="lift reveal border border-line border-[#283337] bg-[#101719] p-6">
             <i data-lucide="scan-line" class="size-6 text-tech"></i>
             <h3 class="mt-8 text-lg font-semibold">分布式感知</h3>
-            <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">压力、拉伸与姿态数据按空间位置映射，支持原始数据导出与独立标定。</p>
+            <p class="mt-3 text-sm leading-6 text-slate-400">压力、拉伸与姿态数据按空间位置映射，支持原始数据导出与独立标定。</p>
           </article>
-          <article class="lift reveal border border-line bg-white p-6 dark:border-[#283337] dark:bg-[#101719]">
+          <article class="lift reveal border border-line border-[#283337] bg-[#101719] p-6">
             <i data-lucide="waves" class="size-6 text-[#138c83]"></i>
             <h3 class="mt-8 text-lg font-semibold">链式触觉编排</h3>
-            <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">将碰撞、方向和动作事件编码为可定位、可传播、可重复的身体触觉模式。</p>
+            <p class="mt-3 text-sm leading-6 text-slate-400">将碰撞、方向和动作事件编码为可定位、可传播、可重复的身体触觉模式。</p>
           </article>
-          <article class="lift reveal border border-line bg-white p-6 dark:border-[#283337] dark:bg-[#101719]">
+          <article class="lift reveal border border-line border-[#283337] bg-[#101719] p-6">
             <i data-lucide="blocks" class="size-6 text-[#7b61a8]"></i>
             <h3 class="mt-8 text-lg font-semibold">模块化工程架构</h3>
-            <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">电子层可拆卸、触觉模块可更换、贴肤层可清洗，面向高频 B2B 部署与维护。</p>
+            <p class="mt-3 text-sm leading-6 text-slate-400">电子层可拆卸、触觉模块可更换、贴肤层可清洗，面向高频 B2B 部署与维护。</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="applications" class="section-pad border-y border-line bg-white dark:border-[#253034] dark:bg-[#101719]">
+    <section id="applications" class="section-pad border-y border-line border-[#253034] bg-[#101719]">
       <div class="section-shell">
         <div class="reveal flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <div>
             <p class="mb-4 text-sm font-semibold text-tech">02 / 行业应用</p>
             <h2 class="section-title max-w-3xl font-semibold text-balance">让触觉成为可部署、可衡量的业务能力</h2>
           </div>
-          <p class="max-w-lg text-sm leading-7 text-slate-600 dark:text-slate-400">优先进入需求明确、可付费验证、能够通过 SDK 复用的 B2B 场景。</p>
+          <p class="max-w-lg text-sm leading-7 text-slate-400">优先进入需求明确、可付费验证、能够通过 SDK 复用的 B2B 场景。</p>
         </div>
 
         <div id="sceneTabs" class="reveal mt-10 flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="应用场景"></div>
 
-        <div class="mt-5 grid overflow-hidden border border-line bg-[#071014] text-white dark:border-[#283337] lg:grid-cols-[1.35fr_.65fr]">
+        <div class="mt-5 grid overflow-hidden border border-line bg-[#071014] text-white border-[#283337] lg:grid-cols-[1.35fr_.65fr]">
           <div class="media-zoom relative min-h-[360px] overflow-hidden lg:min-h-[560px]">
             <video id="sceneVideo" class="absolute inset-0 h-full w-full object-cover" autoplay muted loop playsinline preload="metadata"></video>
             <button id="sceneVideoStatus" class="absolute inset-0 z-[3] hidden cursor-pointer place-items-center bg-[#071014]/70 px-6 text-center text-sm text-white backdrop-blur-sm" type="button">
@@ -341,20 +336,20 @@
       </div>
     </section>
 
-    <section id="funding" class="section-pad bg-mist dark:bg-[#0b1012]">
+    <section id="funding" class="section-pad bg-[#0b1012]">
       <div class="section-shell">
         <div class="reveal grid gap-8 lg:grid-cols-[1fr_.85fr] lg:items-end">
           <div>
             <p class="mb-4 text-sm font-semibold text-tech">03 / 融资发展</p>
             <h2 class="section-title max-w-3xl font-semibold text-balance">以工程与付费验证，驱动每一阶段增长</h2>
           </div>
-          <div class="border-l-2 border-tech pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <div class="border-l-2 border-tech pl-5 text-sm leading-7 text-slate-400">
             当前资料披露的是未来融资计划，并非历史融资记录。已完成融资、估值与投资机构尚未披露，官网不作虚构展示。
           </div>
         </div>
 
         <div class="mt-12 grid gap-4 lg:grid-cols-[.72fr_1.28fr]">
-          <article class="reveal bg-ink p-7 text-white dark:bg-[#151e21] md:p-9">
+          <article class="reveal bg-ink p-7 text-white bg-[#151e21] md:p-9">
             <div class="flex items-start justify-between gap-4">
               <div>
                 <p class="text-xs text-white/50">SEED ROUND PLAN</p>
@@ -364,40 +359,40 @@
             </div>
             <p class="mt-8 max-w-md text-sm leading-7 text-white/70">覆盖 18 个月，用于工程样机、SDK、客户试点、检测认证和小批量试产。</p>
             <div class="mt-10 grid grid-cols-2 gap-px bg-white/15">
-              <div class="bg-ink p-4 dark:bg-[#151e21]"><strong class="text-xl">3</strong><p class="mt-1 text-xs text-white/50">付费客户门槛</p></div>
-              <div class="bg-ink p-4 dark:bg-[#151e21]"><strong class="text-xl">100</strong><p class="mt-1 text-xs text-white/50">累计部署目标</p></div>
-              <div class="bg-ink p-4 dark:bg-[#151e21]"><strong class="text-xl">3</strong><p class="mt-1 text-xs text-white/50">外部 SDK 团队</p></div>
-              <div class="bg-ink p-4 dark:bg-[#151e21]"><strong class="text-xl">18 mo</strong><p class="mt-1 text-xs text-white/50">资金覆盖周期</p></div>
+              <div class="bg-ink p-4 bg-[#151e21]"><strong class="text-xl">3</strong><p class="mt-1 text-xs text-white/50">付费客户门槛</p></div>
+              <div class="bg-ink p-4 bg-[#151e21]"><strong class="text-xl">100</strong><p class="mt-1 text-xs text-white/50">累计部署目标</p></div>
+              <div class="bg-ink p-4 bg-[#151e21]"><strong class="text-xl">3</strong><p class="mt-1 text-xs text-white/50">外部 SDK 团队</p></div>
+              <div class="bg-ink p-4 bg-[#151e21]"><strong class="text-xl">18 mo</strong><p class="mt-1 text-xs text-white/50">资金覆盖周期</p></div>
             </div>
             <a href="#contact" class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-cyan">索取融资资料 <i data-lucide="arrow-right" class="size-4"></i></a>
           </article>
 
-          <div class="reveal border border-line bg-white p-7 dark:border-[#283337] dark:bg-[#101719] md:p-9">
-            <div class="border-l border-line pl-7 dark:border-[#344044]">
+          <div class="reveal border border-line p-7 border-[#283337] bg-[#101719] md:p-9">
+            <div class="border-l border-line pl-7 border-[#344044]">
               <article class="timeline-item relative pb-10">
                 <div class="flex flex-wrap items-center justify-between gap-2"><h3 class="font-semibold">P0 / 开发者验证套件</h3><span class="text-xs text-slate-500">M0-M6</span></div>
-                <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">完成 8-16 点反馈、基础传感输入、PC 编排器与 Unity / Unreal 接入验证。</p>
+                <p class="mt-3 text-sm leading-6 text-slate-400">完成 8-16 点反馈、基础传感输入、PC 编排器与 Unity / Unreal 接入验证。</p>
               </article>
               <article class="timeline-item relative pb-10">
                 <div class="flex flex-wrap items-center justify-between gap-2"><h3 class="font-semibold">种子轮 / 工程与试点</h3><span class="text-xs text-tech">M0-M18</span></div>
-                <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">推进 EVT、DVT 至 PVT 试产，形成 3 个付费客户、100 套累计部署与可靠性证据。</p>
+                <p class="mt-3 text-sm leading-6 text-slate-400">推进 EVT、DVT 至 PVT 试产，形成 3 个付费客户、100 套累计部署与可靠性证据。</p>
               </article>
               <article class="timeline-item relative pb-10">
                 <div class="flex flex-wrap items-center justify-between gap-2"><h3 class="font-semibold">Pre-A / 小批量商业化</h3><span class="text-xs text-slate-500">门槛达成后</span></div>
-                <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">建设管理平台与第二供应源，以年度 20 个客户、800 套交付和 1,240 万元收入目标复核融资需求。</p>
+                <p class="mt-3 text-sm leading-6 text-slate-400">建设管理平台与第二供应源，以年度 20 个客户、800 套交付和 1,240 万元收入目标复核融资需求。</p>
               </article>
               <article class="timeline-item relative">
                 <div class="flex flex-wrap items-center justify-between gap-2"><h3 class="font-semibold">A 轮 / 平台化增长</h3><span class="text-xs text-slate-500">商业模式验证后</span></div>
-                <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">产品平台化并拓展行业版本，三年基准目标为 55 个付费客户、2,500 套交付与 3,750 万元收入。</p>
+                <p class="mt-3 text-sm leading-6 text-slate-400">产品平台化并拓展行业版本，三年基准目标为 55 个付费客户、2,500 套交付与 3,750 万元收入。</p>
               </article>
             </div>
           </div>
         </div>
 
         <div class="mt-4 grid gap-4 md:grid-cols-3">
-          <div class="reveal border-t-2 border-tech bg-white p-6 dark:bg-[#101719]"><p class="text-3xl font-semibold">240 万</p><p class="mt-2 text-sm text-slate-500">第 1 年基准收入目标</p></div>
-          <div class="reveal border-t-2 border-[#138c83] bg-white p-6 dark:bg-[#101719]"><p class="text-3xl font-semibold">1,240 万</p><p class="mt-2 text-sm text-slate-500">第 2 年基准收入目标</p></div>
-          <div class="reveal border-t-2 border-[#7b61a8] bg-white p-6 dark:bg-[#101719]"><p class="text-3xl font-semibold">3,750 万</p><p class="mt-2 text-sm text-slate-500">第 3 年基准收入目标</p></div>
+          <div class="reveal border-t-2 border-tech bg-[#101719] p-6"><p class="text-3xl font-semibold">240 万</p><p class="mt-2 text-sm text-slate-500">第 1 年基准收入目标</p></div>
+          <div class="reveal border-t-2 border-[#138c83] bg-[#101719] p-6"><p class="text-3xl font-semibold">1,240 万</p><p class="mt-2 text-sm text-slate-500">第 2 年基准收入目标</p></div>
+          <div class="reveal border-t-2 border-[#7b61a8] bg-[#101719] p-6"><p class="text-3xl font-semibold">3,750 万</p><p class="mt-2 text-sm text-slate-500">第 3 年基准收入目标</p></div>
         </div>
         <p class="mt-4 text-xs leading-5 text-slate-500">以上为商业计划书内部基准情景，不构成业绩承诺或已签订单。</p>
       </div>
@@ -488,7 +483,7 @@
       </div>
     </section>
 
-    <section id="resources" class="section-pad border-b border-line bg-mist dark:border-[#253034] dark:bg-[#0b1012]">
+    <section id="resources" class="section-pad border-b border-line border-[#253034] bg-[#0b1012]">
       <div class="section-cv-bg">
         <div class="cv-circuit-layer">
           <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -547,45 +542,45 @@
             <p class="mb-4 text-sm font-semibold text-tech">05 / 材料与院企合作</p>
             <h2 class="section-title max-w-3xl font-semibold text-balance">从材料选型到联合验证，集中在同一入口</h2>
           </div>
-          <p class="max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-400 lg:justify-self-end">统一管理首代物料、新材料验证和高校科研合作，避免技术路线、样机需求与对接信息分散。</p>
+          <p class="max-w-xl text-sm leading-7 text-slate-400 lg:justify-self-end">统一管理首代物料、新材料验证和高校科研合作，避免技术路线、样机需求与对接信息分散。</p>
         </div>
 
-        <div class="mt-12 border-y border-line dark:border-[#2d383c]">
+        <div class="mt-12 border-y border-line border-[#2d383c]">
           <article class="reveal grid gap-8 py-8 md:grid-cols-[.32fr_1fr] md:py-10">
             <div>
               <p class="text-xs font-semibold text-tech">01 / 物料与材料清单</p>
               <h3 class="mt-3 text-2xl font-semibold">工程物料与新材料路线</h3>
-              <p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">先用成熟器件完成系统验证，再按可靠性证据逐步导入先进柔性材料。</p>
+              <p class="mt-4 text-sm leading-7 text-slate-400">先用成熟器件完成系统验证，再按可靠性证据逐步导入先进柔性材料。</p>
             </div>
             <div class="overflow-x-auto">
               <table class="w-full min-w-[620px] border-collapse text-left text-sm">
-                <thead class="border-b border-line text-xs text-slate-500 dark:border-[#344044]">
+                <thead class="border-b border-line text-xs text-slate-500 border-[#344044]">
                   <tr><th class="pb-4 pr-5 font-medium">阶段</th><th class="pb-4 pr-5 font-medium">材料与器件</th><th class="pb-4 font-medium">项目结论</th></tr>
                 </thead>
-                <tbody class="divide-y divide-line dark:divide-[#2d383c]">
-                  <tr><td class="py-5 pr-5 font-semibold">首代样机</td><td class="py-5 pr-5 text-slate-600 dark:text-slate-400">TPU 联锁骨架、织物基底、铜 FPC、ERM / LRA</td><td class="py-5 text-[#138c83]">立即采用</td></tr>
-                  <tr><td class="py-5 pr-5 font-semibold">局部升级</td><td class="py-5 pr-5 text-slate-600 dark:text-slate-400">PDMS、AgNW、LIG 传感片、音圈模块</td><td class="py-5 text-tech">模块验证后采用</td></tr>
-                  <tr><td class="py-5 pr-5 font-semibold">联合研发</td><td class="py-5 pr-5 text-slate-600 dark:text-slate-400">MXene / CNT / TPU、AgNW / 壳聚糖 / ZnO</td><td class="py-5 text-[#7b61a8] dark:text-[#b89cdd]">先替换局部节点</td></tr>
+                <tbody class="divide-y divide-line divide-[#2d383c]">
+                  <tr><td class="py-5 pr-5 font-semibold">首代样机</td><td class="py-5 pr-5 text-slate-400">TPU 联锁骨架、织物基底、铜 FPC、ERM / LRA</td><td class="py-5 text-[#138c83]">立即采用</td></tr>
+                  <tr><td class="py-5 pr-5 font-semibold">局部升级</td><td class="py-5 pr-5 text-slate-400">PDMS、AgNW、LIG 传感片、音圈模块</td><td class="py-5 text-tech">模块验证后采用</td></tr>
+                  <tr><td class="py-5 pr-5 font-semibold">联合研发</td><td class="py-5 pr-5 text-slate-400">MXene / CNT / TPU、AgNW / 壳聚糖 / ZnO</td><td class="py-5 text-[#7b61a8] text-[#b89cdd]">先替换局部节点</td></tr>
                 </tbody>
               </table>
             </div>
           </article>
 
-          <article class="reveal grid gap-8 border-t border-line py-8 dark:border-[#2d383c] md:grid-cols-[.32fr_1fr] md:py-10">
+          <article class="reveal grid gap-8 border-t border-line py-8 border-[#2d383c] md:grid-cols-[.32fr_1fr] md:py-10">
             <div>
               <p class="text-xs font-semibold text-tech">02 / 院企合作联系</p>
               <h3 class="mt-3 text-2xl font-semibold">按课题对接联合验证团队</h3>
-              <p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">以下均为建议接洽方向，不代表合作已经达成。</p>
+              <p class="mt-4 text-sm leading-7 text-slate-400">以下均为建议接洽方向，不代表合作已经达成。</p>
             </div>
             <div>
-              <div class="grid gap-px bg-line dark:bg-[#2d383c] md:grid-cols-3">
-                <div class="bg-mist p-5 dark:bg-[#0b1012]"><p class="text-xs text-slate-500">柔性电子</p><p class="mt-3 font-semibold">清华大学相关团队</p><p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">阵列布局、曲面贴合与信号解耦</p></div>
-                <div class="bg-mist p-5 dark:bg-[#0b1012]"><p class="text-xs text-slate-500">智能感知</p><p class="mt-3 font-semibold">东南大学相关团队</p><p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">可拉伸传感、动作识别与联合样机</p></div>
-                <div class="bg-mist p-5 dark:bg-[#0b1012]"><p class="text-xs text-slate-500">纳米能源</p><p class="mt-3 font-semibold">中科院相关团队</p><p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">压电感知、低功耗传感与可靠性</p></div>
+              <div class="grid gap-px bg-line bg-[#2d383c] md:grid-cols-3">
+                <div class="bg-[#0b1012] p-5"><p class="text-xs text-slate-500">柔性电子</p><p class="mt-3 font-semibold">清华大学相关团队</p><p class="mt-2 text-sm leading-6 text-slate-400">阵列布局、曲面贴合与信号解耦</p></div>
+                <div class="bg-[#0b1012] p-5"><p class="text-xs text-slate-500">智能感知</p><p class="mt-3 font-semibold">东南大学相关团队</p><p class="mt-2 text-sm leading-6 text-slate-400">可拉伸传感、动作识别与联合样机</p></div>
+                <div class="bg-[#0b1012] p-5"><p class="text-xs text-slate-500">纳米能源</p><p class="mt-3 font-semibold">中科院相关团队</p><p class="mt-2 text-sm leading-6 text-slate-400">压电感知、低功耗传感与可靠性</p></div>
               </div>
               <div class="mt-6 flex flex-col gap-4 border-l-2 border-tech pl-5 sm:flex-row sm:items-center sm:justify-between">
-                <p class="max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-400">首次对接建议以 6-9 个月、指标清晰的联合课题为单位，并提前约定知识产权、保密、样品归属和成果许可范围。</p>
-                <a href="#contact" data-contact-topic="材料与院企合作" class="inline-flex h-11 shrink-0 items-center gap-2 bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-tech dark:bg-white dark:text-ink dark:hover:bg-cyan">发起合作联系 <i data-lucide="arrow-up-right" class="size-4"></i></a>
+                <p class="max-w-2xl text-sm leading-6 text-slate-400">首次对接建议以 6-9 个月、指标清晰的联合课题为单位，并提前约定知识产权、保密、样品归属和成果许可范围。</p>
+                <a href="#contact" data-contact-topic="材料与院企合作" class="inline-flex h-11 shrink-0 items-center gap-2 bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-tech">发起合作联系 <i data-lucide="arrow-up-right" class="size-4"></i></a>
               </div>
             </div>
           </article>
@@ -593,45 +588,45 @@
       </div>
     </section>
 
-    <section id="news" class="section-pad bg-white dark:bg-[#101719]">
+    <section id="news" class="section-pad bg-[#101719]">
       <div class="section-shell">
         <div class="reveal flex items-end justify-between gap-6">
           <div><p class="mb-4 text-sm font-semibold text-tech">06 / 新闻动态</p><h2 class="section-title font-semibold">持续进展</h2></div>
           <a href="#contact" class="hidden items-center gap-2 text-sm font-semibold text-tech sm:flex">媒体与合作咨询 <i data-lucide="arrow-right" class="size-4"></i></a>
         </div>
         <div class="mt-10 grid gap-4 lg:grid-cols-3">
-          <article class="lift reveal border border-line bg-mist p-6 dark:border-[#2b363a] dark:bg-[#0b1012]">
+          <article class="lift reveal border border-line bg-[#0b1012] p-6 border-[#2b363a]">
             <div class="flex items-center justify-between text-xs text-slate-500"><span>产品进展</span><time datetime="2026-08">2026.08</time></div>
             <h3 class="mt-8 text-xl font-semibold leading-8">X1 模块化触觉系统进入工程验证规划阶段</h3>
-            <p class="mt-4 text-sm leading-6 text-slate-600 dark:text-slate-400">围绕反馈点布局、可拆洗结构、SDK 接入与触觉盲测建立首代验证框架。</p>
-            <span class="mt-10 inline-flex size-9 items-center justify-center border border-line dark:border-[#344044]"><i data-lucide="arrow-up-right" class="size-4"></i></span>
+            <p class="mt-4 text-sm leading-6 text-slate-400">围绕反馈点布局、可拆洗结构、SDK 接入与触觉盲测建立首代验证框架。</p>
+            <span class="mt-10 inline-flex size-9 items-center justify-center border border-line border-[#344044]"><i data-lucide="arrow-up-right" class="size-4"></i></span>
           </article>
-          <article class="lift reveal border border-line bg-mist p-6 dark:border-[#2b363a] dark:bg-[#0b1012]">
+          <article class="lift reveal border border-line bg-[#0b1012] p-6 border-[#2b363a]">
             <div class="flex items-center justify-between text-xs text-slate-500"><span>技术研究</span><time datetime="2026-08">2026.08</time></div>
             <h3 class="mt-8 text-xl font-semibold leading-8">先进柔性材料将以对照实验方式逐步导入</h3>
-            <p class="mt-4 text-sm leading-6 text-slate-600 dark:text-slate-400">MXene/CNT、LIG、ZnO 等路线将与成熟传感器同步测试可靠性和系统价值。</p>
-            <span class="mt-10 inline-flex size-9 items-center justify-center border border-line dark:border-[#344044]"><i data-lucide="arrow-up-right" class="size-4"></i></span>
+            <p class="mt-4 text-sm leading-6 text-slate-400">MXene/CNT、LIG、ZnO 等路线将与成熟传感器同步测试可靠性和系统价值。</p>
+            <span class="mt-10 inline-flex size-9 items-center justify-center border border-line border-[#344044]"><i data-lucide="arrow-up-right" class="size-4"></i></span>
           </article>
-          <article class="lift reveal border border-line bg-mist p-6 dark:border-[#2b363a] dark:bg-[#0b1012]">
+          <article class="lift reveal border border-line bg-[#0b1012] p-6 border-[#2b363a]">
             <div class="flex items-center justify-between text-xs text-slate-500"><span>合作计划</span><time datetime="2026-08">2026.08</time></div>
             <h3 class="mt-8 text-xl font-semibold leading-8">启动 XR、训练与科研场景的首批合作沟通</h3>
-            <p class="mt-4 text-sm leading-6 text-slate-600 dark:text-slate-400">寻找具备明确项目预算、批量设备需求和 SDK 适配能力的联合验证伙伴。</p>
-            <span class="mt-10 inline-flex size-9 items-center justify-center border border-line dark:border-[#344044]"><i data-lucide="arrow-up-right" class="size-4"></i></span>
+            <p class="mt-4 text-sm leading-6 text-slate-400">寻找具备明确项目预算、批量设备需求和 SDK 适配能力的联合验证伙伴。</p>
+            <span class="mt-10 inline-flex size-9 items-center justify-center border border-line border-[#344044]"><i data-lucide="arrow-up-right" class="size-4"></i></span>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="section-pad border-t border-line bg-mist dark:border-[#253034] dark:bg-[#0b1012]">
+    <section id="contact" class="section-pad border-t border-line border-[#253034] bg-[#0b1012]">
       <div class="section-shell grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
         <div class="reveal">
           <p class="mb-4 text-sm font-semibold text-tech">07 / 联系我们</p>
           <h2 class="section-title font-semibold text-balance">共同定义下一代身体交互</h2>
-          <p class="mt-6 max-w-md text-sm leading-7 text-slate-600 dark:text-slate-400">欢迎 XR 内容团队、行业集成商、材料与院企合作伙伴及投资机构交流合作。</p>
+          <p class="mt-6 max-w-md text-sm leading-7 text-slate-400">欢迎 XR 内容团队、行业集成商、材料与院企合作伙伴及投资机构交流合作。</p>
           <div class="mt-10 grid gap-5 text-sm">
             <div class="flex flex-col gap-3">
               <div class="flex items-center gap-4">
-                <span class="grid size-10 place-items-center border border-line dark:border-[#344044]">
+                <span class="grid size-10 place-items-center border border-line border-[#344044]">
                   <i data-lucide="mail" class="size-4"></i>
                 </span>
                 <div class="flex flex-1 items-center gap-2">
@@ -642,7 +637,7 @@
                 </div>
               </div>
               <div class="flex items-center gap-4">
-                <span class="grid size-10 place-items-center border border-line dark:border-[#344044]">
+                <span class="grid size-10 place-items-center border border-line border-[#344044]">
                   <i data-lucide="mail" class="size-4"></i>
                 </span>
                 <div class="flex flex-1 items-center gap-2">
@@ -655,7 +650,7 @@
             </div>
             <span id="copyEmailStatus" class="text-xs text-cyan opacity-0 transition-opacity" aria-live="polite">已复制</span>
             <div class="flex items-center gap-4">
-              <span class="grid size-10 place-items-center border border-line dark:border-[#344044]">
+              <span class="grid size-10 place-items-center border border-line border-[#344044]">
                 <i data-lucide="clock" class="size-4"></i>
               </span>
               <span>工作日 24 小时内回复</span>
@@ -663,25 +658,25 @@
           </div>
         </div>
 
-        <form id="contactForm" class="reveal grid gap-5 border-t-2 border-ink bg-white p-6 dark:border-white dark:bg-[#101719] md:grid-cols-2 md:p-8" novalidate>
+        <form id="contactForm" class="reveal grid gap-5 border-t-2 border-ink bg-[#101719] p-6 md:grid-cols-2 md:p-8" novalidate>
           <label class="hidden" aria-hidden="true"><span>网站</span><input name="website" tabindex="-1" autocomplete="off" /></label>
           <label class="grid gap-2 text-sm" for="contactName">
             <span>姓名 / 称呼 <span class="text-red-500" aria-hidden="true">*</span></span>
-            <input id="contactName" name="name" required class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请输入" aria-describedby="nameHint" />
+            <input id="contactName" name="name" required class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech" placeholder="请输入" aria-describedby="nameHint" />
             <small id="nameHint" class="text-xs text-slate-400">至少 2 个字符</small>
           </label>
           <label class="grid gap-2 text-sm" for="contactCompany">
             <span>公司 / 机构</span>
-            <input id="contactCompany" name="company" class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请输入" />
+            <input id="contactCompany" name="company" class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech" placeholder="请输入" />
           </label>
           <label class="grid gap-2 text-sm" for="contactEmail">
             <span>联系邮箱 <span class="text-red-500" aria-hidden="true">*</span></span>
-            <input id="contactEmail" name="email" type="email" required class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="name@company.com" aria-describedby="emailHint" />
+            <input id="contactEmail" name="email" type="email" required class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech" placeholder="name@company.com" aria-describedby="emailHint" />
             <small id="emailHint" class="text-xs text-slate-400">用于接收回复</small>
           </label>
           <label class="grid gap-2 text-sm" for="contactTopic">
             <span>合作方向</span>
-            <select id="contactTopic" name="topic" class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech dark:border-[#344044] dark:bg-[#101719]">
+            <select id="contactTopic" name="topic" class="h-12 border border-line bg-transparent px-4 outline-none transition-colors focus:border-tech">
               <option>产品与 SDK</option>
               <option>场景试点</option>
               <option>材料与院企合作</option>
@@ -691,12 +686,12 @@
           </label>
           <label class="grid gap-2 text-sm md:col-span-2" for="contactMessage">
             <span>需求说明 <span class="text-red-500" aria-hidden="true">*</span></span>
-            <textarea id="contactMessage" name="message" required rows="5" class="resize-none border border-line bg-transparent p-4 outline-none transition-colors focus:border-tech dark:border-[#344044]" placeholder="请简要说明合作需求" aria-describedby="messageHint"></textarea>
+            <textarea id="contactMessage" name="message" required rows="5" class="resize-none border border-line bg-transparent p-4 outline-none transition-colors focus:border-tech" placeholder="请简要说明合作需求" aria-describedby="messageHint"></textarea>
             <small id="messageHint" class="text-xs text-slate-400">至少 10 个字符</small>
           </label>
           <div class="flex flex-col gap-3 md:col-span-2 sm:flex-row sm:items-center sm:justify-between">
             <p id="formStatus" class="text-xs text-slate-500" aria-live="polite" aria-atomic="true">信息将提交至项目联系渠道，仅用于本次合作沟通。</p>
-            <button class="inline-flex h-12 items-center justify-center gap-2 bg-ink px-6 text-sm font-semibold text-white transition-all hover:bg-tech active:scale-95 dark:bg-white dark:text-ink dark:hover:bg-cyan" type="submit">
+            <button class="inline-flex h-12 items-center justify-center gap-2 bg-ink px-6 text-sm font-semibold text-white transition-all hover:bg-tech active:scale-95" type="submit">
               <span id="submitText">发送合作需求</span>
               <i data-lucide="send" class="size-4" id="submitIcon"></i>
               <svg id="submitSpinner" class="hidden size-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -710,20 +705,20 @@
     </section>
   </main>
 
-  <footer class="border-t border-line bg-white py-10 dark:border-[#253034] dark:bg-[#101719]">
+  <footer class="border-t border-line py-10 border-[#253034] bg-[#101719]">
     <div class="section-shell flex flex-col gap-7">
       <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <a href="#home" class="flex items-center gap-3"><span class="brand-mark-shell"><img src="assets/brand/x1-nano-layer-logo.svg" alt="" /></span><span class="text-lg font-semibold">链感：智能触觉</span></a>
         <nav class="flex flex-wrap gap-x-6 gap-y-3 text-xs text-slate-500"><a href="#products">产品</a><a href="#applications">行业应用</a><a href="#funding">融资发展</a><a href="#about">关于我们</a><a href="#resources">材料与院企合作</a><a href="/buy.html">购买 / 预订</a><a href="#contact">联系我们</a></nav>
       </div>
-      <div class="flex flex-col gap-3 border-t border-line pt-6 text-xs text-slate-500 dark:border-[#2d383c] md:flex-row md:items-center md:justify-between">
+      <div class="flex flex-col gap-3 border-t border-line pt-6 text-xs text-slate-500 border-[#2d383c] md:flex-row md:items-center md:justify-between">
         <p>© 2026 链感：智能触觉穿戴项目。版权所有。</p>
         <p>备案信息待主体注册后补充</p>
       </div>
     </div>
   </footer>
 
-  <button id="backToTop" class="pointer-events-none fixed bottom-5 right-5 z-40 grid size-11 translate-y-3 place-items-center border border-line bg-white opacity-0 shadow-lg transition-all dark:border-[#344044] dark:bg-[#151e21]" type="button" aria-label="返回顶部" title="返回顶部">
+  <button id="backToTop" class="pointer-events-none fixed bottom-5 right-5 z-40 grid size-11 translate-y-3 place-items-center border border-line bg-[#151e21] opacity-0 shadow-lg transition-all border-[#344044]" type="button" aria-label="返回顶部" title="返回顶部">
     <i data-lucide="arrow-up" class="size-4"></i>
   </button>
 

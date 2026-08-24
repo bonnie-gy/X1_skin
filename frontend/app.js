@@ -90,7 +90,7 @@ function renderProductTabs() {
       ? '<span class="rounded bg-signal/10 px-2 py-0.5 text-xs font-medium text-signal">预售</span>'
       : '<i data-lucide="arrow-right" class="size-4 text-slate-400"></i>';
     return `
-    <button class="product-thumb lift flex min-h-28 items-center justify-between border border-line bg-white p-5 text-left transition-all duration-200 dark:border-[#283337] dark:bg-[#101719]" type="button" role="tab" aria-selected="${index === 0}" data-product="${index}">
+    <button class="product-thumb lift flex min-h-28 items-center justify-between border border-line bg-white p-5 text-left transition-all duration-200 border-[#283337] bg-[#101719]" type="button" role="tab" aria-selected="${index === 0}" data-product="${index}">
       <span><span class="text-xs text-slate-500">0${index + 1} / ${item.stage}</span><strong class="mt-2 block text-lg">${item.name}</strong></span>
       ${badge}
     </button>`;
@@ -254,7 +254,7 @@ function renderScene(index) {
 
 function renderSceneTabs() {
   sceneTabs.innerHTML = scenes.map((item, index) => `
-    <button class="scene-tab shrink-0 border border-line px-4 py-2.5 text-sm text-slate-600 transition-all duration-200 hover:border-tech hover:text-tech dark:border-[#344044] dark:text-slate-300" type="button" role="tab" aria-selected="${index === 0}" data-scene="${index}">${item.short}</button>`)
+    <button class="scene-tab shrink-0 border border-line px-4 py-2.5 text-sm text-slate-600 transition-all duration-200 hover:border-tech hover:text-tech border-[#344044] text-slate-300" type="button" role="tab" aria-selected="${index === 0}" data-scene="${index}">${item.short}</button>`)
     .join('');
   renderScene(0);
 
@@ -307,16 +307,6 @@ sceneVideoStatus.addEventListener('click', () => {
 
 window.addEventListener('beforeunload', () => {
   sceneVideoUrls.forEach(url => URL.revokeObjectURL(url));
-});
-
-const root = document.documentElement;
-const storedTheme = localStorage.getItem('x1-theme');
-const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-if (storedTheme === 'dark' || (!storedTheme && preferDark)) root.classList.add('dark');
-
-document.querySelector('#themeToggle').addEventListener('click', () => {
-  root.classList.toggle('dark');
-  localStorage.setItem('x1-theme', root.classList.contains('dark') ? 'dark' : 'light');
 });
 
 const header = document.querySelector('#siteHeader');
@@ -942,21 +932,21 @@ document.querySelector('#contactForm').addEventListener('submit', async event =>
   // 基本验证
   if (!payload.name || payload.name.trim().length < 2) {
     status.textContent = '请输入有效的姓名（至少2个字符）';
-    status.className = 'text-xs text-red-600 dark:text-red-400';
+    status.className = 'text-xs text-red-600 text-red-400';
     form.querySelector('[name="name"]').focus();
     return;
   }
 
   if (!payload.email || !isValidEmail(payload.email)) {
     status.textContent = '请输入有效的邮箱地址';
-    status.className = 'text-xs text-red-600 dark:text-red-400';
+    status.className = 'text-xs text-red-600 text-red-400';
     form.querySelector('[name="email"]').focus();
     return;
   }
 
   if (!payload.message || payload.message.trim().length < 10) {
     status.textContent = '需求说明至少需要10个字符';
-    status.className = 'text-xs text-red-600 dark:text-red-400';
+    status.className = 'text-xs text-red-600 text-red-400';
     form.querySelector('[name="message"]').focus();
     return;
   }
@@ -987,7 +977,7 @@ document.querySelector('#contactForm').addEventListener('submit', async event =>
     }, 3000);
   } catch (error) {
     status.textContent = error.message || '提交失败，请稍后重试。';
-    status.className = 'text-xs text-red-600 dark:text-red-400';
+    status.className = 'text-xs text-red-600 text-red-400';
   } finally {
     submitButton.disabled = false;
     submitButton.classList.remove('opacity-60', 'cursor-not-allowed');
