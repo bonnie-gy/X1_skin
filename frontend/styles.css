@@ -640,3 +640,125 @@ html.dark .product-thumb[aria-selected="true"] { background: rgba(22,42,50,.94) 
   .hero-content { opacity: 1 !important; transform: none !important; }
   .hero-product { opacity: 1 !important; transform: none !important; }
 }
+
+/* ── Circuit board background animation ── */
+
+.cv-pulse { animation: cvPulse 3.6s ease-in-out infinite; }
+.cv-pulse-d1 { animation: cvPulse 3.6s ease-in-out .8s infinite; }
+.cv-pulse-d2 { animation: cvPulse 3.6s ease-in-out 1.6s infinite; }
+.cv-pulse-d3 { animation: cvPulse 3.6s ease-in-out 2.4s infinite; }
+.cv-fade-in { animation: cvFadeIn 1.5s ease-out forwards; opacity: 0; }
+.cv-fade-in-d1 { animation: cvFadeIn 1.5s ease-out .3s forwards; opacity: 0; }
+.cv-fade-in-d2 { animation: cvFadeIn 1.5s ease-out .6s forwards; opacity: 0; }
+.cv-fade-in-d3 { animation: cvFadeIn 1.5s ease-out .9s forwards; opacity: 0; }
+
+@keyframes cvPulse {
+  0%, 100% { opacity: 0; }
+  35% { opacity: 1; }
+  65% { opacity: 1; }
+}
+
+@keyframes cvFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.section-cv-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.section-cv-bg .cv-circuit-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-cv-bg .cv-circuit-layer svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#about .section-cv-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(255,119,92,.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 60%, rgba(32,199,194,.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(184,229,96,.06) 0%, transparent 45%),
+    linear-gradient(to bottom, rgba(4,8,12,.55) 0%, rgba(4,8,12,.2) 35%, rgba(4,8,12,.55) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+#resources .section-cv-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(255,119,92,.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 60%, rgba(32,199,194,.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(184,229,96,.05) 0%, transparent 45%),
+    linear-gradient(to bottom, rgba(4,8,12,.55) 0%, rgba(4,8,12,.2) 35%, rgba(4,8,12,.55) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+#about {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(255,119,92,.16) 0%, transparent 48%),
+    radial-gradient(ellipse at 80% 70%, rgba(184,229,96,.1) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(32,199,194,.08) 0%, transparent 50%),
+    linear-gradient(145deg, #060a0e 0%, #0a1018 30%, #080e14 60%, #05080c 100%) !important;
+}
+
+#about::before { display: none; }
+
+#about .section-shell,
+#about > .section-shell { position: relative; z-index: 2; }
+
+#resources {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(255,119,92,.13) 0%, transparent 48%),
+    radial-gradient(ellipse at 80% 70%, rgba(184,229,96,.09) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(32,199,194,.07) 0%, transparent 50%),
+    linear-gradient(155deg, #060a0e 0%, #0a1018 30%, #080e14 60%, #05080c 100%) !important;
+  background-color: #070c10 !important;
+}
+
+#resources .bg-white,
+#resources .bg-mist {
+  background-color: rgba(8,14,20,.78) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: rgba(255,255,255,.06) !important;
+}
+
+html.dark #resources {
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(255,119,92,.15) 0%, transparent 48%),
+    radial-gradient(ellipse at 80% 70%, rgba(184,229,96,.11) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(32,199,194,.09) 0%, transparent 50%),
+    #060a0e !important;
+  background-color: #060a0e !important;
+}
+
+html.dark #resources .bg-white,
+html.dark #resources .bg-mist {
+  background-color: rgba(6,10,14,.82) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+#resources::before { display: none; }

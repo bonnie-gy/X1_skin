@@ -404,6 +404,58 @@
     </section>
 
     <section id="about" class="section-pad overflow-hidden bg-[#111719] text-white">
+      <div class="section-cv-bg">
+        <div class="cv-circuit-layer">
+          <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <filter id="cvGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <filter id="cvGlowBig"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <linearGradient id="cvOrangeG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ff775c" stop-opacity="0"/><stop offset="50%" stop-color="#ff775c" stop-opacity="1"/><stop offset="100%" stop-color="#ff775c" stop-opacity="0"/></linearGradient>
+              <linearGradient id="cvGreenG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#b8e560" stop-opacity="0"/><stop offset="50%" stop-color="#b8e560" stop-opacity="1"/><stop offset="100%" stop-color="#b8e560" stop-opacity="0"/></linearGradient>
+              <linearGradient id="cvBlueG" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#176fdf" stop-opacity="0"/><stop offset="40%" stop-color="#176fdf" stop-opacity=".9"/><stop offset="60%" stop-color="#5b9cf5" stop-opacity="1"/><stop offset="100%" stop-color="#176fdf" stop-opacity="0"/></linearGradient>
+              <linearGradient id="cvCyanG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#20c7c2" stop-opacity="0"/><stop offset="50%" stop-color="#20c7c2" stop-opacity="1"/><stop offset="100%" stop-color="#20c7c2" stop-opacity="0"/></linearGradient>
+              <radialGradient id="cvOrangeGlow"><stop offset="0%" stop-color="#ff775c" stop-opacity=".9"/><stop offset="100%" stop-color="#ff775c" stop-opacity="0"/></radialGradient>
+              <radialGradient id="cvGreenGlow"><stop offset="0%" stop-color="#b8e560" stop-opacity=".9"/><stop offset="100%" stop-color="#b8e560" stop-opacity="0"/></radialGradient>
+              <radialGradient id="cvBlueGlow"><stop offset="0%" stop-color="#176fdf" stop-opacity=".9"/><stop offset="100%" stop-color="#176fdf" stop-opacity="0"/></radialGradient>
+            </defs>
+            <g stroke-width="1" fill="none" opacity=".1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M0,80 L200,80 L240,40 L400,40" stroke="#20c7c2"/><path d="M0,200 L140,200 L180,160 L320,160" stroke="#176fdf"/><path d="M0,340 L160,340 L200,300 L360,300 L400,260" stroke="#20c7c2"/><path d="M0,480 L120,480 L160,440 L300,440" stroke="#176fdf"/><path d="M0,620 L180,620 L220,580 L380,580" stroke="#20c7c2"/><path d="M0,760 L100,760 L140,720 L280,720" stroke="#176fdf"/><path d="M400,0 L400,80 L440,80 L560,80" stroke="#20c7c2"/><path d="M400,180 L400,260 L440,260 L580,260" stroke="#176fdf"/><path d="M400,380 L400,460 L440,460 L580,460" stroke="#20c7c2"/><path d="M400,600 L400,680 L440,680 L600,680" stroke="#176fdf"/><path d="M600,0 L600,120 L640,120 L760,120" stroke="#20c7c2"/><path d="M600,240 L600,320 L640,320 L780,320" stroke="#176fdf"/><path d="M600,440 L600,520 L640,520 L800,520" stroke="#20c7c2"/><path d="M800,0 L800,100 L840,100 L1000,100" stroke="#20c7c2"/><path d="M800,220 L800,300 L840,300 L1020,300 L1060,260" stroke="#176fdf"/><path d="M1000,0 L1000,180 L1040,180 L1200,180" stroke="#20c7c2"/><path d="M1000,380 L1000,480 L1040,480 L1200,480" stroke="#176fdf"/><path d="M200,800 L200,620 L240,620 L380,620" stroke="#20c7c2"/><path d="M560,800 L560,680 L600,680" stroke="#176fdf"/><path d="M760,800 L760,520 L800,520" stroke="#20c7c2"/><path d="M1200,620 L1060,620 L1020,580 L880,580" stroke="#176fdf"/><path d="M280,0 L280,120 L240,120" stroke="#20c7c2"/><path d="M160,160 L160,300" stroke="rgba(32,199,194,.4)"/><path d="M360,300 L360,440" stroke="rgba(23,111,223,.4)"/><path d="M640,120 L640,240" stroke="rgba(32,199,194,.4)"/><path d="M880,0 L880,220" stroke="rgba(23,111,223,.4)"/><path d="M1020,300 L1020,380" stroke="rgba(32,199,194,.4)"/>
+            </g>
+            <g stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".35">
+              <path d="M200,80 L240,40 L400,40 L440,80 L560,80" stroke="#ff775c" class="cv-pulse"/><path d="M160,340 L200,300 L360,300 L400,260 L440,260 L580,260" stroke="#ff775c" class="cv-pulse-d1"/><path d="M600,120 L640,120 L760,120 L800,80 L1000,80" stroke="#b8e560" class="cv-pulse-d2"/><path d="M600,240 L640,320 L780,320 L820,280 L1000,280" stroke="#ff775c" class="cv-pulse-d3"/><path d="M800,220 L840,300 L1020,300" stroke="#b8e560" class="cv-pulse"/><path d="M1000,180 L1040,180 L1200,180 L1200,380" stroke="#ff775c" class="cv-pulse-d1"/><path d="M200,800 L200,620 L240,620 L380,620 L420,580 L560,580" stroke="#b8e560" class="cv-pulse-d2"/><path d="M560,800 L560,680 L600,680 L640,640 L800,640" stroke="#ff775c" class="cv-pulse-d3"/>
+            </g>
+            <g stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".55">
+              <path d="M120,800 L120,680 L160,680 L280,680 L320,640 L480,640" stroke="url(#cvBlueG)" stroke-dasharray="8 200"><animate attributeName="stroke-dashoffset" from="0" to="-200" dur="4s" repeatCount="indefinite"/></path>
+              <path d="M480,800 L480,640 L520,640 L680,640 L720,600 L880,600" stroke="url(#cvBlueG)" stroke-dasharray="10 200"><animate attributeName="stroke-dashoffset" from="0" to="-200" dur="5s" begin="1s" repeatCount="indefinite"/></path>
+              <path d="M880,800 L880,600 L920,600 L1080,600 L1120,560 L1200,560" stroke="url(#cvBlueG)" stroke-dasharray="6 200"><animate attributeName="stroke-dashoffset" from="0" to="-200" dur="3.5s" begin="2s" repeatCount="indefinite"/></path>
+              <path d="M0,120 L80,120 L120,80 L280,80" stroke="url(#cvOrangeG)" stroke-dasharray="6 160"><animate attributeName="stroke-dashoffset" from="0" to="-160" dur="3s" begin=".5s" repeatCount="indefinite"/></path>
+              <path d="M0,380 L100,380 L140,340 L300,340" stroke="url(#cvGreenG)" stroke-dasharray="8 180"><animate attributeName="stroke-dashoffset" from="0" to="-180" dur="4.5s" begin="1.5s" repeatCount="indefinite"/></path>
+            </g>
+            <g stroke-linecap="round">
+              <circle cx="200" cy="80" r="3.5" fill="#ff775c" opacity="0" class="cv-pulse"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="0s" repeatCount="indefinite"/></circle>
+              <circle cx="400" cy="40" r="3" fill="#ff775c" opacity="0" class="cv-pulse-d1"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin=".7s" repeatCount="indefinite"/></circle>
+              <circle cx="640" cy="120" r="3.5" fill="#b8e560" opacity="0" class="cv-pulse-d2"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="1.4s" repeatCount="indefinite"/></circle>
+              <circle cx="840" cy="300" r="3" fill="#ff775c" opacity="0" class="cv-pulse-d3"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="2.1s" repeatCount="indefinite"/></circle>
+              <circle cx="1000" cy="100" r="3.5" fill="#b8e560" opacity="0" class="cv-pulse"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="0s" repeatCount="indefinite"/></circle>
+              <circle cx="1040" cy="180" r="3" fill="#ff775c" opacity="0" class="cv-pulse-d1"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin=".7s" repeatCount="indefinite"/></circle>
+              <circle cx="200" cy="620" r="3.5" fill="#b8e560" opacity="0" class="cv-pulse-d2"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="1.4s" repeatCount="indefinite"/></circle>
+              <circle cx="600" cy="600" r="3" fill="#ff775c" opacity="0" class="cv-pulse-d3"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="2.1s" repeatCount="indefinite"/></circle>
+              <circle cx="880" cy="600" r="3.5" fill="#ff775c" opacity="0" class="cv-pulse"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="0s" repeatCount="indefinite"/></circle>
+              <circle cx="1200" cy="480" r="3" fill="#b8e560" opacity="0" class="cv-pulse-d1"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin=".7s" repeatCount="indefinite"/></circle>
+              <circle cx="360" cy="300" r="3.5" fill="#176fdf" opacity="0" class="cv-pulse-d2"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="1.4s" repeatCount="indefinite"/></circle>
+              <circle cx="780" cy="320" r="3" fill="#176fdf" opacity="0" class="cv-pulse-d3"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="2.1s" repeatCount="indefinite"/></circle>
+            </g>
+            <g opacity=".3">
+              <circle cx="200" cy="80" r="22" fill="url(#cvOrangeGlow)" class="cv-pulse"><animate attributeName="r" values="6;26;6" dur="3.5s" begin="0s" repeatCount="indefinite"/></circle>
+              <circle cx="640" cy="120" r="22" fill="url(#cvGreenGlow)" class="cv-pulse-d1"><animate attributeName="r" values="6;26;6" dur="3.5s" begin=".9s" repeatCount="indefinite"/></circle>
+              <circle cx="1000" cy="100" r="22" fill="url(#cvOrangeGlow)" class="cv-pulse-d2"><animate attributeName="r" values="6;26;6" dur="3.5s" begin="1.8s" repeatCount="indefinite"/></circle>
+              <circle cx="880" cy="600" r="22" fill="url(#cvGreenGlow)" class="cv-pulse-d3"><animate attributeName="r" values="6;26;6" dur="3.5s" begin="2.7s" repeatCount="indefinite"/></circle>
+              <circle cx="360" cy="300" r="18" fill="url(#cvBlueGlow)" class="cv-pulse"><animate attributeName="r" values="4;20;4" dur="3s" begin="0s" repeatCount="indefinite"/></circle>
+              <circle cx="780" cy="320" r="18" fill="url(#cvBlueGlow)" class="cv-pulse-d1"><animate attributeName="r" values="4;20;4" dur="3s" begin="1s" repeatCount="indefinite"/></circle>
+            </g>
+          </svg>
+        </div>
+      </div>
       <div class="section-shell">
         <div class="reveal grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
           <div>
@@ -437,6 +489,58 @@
     </section>
 
     <section id="resources" class="section-pad border-b border-line bg-mist dark:border-[#253034] dark:bg-[#0b1012]">
+      <div class="section-cv-bg">
+        <div class="cv-circuit-layer">
+          <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <filter id="cvGlowR"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <filter id="cvGlowBigR"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <linearGradient id="cvOrangeGR" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ff775c" stop-opacity="0"/><stop offset="50%" stop-color="#ff775c" stop-opacity="1"/><stop offset="100%" stop-color="#ff775c" stop-opacity="0"/></linearGradient>
+              <linearGradient id="cvGreenGR" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#b8e560" stop-opacity="0"/><stop offset="50%" stop-color="#b8e560" stop-opacity="1"/><stop offset="100%" stop-color="#b8e560" stop-opacity="0"/></linearGradient>
+              <linearGradient id="cvBlueGR" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#176fdf" stop-opacity="0"/><stop offset="40%" stop-color="#176fdf" stop-opacity=".9"/><stop offset="60%" stop-color="#5b9cf5" stop-opacity="1"/><stop offset="100%" stop-color="#176fdf" stop-opacity="0"/></linearGradient>
+              <linearGradient id="cvCyanGR" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#20c7c2" stop-opacity="0"/><stop offset="50%" stop-color="#20c7c2" stop-opacity="1"/><stop offset="100%" stop-color="#20c7c2" stop-opacity="0"/></linearGradient>
+              <radialGradient id="cvOrangeGlowR"><stop offset="0%" stop-color="#ff775c" stop-opacity=".9"/><stop offset="100%" stop-color="#ff775c" stop-opacity="0"/></radialGradient>
+              <radialGradient id="cvGreenGlowR"><stop offset="0%" stop-color="#b8e560" stop-opacity=".9"/><stop offset="100%" stop-color="#b8e560" stop-opacity="0"/></radialGradient>
+              <radialGradient id="cvBlueGlowR"><stop offset="0%" stop-color="#176fdf" stop-opacity=".9"/><stop offset="100%" stop-color="#176fdf" stop-opacity="0"/></radialGradient>
+            </defs>
+            <g stroke-width="1" fill="none" opacity=".1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M0,80 L200,80 L240,40 L400,40" stroke="#20c7c2"/><path d="M0,200 L140,200 L180,160 L320,160" stroke="#176fdf"/><path d="M0,340 L160,340 L200,300 L360,300 L400,260" stroke="#20c7c2"/><path d="M0,480 L120,480 L160,440 L300,440" stroke="#176fdf"/><path d="M0,620 L180,620 L220,580 L380,580" stroke="#20c7c2"/><path d="M0,760 L100,760 L140,720 L280,720" stroke="#176fdf"/><path d="M400,0 L400,80 L440,80 L560,80" stroke="#20c7c2"/><path d="M400,180 L400,260 L440,260 L580,260" stroke="#176fdf"/><path d="M400,380 L400,460 L440,460 L580,460" stroke="#20c7c2"/><path d="M400,600 L400,680 L440,680 L600,680" stroke="#176fdf"/><path d="M600,0 L600,120 L640,120 L760,120" stroke="#20c7c2"/><path d="M600,240 L600,320 L640,320 L780,320" stroke="#176fdf"/><path d="M600,440 L600,520 L640,520 L800,520" stroke="#20c7c2"/><path d="M800,0 L800,100 L840,100 L1000,100" stroke="#20c7c2"/><path d="M800,220 L800,300 L840,300 L1020,300 L1060,260" stroke="#176fdf"/><path d="M1000,0 L1000,180 L1040,180 L1200,180" stroke="#20c7c2"/><path d="M1000,380 L1000,480 L1040,480 L1200,480" stroke="#176fdf"/><path d="M200,800 L200,620 L240,620 L380,620" stroke="#20c7c2"/><path d="M560,800 L560,680 L600,680" stroke="#176fdf"/><path d="M760,800 L760,520 L800,520" stroke="#20c7c2"/><path d="M1200,620 L1060,620 L1020,580 L880,580" stroke="#176fdf"/><path d="M280,0 L280,120 L240,120" stroke="#20c7c2"/><path d="M160,160 L160,300" stroke="rgba(32,199,194,.4)"/><path d="M360,300 L360,440" stroke="rgba(23,111,223,.4)"/><path d="M640,120 L640,240" stroke="rgba(32,199,194,.4)"/><path d="M880,0 L880,220" stroke="rgba(23,111,223,.4)"/><path d="M1020,300 L1020,380" stroke="rgba(32,199,194,.4)"/>
+            </g>
+            <g stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".35">
+              <path d="M200,80 L240,40 L400,40 L440,80 L560,80" stroke="#ff775c" class="cv-pulse"/><path d="M160,340 L200,300 L360,300 L400,260 L440,260 L580,260" stroke="#ff775c" class="cv-pulse-d1"/><path d="M600,120 L640,120 L760,120 L800,80 L1000,80" stroke="#b8e560" class="cv-pulse-d2"/><path d="M600,240 L640,320 L780,320 L820,280 L1000,280" stroke="#ff775c" class="cv-pulse-d3"/><path d="M800,220 L840,300 L1020,300" stroke="#b8e560" class="cv-pulse"/><path d="M1000,180 L1040,180 L1200,180 L1200,380" stroke="#ff775c" class="cv-pulse-d1"/><path d="M200,800 L200,620 L240,620 L380,620 L420,580 L560,580" stroke="#b8e560" class="cv-pulse-d2"/><path d="M560,800 L560,680 L600,680 L640,640 L800,640" stroke="#ff775c" class="cv-pulse-d3"/>
+            </g>
+            <g stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".55">
+              <path d="M120,800 L120,680 L160,680 L280,680 L320,640 L480,640" stroke="url(#cvBlueGR)" stroke-dasharray="8 200"><animate attributeName="stroke-dashoffset" from="0" to="-200" dur="4s" repeatCount="indefinite"/></path>
+              <path d="M480,800 L480,640 L520,640 L680,640 L720,600 L880,600" stroke="url(#cvBlueGR)" stroke-dasharray="10 200"><animate attributeName="stroke-dashoffset" from="0" to="-200" dur="5s" begin="1s" repeatCount="indefinite"/></path>
+              <path d="M880,800 L880,600 L920,600 L1080,600 L1120,560 L1200,560" stroke="url(#cvBlueGR)" stroke-dasharray="6 200"><animate attributeName="stroke-dashoffset" from="0" to="-200" dur="3.5s" begin="2s" repeatCount="indefinite"/></path>
+              <path d="M0,120 L80,120 L120,80 L280,80" stroke="url(#cvOrangeGR)" stroke-dasharray="6 160"><animate attributeName="stroke-dashoffset" from="0" to="-160" dur="3s" begin=".5s" repeatCount="indefinite"/></path>
+              <path d="M0,380 L100,380 L140,340 L300,340" stroke="url(#cvGreenGR)" stroke-dasharray="8 180"><animate attributeName="stroke-dashoffset" from="0" to="-180" dur="4.5s" begin="1.5s" repeatCount="indefinite"/></path>
+            </g>
+            <g stroke-linecap="round">
+              <circle cx="200" cy="80" r="3.5" fill="#ff775c" opacity="0" class="cv-pulse"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="0s" repeatCount="indefinite"/></circle>
+              <circle cx="400" cy="40" r="3" fill="#ff775c" opacity="0" class="cv-pulse-d1"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin=".7s" repeatCount="indefinite"/></circle>
+              <circle cx="640" cy="120" r="3.5" fill="#b8e560" opacity="0" class="cv-pulse-d2"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="1.4s" repeatCount="indefinite"/></circle>
+              <circle cx="840" cy="300" r="3" fill="#ff775c" opacity="0" class="cv-pulse-d3"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="2.1s" repeatCount="indefinite"/></circle>
+              <circle cx="1000" cy="100" r="3.5" fill="#b8e560" opacity="0" class="cv-pulse"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="0s" repeatCount="indefinite"/></circle>
+              <circle cx="1040" cy="180" r="3" fill="#ff775c" opacity="0" class="cv-pulse-d1"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin=".7s" repeatCount="indefinite"/></circle>
+              <circle cx="200" cy="620" r="3.5" fill="#b8e560" opacity="0" class="cv-pulse-d2"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="1.4s" repeatCount="indefinite"/></circle>
+              <circle cx="600" cy="600" r="3" fill="#ff775c" opacity="0" class="cv-pulse-d3"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="2.1s" repeatCount="indefinite"/></circle>
+              <circle cx="880" cy="600" r="3.5" fill="#ff775c" opacity="0" class="cv-pulse"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="0s" repeatCount="indefinite"/></circle>
+              <circle cx="1200" cy="480" r="3" fill="#b8e560" opacity="0" class="cv-pulse-d1"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin=".7s" repeatCount="indefinite"/></circle>
+              <circle cx="360" cy="300" r="3.5" fill="#176fdf" opacity="0" class="cv-pulse-d2"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="1.4s" repeatCount="indefinite"/></circle>
+              <circle cx="780" cy="320" r="3" fill="#176fdf" opacity="0" class="cv-pulse-d3"><animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="2.1s" repeatCount="indefinite"/></circle>
+            </g>
+            <g opacity=".3">
+              <circle cx="200" cy="80" r="22" fill="url(#cvOrangeGlowR)" class="cv-pulse"><animate attributeName="r" values="6;26;6" dur="3.5s" begin="0s" repeatCount="indefinite"/></circle>
+              <circle cx="640" cy="120" r="22" fill="url(#cvGreenGlowR)" class="cv-pulse-d1"><animate attributeName="r" values="6;26;6" dur="3.5s" begin=".9s" repeatCount="indefinite"/></circle>
+              <circle cx="1000" cy="100" r="22" fill="url(#cvOrangeGlowR)" class="cv-pulse-d2"><animate attributeName="r" values="6;26;6" dur="3.5s" begin="1.8s" repeatCount="indefinite"/></circle>
+              <circle cx="880" cy="600" r="22" fill="url(#cvGreenGlowR)" class="cv-pulse-d3"><animate attributeName="r" values="6;26;6" dur="3.5s" begin="2.7s" repeatCount="indefinite"/></circle>
+              <circle cx="360" cy="300" r="18" fill="url(#cvBlueGlowR)" class="cv-pulse"><animate attributeName="r" values="4;20;4" dur="3s" begin="0s" repeatCount="indefinite"/></circle>
+              <circle cx="780" cy="320" r="18" fill="url(#cvBlueGlowR)" class="cv-pulse-d1"><animate attributeName="r" values="4;20;4" dur="3s" begin="1s" repeatCount="indefinite"/></circle>
+            </g>
+          </svg>
+        </div>
+      </div>
       <div class="section-shell">
         <div class="reveal grid gap-6 lg:grid-cols-[.75fr_1.25fr] lg:items-end">
           <div>

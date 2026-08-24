@@ -1078,6 +1078,114 @@ document.querySelectorAll('.copy-email-btn').forEach(btn => {
   });
 });
 
+/* ── Circuit board background animation ── */
+function initCircuitBoard() {
+  const sections = [
+    { id: 'about', particleColors: [[255,119,92],[184,229,96],[23,111,223]] },
+    { id: 'resources', particleColors: [[255,119,92],[184,229,96],[23,111,223]] }
+  ];
+
+  sections.forEach(({ id, particleColors }) => {
+    const section = document.getElementById(id);
+    const svg = section?.querySelector('.cv-circuit-layer svg');
+    if (!section || !svg) return;
+
+    const paths = svg.querySelectorAll('.cv-cols path');
+    if (!paths.length) return;
+
+    const glowColor = '255,255,255';
+    const allPaths = Array.from(paths);
+    const particles = [];
+    let running = true;
+    let rafId = 0;
+
+    allPaths.forEach((path, i) => {
+      particles.push({
+        path,
+        progress: Math.random(),
+        speed: .001 + Math.random() * .003,
+        size: 1.2 + Math.random() * 2.5,
+        color: particleColors[Math.floor(Math.random() * particleColors.length)],
+        alpha: .5 + Math.random() * .5,
+        delay: (i / allPaths.length) * 5000 + Math.random() * 4000,
+        started: false,
+        startTime: 0
+      });
+    });
+
+    const NS = 'http://www.w3.org/2000/svg';
+    const container = document.createElementNS(NS, 'g');
+    container.setAttribute('class', 'cv-particles');
+    svg.appendChild(container);
+
+    function createParticleEl() {
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('r', '0');
+      c.setAttribute('fill', `rgba(${glowColor},0)`);
+      c.setAttribute('filter', `url(#${id === 'about' ? 'cvGlow' : 'cvGlowR'})`);
+      container.appendChild(c);
+      return c;
+    }
+
+    const particleEls = particles.map(() => createParticleEl());
+
+    function animate(ts) {
+      if (!running) return;
+
+      particles.forEach((p, i) => {
+        if (!p.started) {
+          if (ts - p.startTime < p.delay) return;
+          p.started = true;
+        }
+
+        p.progress += p.speed;
+        if (p.progress > 1) {
+          p.progress = 0;
+          p.delay = 1500 + Math.random() * 5000;
+          p.started = false;
+          p.startTime = ts;
+        }
+
+        if (!p.started) return;
+
+        try {
+          const len = p.path.getTotalLength();
+          const pt = p.path.getPointAtLength(p.progress * len);
+          const el = particleEls[i];
+          const fadeLen = .1;
+          const alpha = p.progress < fadeLen
+            ? p.alpha * (p.progress / fadeLen)
+            : p.progress > 1 - fadeLen
+              ? p.alpha * ((1 - p.progress) / fadeLen)
+              : p.alpha;
+          el.setAttribute('cx', pt.x.toFixed(1));
+          el.setAttribute('cy', pt.y.toFixed(1));
+          el.setAttribute('r', p.size.toFixed(1));
+          el.setAttribute('fill', `rgba(${p.color[0]},${p.color[1]},${p.color[2]},${alpha.toFixed(2)})`);
+        } catch (e) { /* path not ready */ }
+      });
+
+      rafId = requestAnimationFrame(animate);
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries[0]?.isIntersecting;
+      if (visible && !running) {
+        running = true;
+        rafId = requestAnimationFrame(animate);
+      } else if (!visible && running) {
+        running = false;
+        cancelAnimationFrame(rafId);
+      }
+    }, { threshold: .02 });
+    observer.observe(section);
+
+    rafId = requestAnimationFrame(animate);
+  });
+}
+
+initCircuitBoard();
+
 lucide.createIcons();
 loadContent();
 initHeroScrollStory();
