@@ -363,7 +363,7 @@ function updateHeroStory() {
   const storyShiftY = materialFocus * (mobile ? 18 : 24) - signalEnter * (mobile ? 20 : 34);
   // Let the hero product clear before the final signal panel and the metrics band
   // arrive, so the hand never visually collides with the next section.
-  const productOpacity = 1 - smoothstep(.56, .72, progress);
+  const productOpacity = 1 - smoothstep(.78, .96, progress) * .16;
   const videoOpacity = materialFocus * .34 + signalEnter * .64;
   const phase = progress < .31 ? 0 : progress < .7 ? 1 : 2;
 
