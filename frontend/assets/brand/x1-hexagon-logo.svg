@@ -11,7 +11,6 @@
       <stop offset="0.88" stop-color="#8cc8db"/>
       <stop offset="1" stop-color="#d0ecf7"/>
     </linearGradient>
-    <!-- 金属银白脉冲（中心核心，高光最亮） -->
     <radialGradient id="pulse-silver" cx="30%" cy="20%" r="80%">
       <stop offset="0" stop-color="#ffffff"/>
       <stop offset="0.12" stop-color="#d0ecf7"/>
@@ -19,7 +18,6 @@
       <stop offset="0.55" stop-color="#0e5a7a"/>
       <stop offset="1" stop-color="#041820" stop-opacity=".85"/>
     </radialGradient>
-    <!-- 金属蓝脉冲（顶点节点） -->
     <radialGradient id="pulse-metal-blue" cx="30%" cy="20%" r="80%">
       <stop offset="0" stop-color="#d0ecf7"/>
       <stop offset="0.18" stop-color="#5bb5d8"/>
@@ -27,7 +25,6 @@
       <stop offset="0.65" stop-color="#0e5a7a"/>
       <stop offset="1" stop-color="#051520" stop-opacity=".9"/>
     </radialGradient>
-    <!-- 金属铜脉冲（交替节点，暗红铜质感） -->
     <radialGradient id="pulse-copper" cx="30%" cy="20%" r="80%">
       <stop offset="0" stop-color="#fff0d0"/>
       <stop offset="0.15" stop-color="#f5c788"/>
@@ -35,7 +32,6 @@
       <stop offset="0.6" stop-color="#6b3a18"/>
       <stop offset="1" stop-color="#2a1208" stop-opacity=".9"/>
     </radialGradient>
-    <!-- 强辉光滤镜 -->
     <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur stdDeviation="2.5" result="blur"/>
       <feMerge>
@@ -51,7 +47,6 @@
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <!-- 金属投影 -->
     <filter id="metal-shadow" x="-10%" y="-10%" width="120%" height="120%">
       <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#020508" flood-opacity=".65"/>
     </filter>
@@ -59,49 +54,49 @@
 
   <!-- 六边形蜂巢 -->
   <g fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#metal-shadow)">
-    <polygon points="60,34 82,48 82,72 60,86 38,72 38,48"
+    <polygon points="60,10 108,47 108,73 60,110 12,73 12,47"
              stroke="url(#hex-stroke)" stroke-width="3.2" opacity=".85" filter="url(#glow)"/>
   </g>
 
   <!-- 蜂巢内部电路连接线 -->
   <g fill="none" stroke-linecap="round" stroke-width="1.4" opacity=".45">
-    <line x1="60" y1="60" x2="60" y2="34" stroke="#5bb5d8"/>
-    <line x1="60" y1="60" x2="82" y2="48" stroke="#0e5a7a"/>
-    <line x1="60" y1="60" x2="82" y2="72" stroke="#5bb5d8"/>
-    <line x1="60" y1="60" x2="60" y2="86" stroke="#0e5a7a"/>
-    <line x1="60" y1="60" x2="38" y2="72" stroke="#5bb5d8"/>
-    <line x1="60" y1="60" x2="38" y2="48" stroke="#0e5a7a"/>
-    <line x1="60" y1="34" x2="72" y2="28" stroke="#5bb5d8" opacity=".3"/>
-    <line x1="82" y1="48" x2="90" y2="44" stroke="#0e5a7a" opacity=".3"/>
-    <line x1="82" y1="72" x2="90" y2="76" stroke="#5bb5d8" opacity=".3"/>
-    <line x1="60" y1="86" x2="48" y2="92" stroke="#0e5a7a" opacity=".3"/>
-    <line x1="38" y1="72" x2="30" y2="76" stroke="#5bb5d8" opacity=".3"/>
-    <line x1="38" y1="48" x2="30" y2="44" stroke="#0e5a7a" opacity=".3"/>
+    <line x1="60" y1="60" x2="60" y2="10" stroke="#5bb5d8"/>
+    <line x1="60" y1="60" x2="108" y2="47" stroke="#0e5a7a"/>
+    <line x1="60" y1="60" x2="108" y2="73" stroke="#5bb5d8"/>
+    <line x1="60" y1="60" x2="60" y2="110" stroke="#0e5a7a"/>
+    <line x1="60" y1="60" x2="12" y2="73" stroke="#5bb5d8"/>
+    <line x1="60" y1="60" x2="12" y2="47" stroke="#0e5a7a"/>
+    <line x1="60" y1="10" x2="79" y2="3" stroke="#5bb5d8" opacity=".3"/>
+    <line x1="108" y1="47" x2="117" y2="43" stroke="#0e5a7a" opacity=".3"/>
+    <line x1="108" y1="73" x2="117" y2="77" stroke="#5bb5d8" opacity=".3"/>
+    <line x1="60" y1="110" x2="41" y2="117" stroke="#0e5a7a" opacity=".3"/>
+    <line x1="12" y1="73" x2="3" y2="77" stroke="#5bb5d8" opacity=".3"/>
+    <line x1="12" y1="47" x2="3" y2="43" stroke="#0e5a7a" opacity=".3"/>
   </g>
 
   <!-- 触觉脉冲光点（6个节点） -->
   <g filter="url(#glow-strong)">
-    <circle cx="60" cy="34" r="4" fill="url(#pulse-metal-blue)" class="pulse-node">
+    <circle cx="60" cy="10" r="4" fill="url(#pulse-metal-blue)" class="pulse-node">
       <animate attributeName="r" values="3;5;3" dur="2.8s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values=".7;1;.7" dur="2.8s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="82" cy="48" r="4" fill="url(#pulse-silver)" class="pulse-node">
+    <circle cx="108" cy="47" r="4" fill="url(#pulse-silver)" class="pulse-node">
       <animate attributeName="r" values="3;5;3" dur="2.8s" begin=".7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values=".7;1;.7" dur="2.8s" begin=".7s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="82" cy="72" r="4" fill="url(#pulse-copper)" class="pulse-node">
+    <circle cx="108" cy="73" r="4" fill="url(#pulse-copper)" class="pulse-node">
       <animate attributeName="r" values="3;5;3" dur="2.8s" begin="1.4s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values=".7;1;.7" dur="2.8s" begin="1.4s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="60" cy="86" r="4" fill="url(#pulse-metal-blue)" class="pulse-node">
+    <circle cx="60" cy="110" r="4" fill="url(#pulse-metal-blue)" class="pulse-node">
       <animate attributeName="r" values="3;5;3" dur="2.8s" begin="2.1s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values=".7;1;.7" dur="2.8s" begin="2.1s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="38" cy="72" r="4" fill="url(#pulse-silver)" class="pulse-node">
+    <circle cx="12" cy="73" r="4" fill="url(#pulse-silver)" class="pulse-node">
       <animate attributeName="r" values="3;5;3" dur="2.8s" begin=".35s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values=".7;1;.7" dur="2.8s" begin=".35s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="38" cy="48" r="4" fill="url(#pulse-copper)" class="pulse-node">
+    <circle cx="12" cy="47" r="4" fill="url(#pulse-copper)" class="pulse-node">
       <animate attributeName="r" values="3;5;3" dur="2.8s" begin="1.05s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values=".7;1;.7" dur="2.8s" begin="1.05s" repeatCount="indefinite"/>
     </circle>
@@ -115,11 +110,11 @@
 
   <!-- 脉冲波纹扩散 -->
   <circle cx="60" cy="60" r="8" fill="none" stroke="#5bb5d8" stroke-width=".8" opacity="0">
-    <animate attributeName="r" values="8;22" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="8;36" dur="2.5s" repeatCount="indefinite"/>
     <animate attributeName="opacity" values=".5;0" dur="2.5s" repeatCount="indefinite"/>
   </circle>
   <circle cx="60" cy="60" r="8" fill="none" stroke="#0e5a7a" stroke-width=".8" opacity="0">
-    <animate attributeName="r" values="8;22" dur="2.5s" begin="1.25s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="8;36" dur="2.5s" begin="1.25s" repeatCount="indefinite"/>
     <animate attributeName="opacity" values=".5;0" dur="2.5s" begin="1.25s" repeatCount="indefinite"/>
   </circle>
 
