@@ -782,24 +782,100 @@ function initHeroExperience() {
   if (!context) return;
 
   const pointer = { x: 0, y: 0, active: false };
-  const particles = [];
-  const colors = [178, 195, 211, 14, 88];
+  const traces = [];
+  const components = [];
+  const signalColors = ['#ff7a18', '#4df58a', '#299cff'];
+  const signalRgb = ['255,122,24', '77,245,138', '41,156,255'];
   let width = 0;
   let height = 0;
   let frameId = 0;
   let running = true;
-  let lastTime = performance.now();
 
-  function resetParticle(particle, randomX = true) {
-    particle.x = randomX ? Math.random() * width : -20;
-    particle.y = Math.random() * height;
-    particle.px = particle.x;
-    particle.py = particle.y;
-    particle.speed = .35 + Math.random() * .75;
-    particle.life = 180 + Math.random() * 320;
-    particle.hue = colors[Math.floor(Math.random() * colors.length)];
-    particle.alpha = .16 + Math.random() * .32;
-    particle.width = .45 + Math.random() * 1.25;
+  function snap(value, grid = 24) {
+    return Math.round(value / grid) * grid;
+  }
+
+  function addTrace(points, colorIndex, index) {
+    const segments = [];
+    let totalLength = 0;
+
+    for (let pointIndex = 1; pointIndex < points.length; pointIndex += 1) {
+      const from = points[pointIndex - 1];
+      const to = points[pointIndex];
+      const length = Math.hypot(to.x - from.x, to.y - from.y);
+      segments.push({ from, to, length, start: totalLength });
+      totalLength += length;
+    }
+
+    traces.push({
+      points,
+      segments,
+      totalLength,
+      colorIndex,
+      speed: 85 + (index % 5) * 18,
+      offset: index * 137,
+      width: colorIndex === 2 ? 1.15 : .9
+    });
+  }
+
+  function buildCircuit() {
+    traces.length = 0;
+    components.length = 0;
+    const compact = width < 768;
+    const horizontalCount = compact ? 8 : 15;
+    const verticalCount = compact ? 4 : 8;
+    const grid = compact ? 20 : 24;
+
+    for (let index = 0; index < horizontalCount; index += 1) {
+      const y = snap(height * (.07 + index / horizontalCount * .88), grid);
+      const x1 = snap(width * (.12 + ((index * 7) % 23) / 100), grid);
+      const x2 = snap(width * (.46 + ((index * 11) % 28) / 100), grid);
+      const bend = snap(y + ((index % 5) - 2) * grid, grid);
+      const endY = snap(bend + ((index % 3) - 1) * grid, grid);
+      addTrace([
+        { x: -36, y },
+        { x: x1, y },
+        { x: x1 + grid, y: bend },
+        { x: x2, y: bend },
+        { x: x2 + grid, y: endY },
+        { x: width + 36, y: endY }
+      ], index % 3, index);
+    }
+
+    for (let index = 0; index < verticalCount; index += 1) {
+      const x = snap(width * (.46 + index / Math.max(1, verticalCount - 1) * .5), grid);
+      const y1 = snap(height * (.16 + ((index * 13) % 22) / 100), grid);
+      const y2 = snap(height * (.58 + ((index * 9) % 24) / 100), grid);
+      const bend = snap(x + ((index % 4) - 1.5) * grid, grid);
+      addTrace([
+        { x, y: -30 },
+        { x, y: y1 },
+        { x: bend, y: y1 + grid },
+        { x: bend, y: y2 },
+        { x: bend + (index % 2 ? grid : -grid), y: y2 + grid },
+        { x: bend + (index % 2 ? grid : -grid), y: height + 30 }
+      ], (index + 2) % 3, horizontalCount + index);
+    }
+
+    const componentCount = compact ? 6 : 12;
+    for (let index = 0; index < componentCount; index += 1) {
+      components.push({
+        x: snap(width * (.38 + ((index * 17) % 57) / 100), grid),
+        y: snap(height * (.08 + ((index * 23) % 78) / 100), grid),
+        w: index % 3 === 0 ? grid * 2.2 : grid * 1.35,
+        h: index % 3 === 0 ? grid * 1.3 : grid * .8
+      });
+    }
+  }
+
+  function pointAt(trace, distance) {
+    const target = Math.max(0, Math.min(distance, trace.totalLength));
+    const segment = trace.segments.find(item => target <= item.start + item.length) || trace.segments.at(-1);
+    const amount = segment.length ? (target - segment.start) / segment.length : 0;
+    return {
+      x: segment.from.x + (segment.to.x - segment.from.x) * amount,
+      y: segment.from.y + (segment.to.y - segment.from.y) * amount
+    };
   }
 
   function resizeCanvas() {
@@ -812,13 +888,7 @@ function initHeroExperience() {
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
     context.setTransform(dpr, 0, 0, dpr, 0, 0);
-    particles.length = 0;
-    const particleCount = width < 768 ? 38 : 76;
-    for (let index = 0; index < particleCount; index += 1) {
-      const particle = {};
-      resetParticle(particle);
-      particles.push(particle);
-    }
+    buildCircuit();
     context.clearRect(0, 0, width, height);
   }
 
@@ -856,46 +926,99 @@ function initHeroExperience() {
 
   function draw(time) {
     if (!running) return;
-    const delta = Math.min(2, (time - lastTime) / 16.67);
-    lastTime = time;
-    context.fillStyle = 'rgba(7, 23, 30, .075)';
-    context.fillRect(0, 0, width, height);
+    context.clearRect(0, 0, width, height);
+    const parallaxX = pointer.active ? (pointer.x / width - .5) * -7 : 0;
+    const parallaxY = pointer.active ? (pointer.y / height - .5) * -5 : 0;
+    const storyEnergy = 1 + Number(hero.dataset.storyPhase || 0) * .16;
 
-    particles.forEach(particle => {
-      particle.px = particle.x;
-      particle.py = particle.y;
-      const fieldX = Math.sin(particle.y * .007 + time * .00034) + Math.cos(particle.x * .003 - time * .00022);
-      const fieldY = Math.cos(particle.x * .005 + time * .00028) * .72 + Math.sin(particle.y * .004) * .35;
-      const storyEnergy = 1 + Number(hero.dataset.storyPhase || 0) * .22;
-      let velocityX = (1.05 + fieldX * .44) * particle.speed * storyEnergy;
-      let velocityY = fieldY * particle.speed * storyEnergy;
+    context.save();
+    context.translate(parallaxX, parallaxY);
+    components.forEach((component, index) => {
+      context.strokeStyle = index % 4 === 0 ? 'rgba(77,245,138,.16)' : 'rgba(101,145,151,.12)';
+      context.fillStyle = 'rgba(4,12,16,.58)';
+      context.lineWidth = 1;
+      context.fillRect(component.x - component.w / 2, component.y - component.h / 2, component.w, component.h);
+      context.strokeRect(component.x - component.w / 2, component.y - component.h / 2, component.w, component.h);
+    });
 
-      if (pointer.active) {
-        const dx = particle.x - pointer.x;
-        const dy = particle.y - pointer.y;
-        const distance = Math.hypot(dx, dy);
-        if (distance < 240 && distance > 1) {
-          const force = (1 - distance / 240) * 2.1;
-          velocityX += (-dy / distance) * force;
-          velocityY += (dx / distance) * force;
-        }
-      }
-
-      particle.x += velocityX * delta;
-      particle.y += velocityY * delta;
-      particle.life -= delta;
-
+    traces.forEach((trace, traceIndex) => {
       context.beginPath();
-      context.moveTo(particle.px, particle.py);
-      context.lineTo(particle.x, particle.y);
-      context.strokeStyle = `hsla(${particle.hue}, 84%, 67%, ${particle.alpha})`;
-      context.lineWidth = particle.width;
+      trace.points.forEach((point, pointIndex) => {
+        if (pointIndex === 0) context.moveTo(point.x, point.y);
+        else context.lineTo(point.x, point.y);
+      });
+      context.strokeStyle = `rgba(${signalRgb[trace.colorIndex]},${trace.colorIndex === 1 ? .16 : .11})`;
+      context.lineWidth = trace.colorIndex === 2 ? 1.2 : .8;
+      context.shadowBlur = 0;
       context.stroke();
 
-      if (particle.x > width + 30 || particle.y < -40 || particle.y > height + 40 || particle.life <= 0) {
-        resetParticle(particle, false);
+      if (trace.colorIndex === 2) {
+        context.save();
+        context.translate(0, 4);
+        context.strokeStyle = 'rgba(41,156,255,.075)';
+        context.stroke();
+        context.restore();
+      }
+
+      trace.points.slice(1, -1).forEach((point, nodeIndex) => {
+        const flash = Math.pow(Math.max(0, Math.sin(time * .0022 + traceIndex * 1.7 + nodeIndex)), 9);
+        const activeGreen = (traceIndex + nodeIndex) % 4 === 0;
+        context.beginPath();
+        context.arc(point.x, point.y, activeGreen ? 1.6 + flash * 1.8 : 1.15, 0, Math.PI * 2);
+        context.fillStyle = activeGreen
+          ? `rgba(77,245,138,${.24 + flash * .76})`
+          : 'rgba(126,170,174,.18)';
+        context.shadowColor = activeGreen ? '#4df58a' : 'transparent';
+        context.shadowBlur = activeGreen ? 4 + flash * 14 : 0;
+        context.fill();
+      });
+
+      const pulseCount = trace.colorIndex === 0 ? 2 : 1;
+      for (let pulseIndex = 0; pulseIndex < pulseCount; pulseIndex += 1) {
+        const pulseDistance = ((time * .001 * trace.speed * storyEnergy) + trace.offset + pulseIndex * trace.totalLength * .52) % trace.totalLength;
+        const trailLength = trace.colorIndex === 2 ? 120 : trace.colorIndex === 0 ? 82 : 54;
+        const steps = trace.colorIndex === 2 ? 18 : 12;
+        for (let step = steps; step > 0; step -= 1) {
+          const fromDistance = pulseDistance - trailLength * (step / steps);
+          const toDistance = pulseDistance - trailLength * ((step - 1) / steps);
+          if (toDistance <= 0) continue;
+          const from = pointAt(trace, Math.max(0, fromDistance));
+          const to = pointAt(trace, toDistance);
+          const alpha = (1 - step / (steps + 1)) * (trace.colorIndex === 0 ? .92 : .74);
+          context.beginPath();
+          context.moveTo(from.x, from.y);
+          context.lineTo(to.x, to.y);
+          context.strokeStyle = `rgba(${signalRgb[trace.colorIndex]},${alpha})`;
+          context.lineWidth = trace.width + (1 - step / steps) * 1.45;
+          context.shadowColor = signalColors[trace.colorIndex];
+          context.shadowBlur = trace.colorIndex === 0 ? 13 : 9;
+          context.stroke();
+        }
+
+        const head = pointAt(trace, pulseDistance);
+        context.beginPath();
+        context.arc(head.x, head.y, trace.colorIndex === 0 ? 2.4 : 1.9, 0, Math.PI * 2);
+        context.fillStyle = signalColors[trace.colorIndex];
+        context.shadowColor = signalColors[trace.colorIndex];
+        context.shadowBlur = trace.colorIndex === 0 ? 18 : 13;
+        context.fill();
       }
     });
+    context.restore();
+
+    context.shadowBlur = 0;
+    const vignette = context.createLinearGradient(0, 0, width, 0);
+    vignette.addColorStop(0, 'rgba(2,6,9,.78)');
+    vignette.addColorStop(.28, 'rgba(2,6,9,.24)');
+    vignette.addColorStop(1, 'rgba(2,6,9,.04)');
+    context.fillStyle = vignette;
+    context.fillRect(0, 0, width, height);
+
+    const bottomFade = context.createLinearGradient(0, height * .66, 0, height);
+    bottomFade.addColorStop(0, 'rgba(2,6,9,0)');
+    bottomFade.addColorStop(1, 'rgba(2,6,9,.52)');
+    context.fillStyle = bottomFade;
+    context.fillRect(0, height * .66, width, height * .34);
 
     frameId = requestAnimationFrame(draw);
   }
@@ -908,7 +1031,6 @@ function initHeroExperience() {
     const visible = entries[0]?.isIntersecting;
     if (visible && !running) {
       running = true;
-      lastTime = performance.now();
       frameId = requestAnimationFrame(draw);
     } else if (!visible && running) {
       running = false;
