@@ -21,7 +21,7 @@
       "name": "X1 Haptic Vest",
       "eyebrow": "MODULAR HAPTIC HARDWARE",
       "stage": "工程开发",
-      "image": "/assets/media/latest-product-vest.jpg",
+      "image": "/assets/media/x1-cabin.png",
       "alt": "X1 模块化触觉背心系统概念图",
       "description": "面向 XR、线下沉浸体验与训练场景的 B2B 模块化触觉背心，强调可维护、可清洗与稳定部署。",
       "specs": [["反馈模块", "16-24 点"], ["目标延迟", "< 30 ms"], ["目标续航", "≥ 6 小时"], ["通信接口", "BLE / USB"]],
