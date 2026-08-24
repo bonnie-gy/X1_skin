@@ -47,11 +47,19 @@ function renderProduct(index) {
     if (productVideo) {
       const nextVideo = productVideos[index];
       productVideo.pause();
-      productVideo.classList.remove('is-unavailable');
-      productVideo.src = nextVideo || '';
-      productVideo.poster = item.image;
-      productVideo.load();
-      productVideo.play().catch(() => {});
+      // The engineering-development card uses the supplied lab image as its
+      // hero artwork; don't let the legacy vest video cover it.
+      if (index === 1) {
+        productVideo.classList.add('is-unavailable');
+        productVideo.removeAttribute('src');
+        productVideo.load();
+      } else {
+        productVideo.classList.remove('is-unavailable');
+        productVideo.src = nextVideo || '';
+        productVideo.poster = item.image;
+        productVideo.load();
+        productVideo.play().catch(() => {});
+      }
     }
     productName.textContent = item.name;
     productEyebrow.textContent = item.eyebrow;
