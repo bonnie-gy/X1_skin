@@ -54,24 +54,24 @@
 
   <!-- 六边形蜂巢 -->
   <g fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#metal-shadow)">
-    <polygon points="60,10 108,47 108,73 60,110 12,73 12,47"
+    <polygon points="60,10 103,35 103,85 60,110 17,85 17,35"
              stroke="url(#hex-stroke)" stroke-width="3.2" opacity=".85" filter="url(#glow)"/>
   </g>
 
   <!-- 蜂巢内部电路连接线 -->
   <g fill="none" stroke-linecap="round" stroke-width="1.4" opacity=".45">
     <line x1="60" y1="60" x2="60" y2="10" stroke="#5bb5d8"/>
-    <line x1="60" y1="60" x2="108" y2="47" stroke="#0e5a7a"/>
-    <line x1="60" y1="60" x2="108" y2="73" stroke="#5bb5d8"/>
+    <line x1="60" y1="60" x2="103" y2="35" stroke="#0e5a7a"/>
+    <line x1="60" y1="60" x2="103" y2="85" stroke="#5bb5d8"/>
     <line x1="60" y1="60" x2="60" y2="110" stroke="#0e5a7a"/>
-    <line x1="60" y1="60" x2="12" y2="73" stroke="#5bb5d8"/>
-    <line x1="60" y1="60" x2="12" y2="47" stroke="#0e5a7a"/>
-    <line x1="60" y1="10" x2="79" y2="3" stroke="#5bb5d8" opacity=".3"/>
-    <line x1="108" y1="47" x2="117" y2="43" stroke="#0e5a7a" opacity=".3"/>
-    <line x1="108" y1="73" x2="117" y2="77" stroke="#5bb5d8" opacity=".3"/>
-    <line x1="60" y1="110" x2="41" y2="117" stroke="#0e5a7a" opacity=".3"/>
-    <line x1="12" y1="73" x2="3" y2="77" stroke="#5bb5d8" opacity=".3"/>
-    <line x1="12" y1="47" x2="3" y2="43" stroke="#0e5a7a" opacity=".3"/>
+    <line x1="60" y1="60" x2="17" y2="85" stroke="#5bb5d8"/>
+    <line x1="60" y1="60" x2="17" y2="35" stroke="#0e5a7a"/>
+    <line x1="60" y1="10" x2="60" y2="3" stroke="#5bb5d8" opacity=".3"/>
+    <line x1="103" y1="35" x2="115" y2="28" stroke="#0e5a7a" opacity=".3"/>
+    <line x1="103" y1="85" x2="115" y2="92" stroke="#5bb5d8" opacity=".3"/>
+    <line x1="60" y1="110" x2="60" y2="117" stroke="#0e5a7a" opacity=".3"/>
+    <line x1="17" y1="85" x2="5" y2="92" stroke="#5bb5d8" opacity=".3"/>
+    <line x1="17" y1="35" x2="5" y2="28" stroke="#0e5a7a" opacity=".3"/>
   </g>
 
   <!-- 触觉脉冲光点（6个节点） -->
@@ -80,11 +80,11 @@
       <animate attributeName="r" values="3;5;3" dur="2.8s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values=".7;1;.7" dur="2.8s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="108" cy="47" r="4" fill="url(#pulse-silver)" class="pulse-node">
+    <circle cx="103" cy="35" r="4" fill="url(#pulse-silver)" class="pulse-node">
       <animate attributeName="r" values="3;5;3" dur="2.8s" begin=".7s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values=".7;1;.7" dur="2.8s" begin=".7s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="108" cy="73" r="4" fill="url(#pulse-copper)" class="pulse-node">
+    <circle cx="103" cy="85" r="4" fill="url(#pulse-copper)" class="pulse-node">
       <animate attributeName="r" values="3;5;3" dur="2.8s" begin="1.4s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values=".7;1;.7" dur="2.8s" begin="1.4s" repeatCount="indefinite"/>
     </circle>
@@ -92,11 +92,11 @@
       <animate attributeName="r" values="3;5;3" dur="2.8s" begin="2.1s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values=".7;1;.7" dur="2.8s" begin="2.1s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="12" cy="73" r="4" fill="url(#pulse-silver)" class="pulse-node">
+    <circle cx="17" cy="85" r="4" fill="url(#pulse-silver)" class="pulse-node">
       <animate attributeName="r" values="3;5;3" dur="2.8s" begin=".35s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values=".7;1;.7" dur="2.8s" begin=".35s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="12" cy="47" r="4" fill="url(#pulse-copper)" class="pulse-node">
+    <circle cx="17" cy="35" r="4" fill="url(#pulse-copper)" class="pulse-node">
       <animate attributeName="r" values="3;5;3" dur="2.8s" begin="1.05s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values=".7;1;.7" dur="2.8s" begin="1.05s" repeatCount="indefinite"/>
     </circle>
