@@ -3,11 +3,20 @@ let scenes = [];
 
 const productTabs = document.querySelector('#productTabs');
 const productImage = document.querySelector('#productImage');
+const productVideo = document.querySelector('#productVideo');
 const productName = document.querySelector('#productName');
 const productEyebrow = document.querySelector('#productEyebrow');
 const productDescription = document.querySelector('#productDescription');
 const productStage = document.querySelector('#productStage');
 const productSpecs = document.querySelector('#productSpecs');
+const productVideos = [
+  'assets/media/product-x1-skin.mp4?v=20260824-1',
+  'assets/media/product-x1-vest.mp4?v=20260824-1',
+  'assets/media/product-x1-studio.mp4?v=20260824-1'
+];
+
+productVideo?.addEventListener('error', () => productVideo.classList.add('is-unavailable'));
+productVideo?.addEventListener('canplay', () => productVideo.classList.remove('is-unavailable'));
 const sceneTabs = document.querySelector('#sceneTabs');
 const sceneVideo = document.querySelector('#sceneVideo');
 const sceneName = document.querySelector('#sceneName');
@@ -35,6 +44,15 @@ function renderProduct(index) {
   setTimeout(() => {
     productImage.src = item.image;
     productImage.alt = item.alt;
+    if (productVideo) {
+      const nextVideo = productVideos[index];
+      productVideo.pause();
+      productVideo.classList.remove('is-unavailable');
+      productVideo.src = nextVideo || '';
+      productVideo.poster = item.image;
+      productVideo.load();
+      productVideo.play().catch(() => {});
+    }
     productName.textContent = item.name;
     productEyebrow.textContent = item.eyebrow;
     productDescription.textContent = item.description;
@@ -90,7 +108,7 @@ function renderProductTabs() {
       ? '<span class="rounded bg-signal/10 px-2 py-0.5 text-xs font-medium text-signal">预售</span>'
       : '<i data-lucide="arrow-right" class="size-4 text-slate-400"></i>';
     return `
-    <button class="product-thumb lift flex min-h-28 items-center justify-between border border-line bg-white p-5 text-left transition-all duration-200 border-[#283337] bg-[#101719]" type="button" role="tab" aria-selected="${index === 0}" data-product="${index}">
+    <button class="product-thumb lift flex min-h-28 items-center justify-between border border-line p-5 text-left transition-all duration-200 border-[#283337] bg-[#101719]" type="button" role="tab" aria-selected="${index === 0}" data-product="${index}">
       <span><span class="text-xs text-slate-500">0${index + 1} / ${item.stage}</span><strong class="mt-2 block text-lg">${item.name}</strong></span>
       ${badge}
     </button>`;
@@ -751,8 +769,9 @@ style.textContent = `
   }
 
   #productTabs button[aria-selected="true"] {
-    border-color: #176fdf;
-    background: rgba(23, 111, 223, 0.05);
+    border-color: rgba(41, 156, 255, 0.62);
+    background: linear-gradient(110deg, rgba(23, 111, 223, 0.16), rgba(32, 199, 194, 0.055));
+    box-shadow: inset 0 0 0 1px rgba(41, 156, 255, 0.08), 0 14px 36px rgba(0, 0, 0, 0.2);
   }
 
   .product-thumb:active {

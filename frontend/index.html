@@ -76,7 +76,7 @@
     };
   </script>
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <link rel="stylesheet" href="styles-v2.css?v=20260824-2" />
+  <link rel="stylesheet" href="styles-v2.css?v=20260824-4" />
 </head>
 <body class="bg-[#071116] text-[#edf7f6] antialiased [--nav-bg:#071116] [--nav-border:#26383d] [--timeline-ring:#071116]">
   <!-- 跳过导航链接（无障碍访问） -->
@@ -256,6 +256,9 @@
               </button>
             </div>
             <div class="media-zoom relative aspect-[16/10] overflow-hidden bg-[#071014]">
+              <video id="productVideo" class="product-media-video absolute inset-0 h-full w-full object-cover" muted autoplay loop playsinline preload="metadata" poster="assets/media/x1-skin.png" aria-label="X1 产品介绍视频">
+                <source src="assets/media/product-x1-skin.mp4?v=20260824-1" type="video/mp4" />
+              </video>
               <img id="productImage" src="assets/media/x1-skin.png" alt="X1 柔性电子皮肤产品概念图" class="h-full w-full object-cover" loading="lazy" />
               <div class="media-bottom pointer-events-none absolute inset-x-0 bottom-0 h-1/2"></div>
               <div class="absolute bottom-5 left-5 flex items-center gap-2 text-xs text-white/80">
@@ -722,6 +725,6 @@
     <i data-lucide="arrow-up" class="size-4"></i>
   </button>
 
-  <script src="app.js?v=20260824-2" defer></script>
+  <script src="app.js?v=20260824-4" defer></script>
 </body>
 </html>
