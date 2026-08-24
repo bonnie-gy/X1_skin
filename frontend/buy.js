@@ -293,10 +293,6 @@ byId('copyOrderId').addEventListener('click', copyOrderId);
 byId('newOrderButton').addEventListener('click', () => renderProduct(activeIndex, false));
 byId('newInquiryButton').addEventListener('click', () => renderProduct(activeIndex, false));
 byId('retryButton').addEventListener('click', loadProducts);
-byId('themeToggle').addEventListener('click', () => {
-  document.documentElement.classList.toggle('dark');
-  localStorage.setItem('x1-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-});
 
 window.addEventListener('DOMContentLoaded', () => {
   window.lucide?.createIcons();

@@ -1,19 +1,4 @@
 :root {
-  color-scheme: light;
-  --ink: #10222b;
-  --muted: #63747c;
-  --mist: #eef4f7;
-  --panel: #ffffff;
-  --line: #cad9df;
-  --line-strong: #9fb3bc;
-  --tech: #176fdf;
-  --cyan: #138c83;
-  --signal: #e9634c;
-  --soft-blue: #eaf2ff;
-  --shadow: 0 24px 70px rgba(20, 47, 59, .1);
-}
-
-html.dark {
   color-scheme: dark;
   --ink: #edf7f6;
   --muted: #9fb0b6;
@@ -21,6 +6,9 @@ html.dark {
   --panel: #10191d;
   --line: #2a3a40;
   --line-strong: #496068;
+  --tech: #176fdf;
+  --cyan: #138c83;
+  --signal: #e9634c;
   --soft-blue: #10243d;
   --shadow: 0 24px 70px rgba(0, 0, 0, .24);
 }
@@ -52,9 +40,6 @@ img { display: block; max-width: 100%; }
 .back-link svg, .icon-button svg { width: 1rem; height: 1rem; }
 .icon-button { display: grid; width: 2.55rem; height: 2.55rem; place-items: center; border: 1px solid var(--line); background: var(--panel); cursor: pointer; }
 .icon-button:hover { border-color: var(--tech); color: var(--tech); }
-.theme-moon { display: none; }
-.dark .theme-sun { display: none; }
-.dark .theme-moon { display: block; }
 
 .sales-intro { border-bottom: 1px solid var(--line); background: var(--panel); }
 .intro-inner { min-height: 13rem; display: grid; grid-template-columns: minmax(0, 1fr) minmax(20rem, .75fr); align-items: end; gap: 3rem; padding-block: 3rem; }
