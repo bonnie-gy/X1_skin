@@ -3,94 +3,94 @@
     {
       "name": "X1 Skin",
       "eyebrow": "FLEXIBLE SENSOR LAYER",
-      "stage": "概念验证",
+      "stage": "Proof of Concept",
       "image": "/assets/media/latest-product-skin.jpg",
-      "alt": "X1 柔性电子皮肤产品概念图",
-      "description": "贴合身体曲面的柔性电子皮肤，用于采集压力、拉伸与姿态变化，为触觉反馈提供实时输入。",
-      "specs": [["响应时间", "80 ms*"], ["应变研究", "最高 535%*"], ["材料路线", "MXene / CNT"], ["产品定位", "局部传感模块"]],
+      "alt": "X1 flexible e-skin product concept",
+      "description": "A flexible e-skin that conforms to body contours, capturing pressure, stretch, and posture changes as real-time input for haptic feedback.",
+      "specs": [["Response Time", "80 ms*"], ["Strain Research", "Up to 535%*"], ["Material Path", "MXene / CNT"], ["Product Positioning", "Localized Sensing Module"]],
       "presale": {
         "enabled": true,
         "price": "¥2999",
         "deposit": "¥500",
         "paymentType": "qrcode",
         "paymentUrl": "https://pay.xxx.com/order/x1-skin",
-        "note": "预计 2026 年 Q4 发货"
+        "note": "Estimated shipping: Q4 2026"
       }
     },
     {
       "name": "X1 Haptic Vest",
       "eyebrow": "MODULAR HAPTIC HARDWARE",
-      "stage": "工程开发",
+      "stage": "Engineering Development",
       "image": "/assets/media/x1-cabin.png?v=20260824-2",
-      "alt": "X1 模块化触觉背心系统概念图",
-      "description": "面向 XR、线下沉浸体验与训练场景的 B2B 模块化触觉背心，强调可维护、可清洗与稳定部署。",
-      "specs": [["反馈模块", "16-24 点"], ["目标延迟", "< 30 ms"], ["目标续航", "≥ 6 小时"], ["通信接口", "BLE / USB"]],
+      "alt": "X1 modular haptic vest system concept",
+      "description": "A B2B modular haptic vest for XR, location-based immersive experiences, and training, designed for maintainability, washability, and reliable deployment.",
+      "specs": [["Feedback Modules", "16-24 points"], ["Latency Target", "< 30 ms"], ["Battery Target", "≥ 6 hours"], ["Connectivity", "BLE / USB"]],
       "presale": {
         "enabled": true,
         "price": "¥12999",
         "deposit": "¥2000",
         "paymentType": "qrcode",
         "paymentUrl": "https://pay.xxx.com/order/x1-vest",
-        "note": "预计 2026 年 Q4 发货"
+        "note": "Estimated shipping: Q4 2026"
       }
     },
     {
       "name": "X1 Studio",
       "eyebrow": "HAPTIC AUTHORING & SDK",
-      "stage": "产品规划",
+      "stage": "Product Planning",
       "image": "/assets/media/latest-product-studio.jpg",
-      "alt": "X1 Studio 触觉编排与训练平台概念图",
-      "description": "连接内容事件、传感输入与空间触觉反馈的编排平台，支持开发、部署、设备管理和数据记录。",
-      "specs": [["引擎支持", "Unity / Unreal"], ["接口能力", "API / SDK"], ["部署方式", "云端 / 私有化"], ["核心功能", "低代码编排"]],
+      "alt": "X1 Studio haptic authoring and training platform concept",
+      "description": "An authoring platform connecting content events, sensing input, and spatial haptic feedback, with support for development, deployment, device management, and data logging.",
+      "specs": [["Engine Support", "Unity / Unreal"], ["Interfaces", "API / SDK"], ["Deployment", "Cloud / Private"], ["Core Function", "Low-Code Authoring"]],
       "presale": {
         "enabled": false,
-        "price": "¥5999/年",
+        "price": "RMB 5,999/year",
         "paymentType": "qrcode",
         "paymentUrl": "https://pay.xxx.com/order/x1-studio",
-        "note": "即将开放预售"
+        "note": "Preorders opening soon"
       }
     }
   ],
   "scenes": [
     {
-      "name": "XR 内容与沉浸体验",
-      "short": "XR 沉浸",
+      "name": "XR Content & Immersive Experiences",
+      "short": "XR Immersion",
       "video": "/assets/media/scene-xr.mp4?v=20260815-2",
-      "description": "将碰撞方向、爆炸冲击和空间事件转化为身体反馈，帮助内容团队在不自研硬件的情况下增强沉浸感。",
-      "values": ["缩短 SDK 接入与内容适配周期", "预置空间触觉模板与音频转触觉能力", "支持开发套件、批量硬件和软件授权"],
-      "delivery": "触觉背心 + SDK + 游戏事件接口 + 触觉模板"
+      "description": "Turn collision direction, blast impact, and spatial events into body feedback, helping content teams deepen immersion without building their own hardware.",
+      "values": ["Shorter SDK integration and content-adaptation cycles", "Prebuilt spatial haptic templates and audio-to-haptics", "Developer kits, volume hardware, and software licensing"],
+      "delivery": "Haptic vest + SDK + game-event interface + haptic templates"
     },
     {
-      "name": "运动与动作训练",
-      "short": "运动训练",
+      "name": "Sports & Movement Training",
+      "short": "Movement Training",
       "video": "/assets/media/scene-sport.mp4?v=20260815-2",
-      "description": "通过身体动作采集与定向触觉提示，辅助教练和研究人员分析动作偏差，构建可重复的训练反馈。",
-      "values": ["动作提示与训练过程记录", "面向体育院校、俱乐部与训练机构", "以动作纠错效果和穿戴舒适性验收"],
-      "delivery": "传感模块 + 动作提示 + 训练分析工具"
+      "description": "Use motion capture and directional haptic cues to help coaches and researchers analyze movement deviation and create repeatable training feedback.",
+      "values": ["Movement cues and training-session records", "For sports schools, clubs, and training institutions", "Validated through correction outcomes and wearing comfort"],
+      "delivery": "Sensing modules + movement cues + training analytics"
     },
     {
-      "name": "康复科研",
-      "short": "健康医疗",
+      "name": "Rehabilitation Research",
+      "short": "Health Research",
       "video": "/assets/media/scene-health.mp4?v=20260815-2",
-      "description": "现阶段定位为科研工具和伦理研究平台，用于探索触觉提示对动作训练的价值，不对外宣称诊断或治疗效果。",
-      "values": ["开放原始数据与同步时间戳", "支持小规模科研与人体工学验证", "医疗用途需独立完成分类、临床与注册路径"],
-      "delivery": "科研套件 + 数据接口 + 联合研究支持"
+      "description": "Currently positioned as a research tool and ethics-study platform for exploring the value of haptic cues in movement training. It makes no diagnostic or therapeutic claims.",
+      "values": ["Open raw data and synchronized timestamps", "Small-scale research and ergonomics validation", "Medical uses require separate classification, clinical, and registration pathways"],
+      "delivery": "Research kit + data interface + joint research support"
     },
     {
-      "name": "工业与安全训练",
-      "short": "工业安全",
+      "name": "Industrial & Safety Training",
+      "short": "Industrial Safety",
       "video": "/assets/media/scene-industry.mp4?v=20260815-2",
-      "description": "在低风险仿真环境中提供危险方向、碰撞位置和动作偏差提示，并记录训练过程用于复盘。",
-      "values": ["离线运行与私有化部署", "适配消防、工业安全和职业训练", "以系统稳定性、训练效果和数据安全验收"],
-      "delivery": "行业硬件 + 私有化平台 + 定制接口 + 维保"
+      "description": "Provide cues for hazard direction, collision location, and movement deviation in low-risk simulations, while recording training sessions for review.",
+      "values": ["Offline operation and private deployment", "For firefighting, industrial safety, and vocational training", "Validated through system stability, training outcomes, and data security"],
+      "delivery": "Industry hardware + private platform + custom interfaces + maintenance"
     },
     {
-      "name": "科研教学与人机交互",
-      "short": "科研教育",
+      "name": "Research, Education & HCI",
+      "short": "Research & Education",
       "video": "/assets/media/scene-research.mp4?v=20260815-2",
-      "description": "为高校实验室和交互研究团队提供开放 API、可替换模块和可观测数据，降低二次开发门槛。",
-      "values": ["开放 API 与原始数据导出", "支持 10-50 人触觉盲测和教学演示", "可围绕材料、感知和算法开展联合课题"],
-      "delivery": "开发者套件 + API 文档 + 示例工程 + 技术支持"
+      "description": "Provide university labs and interaction-research teams with an open API, replaceable modules, and observable data to lower the barrier to further development.",
+      "values": ["Open API and raw-data export", "Haptic blind tests and teaching demonstrations for 10-50 people", "Joint projects across materials, perception, and algorithms"],
+      "delivery": "Developer kit + API documentation + sample projects + technical support"
     }
   ]
 }

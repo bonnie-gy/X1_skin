@@ -22,22 +22,22 @@ function validateInquiry(input) {
   };
 
   if (!inquiry.name || !inquiry.email || !inquiry.message) {
-    return { error: '请完整填写姓名、邮箱和需求说明。' };
+    return { error: 'Please provide your name, email, and project needs.' };
   }
   if (inquiry.name.length < 2) {
-    return { error: '请输入有效的姓名（至少2个字符）。' };
+    return { error: 'Please enter a valid name (at least 2 characters).' };
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inquiry.email)) {
-    return { error: '请输入有效的联系邮箱。' };
+    return { error: 'Please enter a valid contact email.' };
   }
   if (inquiry.message.length < 10) {
-    return { error: '需求说明至少需要10个字符。' };
+    return { error: 'Project needs must be at least 10 characters.' };
   }
   if (
     [inquiry.name, inquiry.company, inquiry.email, inquiry.topic].some(value => value.length > 120)
     || inquiry.message.length > 4000
   ) {
-    return { error: '提交内容过长，请精简后重试。' };
+    return { error: 'Submission is too long. Please shorten it and try again.' };
   }
 
   return { inquiry };
@@ -170,21 +170,21 @@ function validateOrder(input) {
   const quantity = parseInt(input.quantity, 10);
 
   if (!customer.name || !customer.phone || !customer.email || !customer.address) {
-    return { error: '请完整填写姓名、电话、邮箱和收货地址。' };
+    return { error: 'Please provide your name, phone, email, and shipping address.' };
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) {
-    return { error: '请输入有效的联系邮箱。' };
+    return { error: 'Please enter a valid contact email.' };
   }
   if (!/^1[3-9]\d{9}$/.test(customer.phone)) {
-    return { error: '请输入有效的手机号码。' };
+    return { error: 'Please enter a valid phone number.' };
   }
   if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99) {
-    return { error: '购买数量必须在 1 到 99 之间。' };
+    return { error: 'Purchase quantity must be between 1 and 99.' };
   }
   if (
     [customer.name, customer.phone, customer.email, customer.address].some(value => value.length > 120)
   ) {
-    return { error: '填写内容过长，请精简后重试。' };
+    return { error: 'Submission is too long. Please shorten it and try again.' };
   }
 
   return {
@@ -303,23 +303,23 @@ async function handleOrders(request, env) {
 
   const contentLength = Number(request.headers.get('content-length') || 0);
   if (contentLength > MAX_BODY_SIZE) {
-    return jsonResponse({ ok: false, message: '提交内容过大。' }, 413);
+    return jsonResponse({ ok: false, message: 'Submission is too large.' }, 413);
   }
 
   let body;
   try {
     const bodyText = await request.text();
     if (new TextEncoder().encode(bodyText).byteLength > MAX_BODY_SIZE) {
-      return jsonResponse({ ok: false, message: '提交内容过大。' }, 413);
+      return jsonResponse({ ok: false, message: 'Submission is too large.' }, 413);
     }
     body = JSON.parse(bodyText || '{}');
   } catch {
-    return jsonResponse({ ok: false, message: '提交数据格式不正确。' }, 400);
+    return jsonResponse({ ok: false, message: 'Submission data has an invalid format.' }, 400);
   }
 
   // Bot honeypot
   if (String(body.website || '').trim()) {
-    return jsonResponse({ ok: true, paymentUrl: body.paymentUrl || '#', message: '订单已提交，即将跳转到支付页面。' }, 201);
+    return jsonResponse({ ok: true, paymentUrl: body.paymentUrl || '#', message: 'Order submitted. Redirecting to the payment page.' }, 201);
   }
 
   const validation = validateOrder(body);
@@ -363,14 +363,14 @@ async function handleOrders(request, env) {
     ok: true,
     id: record.id,
     paymentUrl: record.product.paymentUrl,
-    message: '订单已提交，即将跳转到支付页面。'
+    message: 'Order submitted. Redirecting to the payment page.'
   }, 201);
 }
 
 async function handleContact(request, env) {
   const contentLength = Number(request.headers.get('content-length') || 0);
   if (contentLength > MAX_BODY_SIZE) {
-    return jsonResponse({ ok: false, message: '提交内容过大。' }, 413);
+    return jsonResponse({ ok: false, message: 'Submission is too large.' }, 413);
   }
 
   let bodyText;
@@ -378,16 +378,16 @@ async function handleContact(request, env) {
   try {
     bodyText = await request.text();
     if (new TextEncoder().encode(bodyText).byteLength > MAX_BODY_SIZE) {
-      return jsonResponse({ ok: false, message: '提交内容过大。' }, 413);
+      return jsonResponse({ ok: false, message: 'Submission is too large.' }, 413);
     }
     body = JSON.parse(bodyText || '{}');
   } catch {
-    return jsonResponse({ ok: false, message: '提交数据格式不正确。' }, 400);
+    return jsonResponse({ ok: false, message: 'Submission data has an invalid format.' }, 400);
   }
 
   // Bots commonly fill hidden website fields. Return a neutral success without sending.
   if (String(body.website || '').trim()) {
-    return jsonResponse({ ok: true, message: '合作需求已提交，我们会尽快与您联系。' }, 201);
+    return jsonResponse({ ok: true, message: 'Your partnership inquiry has been submitted. We will contact you soon.' }, 201);
   }
 
   const validation = validateInquiry(body);
@@ -401,7 +401,7 @@ async function handleContact(request, env) {
     return jsonResponse({
       ok: true,
       id: record.id,
-      message: '合作需求已发送，我们会尽快与您联系。'
+      message: 'Your partnership inquiry has been sent. We will contact you soon.'
     }, 201);
   } catch (error) {
     console.error('Failed to deliver contact inquiry', { message: error.message });
@@ -409,8 +409,8 @@ async function handleContact(request, env) {
     return jsonResponse({
       ok: false,
       message: notConfigured
-        ? '线上联系渠道尚未配置，请发送邮件至 hatchyoung@outlook.com。'
-        : '发送暂时失败，请稍后重试或直接发送邮件至 hatchyoung@outlook.com。'
+        ? 'The online contact channel is not configured. Please email hatchyoung@outlook.com.'
+        : 'Sending failed temporarily. Please try again later or email hatchyoung@outlook.com.'
     }, notConfigured ? 503 : 502);
   }
 }

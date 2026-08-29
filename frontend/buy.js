@@ -17,7 +17,7 @@ function setHidden(element, hidden) {
 }
 
 function formatMoney(value) {
-  return `¥${Math.round(value).toLocaleString('zh-CN')}`;
+  return `RMB ${Math.round(value).toLocaleString('en-US')}`;
 }
 
 function moneyValue(label) {
@@ -35,7 +35,7 @@ function requestedProductIndex() {
 }
 
 function renderSelector() {
-  const labels = ['支付预订金', '申请演示', '申请试用'];
+  const labels = ['Pay reservation deposit', 'Request a demo', 'Apply for a trial'];
   selector.innerHTML = products.map((product, index) => `
     <button class="product-choice" type="button" role="tab" aria-selected="${index === activeIndex}" data-product-index="${index}">
       <span class="choice-copy">
@@ -67,7 +67,7 @@ function renderProduct(index, updateUrl = true) {
   byId('productSpecs').innerHTML = product.specs.map(([label, value]) => `
     <div><dt>${label}</dt><dd>${value}</dd></div>
   `).join('');
-  byId('deliveryTitle').textContent = product.presale?.note || (index === 2 ? '试用时间待确认' : '交付计划待确认');
+  byId('deliveryTitle').textContent = product.presale?.note || (index === 2 ? 'Trial timing to be confirmed' : 'Delivery schedule to be confirmed');
 
   resetPanels();
   if (SALES_MODES[index] === 'preorder') renderPreorder(product);
@@ -98,7 +98,7 @@ function renderPreorder(product) {
   setHidden(byId('preorderPanel'), false);
   byId('panelProductName').textContent = product.name;
   byId('panelPrice').textContent = product.presale.price;
-  byId('depositAmount').textContent = `${product.presale.deposit} / 件`;
+  byId('depositAmount').textContent = `${product.presale.deposit} / unit`;
   preorderForm.reset();
   byId('preorderQuantity').value = '1';
   updateTotals();
@@ -107,16 +107,16 @@ function renderPreorder(product) {
 function renderInquiry(product, mode) {
   setHidden(byId('inquiryPanel'), false);
   const isWaitlist = mode === 'waitlist';
-  byId('inquiryKicker').textContent = isWaitlist ? '开发者试用' : '企业采购';
-  byId('inquiryTitle').textContent = isWaitlist ? '加入试用候补' : '申请演示与报价';
+  byId('inquiryKicker').textContent = isWaitlist ? 'DEVELOPER TRIAL' : 'ENTERPRISE PURCHASING';
+  byId('inquiryTitle').textContent = isWaitlist ? 'Join the trial waitlist' : 'Request a demo and quote';
   byId('inquiryProductName').textContent = product.name;
-  byId('inquiryPrice').textContent = isWaitlist ? '尚未开放' : product.presale?.price || '按项目报价';
-  byId('inquiryPriceLabel').textContent = isWaitlist ? '产品状态' : '产品参考价';
+  byId('inquiryPrice').textContent = isWaitlist ? 'Not yet available' : product.presale?.price || 'Project-based pricing';
+  byId('inquiryPriceLabel').textContent = isWaitlist ? 'Product status' : 'Reference price';
   byId('inquiryLead').textContent = isWaitlist
-    ? '填写你的开发方向与计划，我们会在试用名额开放后联系你。'
-    : '专业设备会根据数量、SDK 接入和交付支持确定最终报价。提交需求后，由团队确认演示与采购方案。';
-  byId('quantityLabel').textContent = isWaitlist ? '预计试用设备数量' : '预计采购数量';
-  inquiryForm.querySelector('[data-submit-text]').textContent = isWaitlist ? '提交试用申请' : '提交采购需求';
+    ? 'Tell us about your development direction and plan. We will contact you when trial capacity becomes available.'
+    : 'Final pricing for professional equipment depends on quantity, SDK integration, and delivery support. Our team will confirm the demonstration and purchasing plan after submission.';
+  byId('quantityLabel').textContent = isWaitlist ? 'Estimated trial-device quantity' : 'Estimated quantity';
+  inquiryForm.querySelector('[data-submit-text]').textContent = isWaitlist ? 'Submit trial application' : 'Submit purchasing request';
   inquiryForm.reset();
   inquiryForm.elements.quantity.value = '1';
 }
@@ -139,7 +139,7 @@ function setSubmitting(form, submitting) {
 
 async function parseResponse(response) {
   const result = await response.json().catch(() => ({}));
-  if (!response.ok || !result.ok) throw new Error(result.message || '提交失败，请稍后重试。');
+  if (!response.ok || !result.ok) throw new Error(result.message || 'Submission failed. Please try again later.');
   return result;
 }
 
@@ -161,9 +161,9 @@ async function submitPreorder(event) {
     address: form.get('address'),
     quantity,
     website: form.get('website'),
-    productName: `${product.name} 预订金`,
+    productName: `${product.name} reservation deposit`,
     productPrice: product.presale.deposit,
-    productDeposit: `产品参考价 ${product.presale.price}`,
+    productDeposit: `Reference price: ${product.presale.price}`,
     paymentUrl: product.presale.paymentUrl
   };
 
@@ -177,7 +177,7 @@ async function submitPreorder(event) {
     const result = await parseResponse(response);
     currentOrderId = result.id || '';
     byId('paymentAmount').textContent = formatMoney(depositTotal);
-    byId('paymentOrderId').textContent = currentOrderId || '订单号生成中';
+    byId('paymentOrderId').textContent = currentOrderId || 'Generating order ID';
     setHidden(byId('preorderFormView'), true);
     setHidden(byId('paymentView'), false);
     byId('paymentView').focus?.();
@@ -197,11 +197,11 @@ async function submitInquiry(event) {
 
   if (!inquiryForm.reportValidity()) return;
   const form = new FormData(inquiryForm);
-  const topic = mode === 'waitlist' ? `${product.name} 试用申请` : `${product.name} 企业采购`;
+  const topic = mode === 'waitlist' ? `${product.name} trial application` : `${product.name} enterprise purchasing`;
   const details = [
-    `产品：${product.name}`,
-    `预计数量：${form.get('quantity') || 1}`,
-    form.get('phone') ? `联系电话：${form.get('phone')}` : '',
+    `Product: ${product.name}`,
+    `Estimated quantity: ${form.get('quantity') || 1}`,
+    form.get('phone') ? `Phone: ${form.get('phone')}` : '',
     '',
     String(form.get('message') || '').trim()
   ].filter((line, index) => line || index === 3).join('\n');
@@ -221,7 +221,7 @@ async function submitInquiry(event) {
       })
     });
     const result = await parseResponse(response);
-    byId('inquiryId').textContent = result.id || '已记录';
+    byId('inquiryId').textContent = result.id || 'Recorded';
     setHidden(inquiryForm, true);
     setHidden(byId('inquirySuccess'), false);
   } catch (submitError) {
@@ -235,16 +235,16 @@ async function copyOrderId() {
   if (!currentOrderId) return;
   try {
     await navigator.clipboard.writeText(currentOrderId);
-    byId('copyStatus').textContent = '订单编号已复制';
+    byId('copyStatus').textContent = 'Order ID copied';
   } catch {
-    byId('copyStatus').textContent = '请长按订单编号复制';
+    byId('copyStatus').textContent = 'Please copy the order ID manually.';
   }
 }
 
 async function loadProducts() {
   setHidden(byId('panelLoading'), false);
   setHidden(byId('panelError'), true);
-  byId('contentStatus').textContent = '正在加载产品信息';
+  byId('contentStatus').textContent = 'Loading product information';
   try {
     const response = await fetch('/api/content', { headers: { Accept: 'application/json' } });
     if (!response.ok) throw new Error(`Content API returned ${response.status}`);
@@ -254,12 +254,12 @@ async function loadProducts() {
     activeIndex = requestedProductIndex();
     renderSelector();
     renderProduct(activeIndex, false);
-    byId('contentStatus').textContent = '价格与状态已更新';
+    byId('contentStatus').textContent = 'Prices and status updated';
   } catch (error) {
     console.error('Failed to load sales content:', error);
     setHidden(byId('panelLoading'), true);
     setHidden(byId('panelError'), false);
-    byId('contentStatus').textContent = '产品信息加载失败';
+    byId('contentStatus').textContent = 'Product information failed to load';
     window.lucide?.createIcons();
   }
 }

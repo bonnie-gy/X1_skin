@@ -93,7 +93,7 @@ function updateFlowTitle(flow) {
 
 function renderZones() {
   const target = devices.find(device => device.id === targetDeviceId);
-  const labels = { chest: '胸部', back: '背部', 'left-arm': '左臂', 'right-arm': '右臂', patch: '贴片' };
+  const labels = { chest: 'Chest', back: 'Back', 'left-arm': 'Left arm', 'right-arm': 'Right arm', patch: 'Patch' };
   const previous = elements.zoneSelect.value;
   const zones = target?.capabilities.hapticZones || [];
   elements.zoneSelect.innerHTML = zones.map(zone => `<option value="${zone}">${labels[zone] || zone}</option>`).join('');
@@ -186,11 +186,11 @@ async function uploadFrame(pressure) {
       metadata: { source: 'sdk-browser-demo' }
     });
     elements.latencyValue.textContent = `${Math.round(performance.now() - startedAt)} ms`;
-    setGatewayOnline(true, '本地设备网关在线');
+    setGatewayOnline(true, 'Local device gateway online');
     pollEvents();
     return frame;
   } catch (error) {
-    setGatewayOnline(false, '设备网关离线');
+    setGatewayOnline(false, 'Device gateway offline');
     log(`${error.code || 'ERROR'} ${error.message}`, 'error');
   } finally {
     uploadPending = false;
@@ -212,7 +212,7 @@ async function pollEvents() {
       }
     });
   } catch (error) {
-    setGatewayOnline(false, '设备网关离线');
+    setGatewayOnline(false, 'Device gateway offline');
   }
 }
 
@@ -235,7 +235,7 @@ async function saveFlow() {
       cooldownMs: 650
     });
     updateFlowTitle({ id: 'pressure-to-chest-pulse', name: 'Pressure feedback demo' });
-    log('编排已保存并启用', 'command');
+    log('Flow saved and enabled', 'command');
     pollEvents();
   } catch (error) {
     log(`${error.code || 'ERROR'} ${error.message}`, 'error');
@@ -286,10 +286,10 @@ async function initialize() {
       elements.intensityInput.value = flow.action.intensity;
     }
     updateControlLabels();
-    setGatewayOnline(true, '本地设备网关在线');
+    setGatewayOnline(true, 'Local device gateway online');
     log(`SDK ${X1.VERSION} ready / ${devices.length} devices`);
   } catch (error) {
-    setGatewayOnline(false, '请通过 npm start 启动网关');
+    setGatewayOnline(false, 'Start the gateway with npm start');
     log(`${error.code || 'ERROR'} ${error.message}`, 'error');
   }
 }

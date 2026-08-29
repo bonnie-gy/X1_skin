@@ -16,16 +16,16 @@ function validateInquiry(input) {
   };
 
   if (!inquiry.name || !inquiry.email || !inquiry.message) {
-    return { error: '请完整填写姓名、邮箱和需求说明。' };
+    return { error: 'Please provide your name, email, and project needs.' };
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inquiry.email)) {
-    return { error: '请输入有效的联系邮箱。' };
+    return { error: 'Please enter a valid contact email.' };
   }
   if (
     [inquiry.name, inquiry.company, inquiry.email, inquiry.topic].some(value => value.length > 120)
     || inquiry.message.length > 4000
   ) {
-    return { error: '提交内容过长，请精简后重试。' };
+    return { error: 'Submission is too long. Please shorten it and try again.' };
   }
 
   return { inquiry };

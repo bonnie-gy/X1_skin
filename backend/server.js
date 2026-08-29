@@ -106,7 +106,7 @@ async function handleApi(request, response, pathname) {
       const clientIp = getClientIp(request);
 
       if (!checkRateLimit(clientIp)) {
-        sendJson(response, 429, { ok: false, message: '请求过于频繁，请稍后再试。' });
+        sendJson(response, 429, { ok: false, message: 'Too many requests. Please try again later.' });
         return true;
       }
 
@@ -125,10 +125,10 @@ async function handleApi(request, response, pathname) {
         console.error('[Email] Failed to send notification:', error.message);
       });
 
-      sendJson(response, 201, { ok: true, id: record.id, message: '合作需求已提交，我们会尽快与您联系。' });
+      sendJson(response, 201, { ok: true, id: record.id, message: 'Your partnership inquiry has been submitted. We will contact you soon.' });
     } catch (error) {
       const status = error.message === 'REQUEST_TOO_LARGE' ? 413 : 400;
-      sendJson(response, status, { ok: false, message: status === 413 ? '提交内容过大。' : '提交数据格式不正确。' });
+      sendJson(response, status, { ok: false, message: status === 413 ? 'Submission is too large.' : 'Submission data has an invalid format.' });
     }
     return true;
   }
@@ -138,7 +138,7 @@ async function handleApi(request, response, pathname) {
       const clientIp = getClientIp(request);
 
       if (!checkRateLimit(clientIp)) {
-        sendJson(response, 429, { ok: false, message: '请求过于频繁，请稍后再试。' });
+        sendJson(response, 429, { ok: false, message: 'Too many requests. Please try again later.' });
         return true;
       }
 
@@ -161,11 +161,11 @@ async function handleApi(request, response, pathname) {
         ok: true,
         id: record.id,
         paymentUrl: record.product.paymentUrl,
-        message: '订单已提交，即将跳转到支付页面。'
+        message: 'Order submitted. Redirecting to the payment page.'
       });
     } catch (error) {
       const status = error.message === 'REQUEST_TOO_LARGE' ? 413 : 400;
-      sendJson(response, status, { ok: false, message: status === 413 ? '提交内容过大。' : '提交数据格式不正确。' });
+      sendJson(response, status, { ok: false, message: status === 413 ? 'Submission is too large.' : 'Submission data has an invalid format.' });
     }
     return true;
   }

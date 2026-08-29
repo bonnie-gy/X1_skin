@@ -70,7 +70,7 @@ main section[id] { scroll-margin-top: 5rem; }
 .on-hero nav a { color: rgba(255,255,255,.72); }
 .on-hero nav a:hover { color: #fff; }
 .on-hero #menuToggle { color: #fff; border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.08); }
-.on-hero a[aria-label="X1 首页"] > span:last-child { color: rgba(255,255,255,.55); border-color: rgba(255,255,255,.25); }
+.on-hero a[aria-label="X1 home"] > span:last-child { color: rgba(255,255,255,.55); border-color: rgba(255,255,255,.25); }
 
 /* Hero: product photography over an energized, low-light circuit field. */
 .hero-experience {

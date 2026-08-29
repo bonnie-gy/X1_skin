@@ -117,7 +117,7 @@ function renderProductTabs() {
   productTabs.innerHTML = products.map((item, index) => {
     const hasPresale = item.presale?.enabled;
     const badge = hasPresale
-      ? '<span class="rounded bg-signal/10 px-2 py-0.5 text-xs font-medium text-signal">预售</span>'
+      ? '<span class="rounded bg-signal/10 px-2 py-0.5 text-xs font-medium text-signal">PREORDER</span>'
       : '<i data-lucide="arrow-right" class="size-4 text-slate-400"></i>';
     return `
     <button class="product-thumb lift flex min-h-28 items-center justify-between border border-line p-5 text-left transition-all duration-200 border-[#283337] bg-[#101719]" type="button" role="tab" aria-selected="${index === 0}" data-product="${index}">
@@ -150,17 +150,17 @@ function setSceneVideoStatus(state, message) {
       sceneVideoStatus.classList.add('grid');
       icon.classList.add('animate-spin');
       icon.setAttribute('data-lucide', 'loader-2');
-      text.textContent = message || '视频加载中...';
+      text.textContent = message || 'Loading video...';
       break;
     case 'error':
       sceneVideoStatus.classList.add('grid');
       icon.setAttribute('data-lucide', 'refresh-cw');
-      text.textContent = message || '视频加载失败';
+      text.textContent = message || 'Video failed to load';
       break;
     case 'paused':
       sceneVideoStatus.classList.add('grid');
       icon.setAttribute('data-lucide', 'play');
-      text.textContent = '点击播放视频';
+      text.textContent = 'Click to play video';
       break;
   }
 
@@ -199,13 +199,13 @@ function downloadSceneVideo(item, retry) {
 }
 
 async function loadSceneVideo(item, loadId, retry = false) {
-  setSceneVideoStatus('loading', retry ? '正在重新加载视频...' : '视频加载中...');
+  setSceneVideoStatus('loading', retry ? 'Reloading video...' : 'Loading video...');
   sceneVideo.pause();
   sceneVideo.removeAttribute('src');
   sceneVideo.load();
   const loadTimeout = window.setTimeout(() => {
     if (loadId === sceneLoadId && sceneVideo.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) {
-      setSceneVideoStatus('error', '视频加载超时，点击重试');
+      setSceneVideoStatus('error', 'Video load timed out. Click to retry');
     }
   }, 20000);
 
@@ -214,7 +214,7 @@ async function loadSceneVideo(item, loadId, retry = false) {
     videoUrl = await downloadSceneVideo(item, retry);
   } catch (error) {
     window.clearTimeout(loadTimeout);
-    if (loadId === sceneLoadId) setSceneVideoStatus('error', '视频下载失败，点击重试');
+    if (loadId === sceneLoadId) setSceneVideoStatus('error', 'Video download failed. Click to retry');
     return;
   }
   if (loadId !== sceneLoadId) return;
@@ -230,14 +230,14 @@ async function loadSceneVideo(item, loadId, retry = false) {
       await sceneVideo.play();
     } catch (error) {
       if (error.name !== 'AbortError' && loadId === sceneLoadId) {
-        setSceneVideoStatus('error', '点击播放视频');
+        setSceneVideoStatus('error', 'Click to play video');
       }
     }
   };
 
   const handleError = () => {
     window.clearTimeout(loadTimeout);
-    if (loadId === sceneLoadId) setSceneVideoStatus('error', '视频加载失败，点击重试');
+    if (loadId === sceneLoadId) setSceneVideoStatus('error', 'Video failed to load. Click to retry');
   };
 
   sceneVideo.addEventListener('canplay', handleReady, { once: true });
@@ -307,8 +307,8 @@ async function loadContent() {
     lucide.createIcons();
   } catch (error) {
     console.error(error);
-    productTabs.innerHTML = '<p class="border border-line p-5 text-sm text-slate-500">产品数据暂时无法加载，请确认后端服务已启动。</p>';
-    sceneTabs.innerHTML = '<p class="text-sm text-slate-500">应用数据暂时无法加载。</p>';
+    productTabs.innerHTML = '<p class="border border-line p-5 text-sm text-slate-500">Product data is unavailable. Please confirm the backend service is running.</p>';
+    sceneTabs.innerHTML = '<p class="text-sm text-slate-500">Application data is unavailable.</p>';
   }
 }
 
@@ -328,7 +328,7 @@ sceneVideoStatus.addEventListener('click', () => {
   if (sceneVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
     sceneVideo.play()
       .then(() => setSceneVideoStatus('ready', ''))
-      .catch(() => setSceneVideoStatus('error', '视频无法播放，点击重试'));
+      .catch(() => setSceneVideoStatus('error', 'Video cannot play. Click to retry'));
     return;
   }
   sceneLoadId += 1;
@@ -578,7 +578,7 @@ sceneVideo.addEventListener('loadeddata', () => {
 
 sceneVideo.addEventListener('pause', () => {
   if (sceneVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-    setSceneVideoStatus('paused', '点击播放视频');
+    setSceneVideoStatus('paused', 'Click to play video');
   }
 });
 
@@ -1086,21 +1086,21 @@ document.querySelector('#contactForm').addEventListener('submit', async event =>
 
   // 基本验证
   if (!payload.name || payload.name.trim().length < 2) {
-    status.textContent = '请输入有效的姓名（至少2个字符）';
+    status.textContent = 'Enter a valid name (at least 2 characters).';
     status.className = 'text-xs text-red-600 text-red-400';
     form.querySelector('[name="name"]').focus();
     return;
   }
 
   if (!payload.email || !isValidEmail(payload.email)) {
-    status.textContent = '请输入有效的邮箱地址';
+    status.textContent = 'Enter a valid email address.';
     status.className = 'text-xs text-red-600 text-red-400';
     form.querySelector('[name="email"]').focus();
     return;
   }
 
   if (!payload.message || payload.message.trim().length < 10) {
-    status.textContent = '需求说明至少需要10个字符';
+    status.textContent = 'Your message must be at least 10 characters.';
     status.className = 'text-xs text-red-600 text-red-400';
     form.querySelector('[name="message"]').focus();
     return;
@@ -1109,7 +1109,7 @@ document.querySelector('#contactForm').addEventListener('submit', async event =>
   // 提交表单
   submitButton.disabled = true;
   submitButton.classList.add('opacity-60', 'cursor-not-allowed');
-  status.textContent = '正在提交合作需求...';
+  status.textContent = 'Sending your inquiry...';
   status.className = 'text-xs text-slate-500';
 
   try {
@@ -1119,7 +1119,7 @@ document.querySelector('#contactForm').addEventListener('submit', async event =>
       body: JSON.stringify(payload)
     });
     const result = await response.json();
-    if (!response.ok) throw new Error(result.message || '提交失败');
+    if (!response.ok) throw new Error(result.message || 'Submission failed.');
 
     status.textContent = '✓ ' + result.message;
     status.className = 'text-xs text-[#138c83] font-semibold';
@@ -1127,11 +1127,11 @@ document.querySelector('#contactForm').addEventListener('submit', async event =>
 
     // 3秒后恢复默认状态
     setTimeout(() => {
-      status.textContent = '信息将提交至项目联系渠道，仅用于本次合作沟通。';
+      status.textContent = 'Your information will be used only for this partnership inquiry.';
       status.className = 'text-xs text-slate-500';
     }, 3000);
   } catch (error) {
-    status.textContent = error.message || '提交失败，请稍后重试。';
+    status.textContent = error.message || 'Submission failed. Please try again later.';
     status.className = 'text-xs text-red-600 text-red-400';
   } finally {
     submitButton.disabled = false;
@@ -1214,7 +1214,7 @@ document.querySelectorAll('.copy-email-btn').forEach(btn => {
     try {
       await navigator.clipboard.writeText(email);
       const status = document.getElementById('copyEmailStatus');
-      status.textContent = '已复制';
+      status.textContent = 'Copied';
       status.style.opacity = '1';
       setTimeout(() => { status.style.opacity = '0'; }, 2000);
     } catch (err) {

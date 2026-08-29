@@ -17,21 +17,21 @@ function validateOrder(input) {
   const quantity = parseInt(input.quantity, 10);
 
   if (!customer.name || !customer.phone || !customer.email || !customer.address) {
-    return { error: '请完整填写姓名、电话、邮箱和收货地址。' };
+    return { error: 'Please provide your name, phone, email, and shipping address.' };
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) {
-    return { error: '请输入有效的联系邮箱。' };
+    return { error: 'Please enter a valid contact email.' };
   }
   if (!/^1[3-9]\d{9}$/.test(customer.phone)) {
-    return { error: '请输入有效的手机号码。' };
+    return { error: 'Please enter a valid phone number.' };
   }
   if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99) {
-    return { error: '购买数量必须在 1 到 99 之间。' };
+    return { error: 'Purchase quantity must be between 1 and 99.' };
   }
   if (
     [customer.name, customer.phone, customer.email, customer.address].some(value => value.length > 120)
   ) {
-    return { error: '填写内容过长，请精简后重试。' };
+    return { error: 'Submission is too long. Please shorten it and try again.' };
   }
 
   return {

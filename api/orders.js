@@ -25,14 +25,14 @@ module.exports = async function ordersHandler(request, response) {
   try {
     const body = parseBody(request.body);
     if (Buffer.byteLength(JSON.stringify(body), 'utf8') > MAX_BODY_SIZE) {
-      return response.status(413).json({ ok: false, message: '提交内容过大。' });
+      return response.status(413).json({ ok: false, message: 'Submission is too large.' });
     }
 
     if (String(body.website || '').trim()) {
       return response.status(201).json({
         ok: true,
         paymentUrl: body.paymentUrl || '#',
-        message: '订单已提交，即将跳转到支付页面。'
+        message: 'Order submitted. Redirecting to the payment page.'
       });
     }
 
@@ -48,24 +48,24 @@ module.exports = async function ordersHandler(request, response) {
       ok: true,
       id: record.id,
       paymentUrl: record.product.paymentUrl,
-      message: '订单已提交，即将跳转到支付页面。'
+      message: 'Order submitted. Redirecting to the payment page.'
     });
   } catch (error) {
     if (error.code === 'CONTACT_DELIVERY_NOT_CONFIGURED') {
       return response.status(503).json({
         ok: false,
-        message: '下单渠道尚未配置，请直接联系客服。'
+        message: 'The order channel is not configured. Please contact support directly.'
       });
     }
 
     if (error instanceof SyntaxError) {
-      return response.status(400).json({ ok: false, message: '提交数据格式不正确。' });
+      return response.status(400).json({ ok: false, message: 'Submission data has an invalid format.' });
     }
 
     console.error('Failed to process order:', { message: error.message });
     return response.status(502).json({
       ok: false,
-      message: '提交失败，请稍后重试或直接联系客服。'
+      message: 'Submission failed. Please try again later or contact support directly.'
     });
   }
 };

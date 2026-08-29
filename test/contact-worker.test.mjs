@@ -20,8 +20,8 @@ function request(body, method = 'POST') {
 
 test('validates contact inquiry fields', () => {
   assert.deepEqual(validateInquiry(validInquiry), { inquiry: validInquiry });
-  assert.match(validateInquiry({ ...validInquiry, email: 'invalid' }).error, /邮箱/);
-  assert.match(validateInquiry({ ...validInquiry, message: '太短' }).error, /10个字符/);
+  assert.match(validateInquiry({ ...validInquiry, email: 'invalid' }).error, /valid contact email/);
+  assert.match(validateInquiry({ ...validInquiry, message: 'Too short' }).error, /at least 10 characters/);
 });
 
 test('escapes user content in the email HTML', () => {
