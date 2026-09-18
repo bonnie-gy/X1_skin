@@ -46,6 +46,15 @@ npm start
 npm run dev
 ```
 
+## 收款与订单安全
+
+- 收款码固定为 `frontend/assets/media/wechat-pay-qr.jpg`，不接受订单请求指定付款链接或替换二维码。付款后仍需人工核对到账记录与订单号，订单提交成功不代表付款成功。
+- `/api/orders` 接收 `productId`、整数数量（1–99）与客户资料。商品名称、定金和币种由后端目录决定，不采信客户端的 `productPrice`、`productDeposit`、`paymentUrl` 等字段。
+- 可收定金的商品须在 `backend/content.json` 中设置稳定的 `id`、`salesMode: "preorder"`、`presale.enabled: true` 和正整数 `presale.depositCents`（人民币分）。目前仅 `x1-skin` 开放定金订单，每件 50000 分，即 500 元；询价和候补商品不能直接下定金订单。
+- 修改定金时更新 `depositCents` 及展示用的 `deposit` 文案；后端以分为单位计算，付款页只使用订单接口返回的 `totalAmountCents` 和 `currency`，不使用浏览器自行计算的金额作为付款依据。
+- 本地 Node、Vercel 与 Cloudflare Worker 共用 `backend/order-validation.js`。前后端需要一起发布；旧前端缺少 `productId` 时会被拒绝，不会按旧客户端报价下单。
+- 建议保护 GitHub `main`：要求通过 Pull Request 合并、禁止强制推送和删除、管理员也遵守规则。单人维护时不强制另一人批准；有可信协作者后再开启至少一人审核。仓库保护不会限制拥有独立部署凭据的人直接发布，部署账户也应限制权限。
+
 ## 邮件通知配置
 
 联系表单提交后，系统会通过邮件发送通知到指定邮箱。

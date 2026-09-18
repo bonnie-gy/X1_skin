@@ -17,7 +17,7 @@ function setHidden(element, hidden) {
 }
 
 function formatMoney(value) {
-  return `RMB ${Math.round(value).toLocaleString('en-US')}`;
+  return `RMB ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
 }
 
 function moneyValue(label) {
@@ -98,7 +98,7 @@ function renderPreorder(product) {
   setHidden(byId('preorderPanel'), false);
   byId('panelProductName').textContent = product.name;
   byId('panelPrice').textContent = product.presale.price;
-  byId('depositAmount').textContent = `${product.presale.deposit} / unit`;
+  byId('depositAmount').textContent = `${formatMoney(product.presale.depositCents / 100)} / unit`;
   preorderForm.reset();
   byId('preorderQuantity').value = '1';
   updateTotals();
@@ -127,7 +127,7 @@ function updateTotals() {
   const quantity = Math.max(1, Math.min(99, Number(byId('preorderQuantity').value) || 1));
   byId('preorderQuantity').value = String(quantity);
   byId('orderTotal').textContent = formatMoney(moneyValue(product.presale.price) * quantity);
-  byId('payableTotal').textContent = formatMoney(moneyValue(product.presale.deposit) * quantity);
+  byId('payableTotal').textContent = formatMoney(product.presale.depositCents * quantity / 100);
 }
 
 function setSubmitting(form, submitting) {
@@ -152,7 +152,6 @@ async function submitPreorder(event) {
   if (!preorderForm.reportValidity()) return;
   const form = new FormData(preorderForm);
   const quantity = Number(form.get('quantity'));
-  const depositTotal = moneyValue(product.presale.deposit) * quantity;
 
   const payload = {
     name: form.get('name'),
@@ -161,10 +160,7 @@ async function submitPreorder(event) {
     address: form.get('address'),
     quantity,
     website: form.get('website'),
-    productName: `${product.name} reservation deposit`,
-    productPrice: product.presale.deposit,
-    productDeposit: `Reference price: ${product.presale.price}`,
-    paymentUrl: product.presale.paymentUrl
+    productId: product.id
   };
 
   setSubmitting(preorderForm, true);
@@ -175,9 +171,13 @@ async function submitPreorder(event) {
       body: JSON.stringify(payload)
     });
     const result = await parseResponse(response);
-    currentOrderId = result.id || '';
-    byId('paymentAmount').textContent = formatMoney(depositTotal);
-    byId('paymentOrderId').textContent = currentOrderId || 'Generating order ID';
+    if (typeof result.id !== 'string' || !result.id || result.currency !== 'CNY' ||
+        !Number.isSafeInteger(result.totalAmountCents) || result.totalAmountCents <= 0) {
+      throw new Error('Unable to confirm the order amount. Please contact support before paying.');
+    }
+    currentOrderId = result.id;
+    byId('paymentAmount').textContent = formatMoney(result.totalAmountCents / 100);
+    byId('paymentOrderId').textContent = currentOrderId;
     setHidden(byId('preorderFormView'), true);
     setHidden(byId('paymentView'), false);
     byId('paymentView').focus?.();

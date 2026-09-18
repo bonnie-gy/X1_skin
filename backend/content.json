@@ -1,6 +1,8 @@
 {
   "products": [
     {
+      "id": "x1-skin",
+      "salesMode": "preorder",
       "name": "X1 Skin",
       "eyebrow": "FLEXIBLE SENSOR LAYER",
       "stage": "Proof of Concept",
@@ -12,12 +14,15 @@
         "enabled": true,
         "price": "¥2999",
         "deposit": "¥500",
+        "depositCents": 50000,
         "paymentType": "qrcode",
         "paymentUrl": "https://pay.xxx.com/order/x1-skin",
         "note": "Estimated shipping: Q4 2026"
       }
     },
     {
+      "id": "x1-vest",
+      "salesMode": "inquiry",
       "name": "X1 Haptic Vest",
       "eyebrow": "MODULAR HAPTIC HARDWARE",
       "stage": "Engineering Development",
@@ -35,6 +40,8 @@
       }
     },
     {
+      "id": "x1-studio",
+      "salesMode": "waitlist",
       "name": "X1 Studio",
       "eyebrow": "HAPTIC AUTHORING & SDK",
       "stage": "Product Planning",
