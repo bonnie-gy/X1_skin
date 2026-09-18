@@ -28,11 +28,10 @@ module.exports = async function ordersHandler(request, response) {
       return response.status(413).json({ ok: false, message: 'Submission is too large.' });
     }
 
-    if (String(body.website || '').trim()) {
+    if (String(body?.website || '').trim()) {
       return response.status(201).json({
         ok: true,
-        paymentUrl: body.paymentUrl || '#',
-        message: 'Order submitted. Redirecting to the payment page.'
+        message: 'Order submitted.'
       });
     }
 
@@ -47,8 +46,9 @@ module.exports = async function ordersHandler(request, response) {
     return response.status(201).json({
       ok: true,
       id: record.id,
-      paymentUrl: record.product.paymentUrl,
-      message: 'Order submitted. Redirecting to the payment page.'
+      totalAmountCents: record.totalAmountCents,
+      currency: record.currency,
+      message: 'Order submitted. Please scan the payment code.'
     });
   } catch (error) {
     if (error.code === 'CONTACT_DELIVERY_NOT_CONFIGURED') {

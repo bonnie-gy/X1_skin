@@ -1,4 +1,7 @@
 import content from '../backend/content.json' with { type: 'json' };
+import orderValidation from '../backend/order-validation.js';
+
+const { validateOrder } = orderValidation;
 
 const MAX_BODY_SIZE = 64 * 1024;
 const EMAIL_API_URL = 'https://api.resend.com/emails';
@@ -160,55 +163,17 @@ async function deliverInquiry(record, env) {
   return result.id;
 }
 
-function validateOrder(input) {
-  const customer = {
-    name: String(input.name || '').trim(),
-    phone: String(input.phone || '').trim(),
-    email: String(input.email || '').trim(),
-    address: String(input.address || '').trim()
-  };
-  const quantity = parseInt(input.quantity, 10);
-
-  if (!customer.name || !customer.phone || !customer.email || !customer.address) {
-    return { error: 'Please provide your name, phone, email, and shipping address.' };
-  }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) {
-    return { error: 'Please enter a valid contact email.' };
-  }
-  if (!/^1[3-9]\d{9}$/.test(customer.phone)) {
-    return { error: 'Please enter a valid phone number.' };
-  }
-  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99) {
-    return { error: 'Purchase quantity must be between 1 and 99.' };
-  }
-  if (
-    [customer.name, customer.phone, customer.email, customer.address].some(value => value.length > 120)
-  ) {
-    return { error: 'Submission is too long. Please shorten it and try again.' };
-  }
-
-  return {
-    customer,
-    quantity,
-    product: {
-      name: String(input.productName || '').trim(),
-      price: String(input.productPrice || '').trim(),
-      paymentUrl: String(input.paymentUrl || '').trim()
-    }
-  };
-}
-
 function createOrderRecord(validated) {
-  const numericMatch = validated.product.price.match(/[\d.]+/);
-  const unitPrice = numericMatch ? parseFloat(numericMatch[0]) : 0;
-  const total = Number.isNaN(unitPrice) ? validated.product.price : unitPrice * validated.quantity;
+  const totalAmountCents = validated.product.unitAmountCents * validated.quantity;
   return {
     id: `X1-ORDER-${crypto.randomUUID()}`,
     createdAt: new Date().toISOString(),
     product: validated.product,
     quantity: validated.quantity,
     customer: validated.customer,
-    totalAmount: total,
+    totalAmount: totalAmountCents / 100,
+    totalAmountCents,
+    currency: 'CNY',
     status: 'pending_payment'
   };
 }
@@ -318,8 +283,8 @@ async function handleOrders(request, env) {
   }
 
   // Bot honeypot
-  if (String(body.website || '').trim()) {
-    return jsonResponse({ ok: true, paymentUrl: body.paymentUrl || '#', message: 'Order submitted. Redirecting to the payment page.' }, 201);
+  if (String(body?.website || '').trim()) {
+    return jsonResponse({ ok: true, message: 'Order submitted.' }, 201);
   }
 
   const validation = validateOrder(body);
@@ -362,8 +327,9 @@ async function handleOrders(request, env) {
   return jsonResponse({
     ok: true,
     id: record.id,
-    paymentUrl: record.product.paymentUrl,
-    message: 'Order submitted. Redirecting to the payment page.'
+    totalAmountCents: record.totalAmountCents,
+    currency: record.currency,
+    message: 'Order submitted. Please scan the payment code.'
   }, 201);
 }
 

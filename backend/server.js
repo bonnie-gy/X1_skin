@@ -160,8 +160,9 @@ async function handleApi(request, response, pathname) {
       sendJson(response, 201, {
         ok: true,
         id: record.id,
-        paymentUrl: record.product.paymentUrl,
-        message: 'Order submitted. Redirecting to the payment page.'
+        totalAmountCents: record.totalAmountCents,
+        currency: record.currency,
+        message: 'Order submitted. Please scan the payment code.'
       });
     } catch (error) {
       const status = error.message === 'REQUEST_TOO_LARGE' ? 413 : 400;
